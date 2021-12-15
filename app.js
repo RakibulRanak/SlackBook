@@ -27,7 +27,7 @@ slackEvents.on('message', (event) => {
                 FB.api(groupUrl, 'POST', { message }, function (
                     response
                 ) {
-                    //console.log(response);
+                    console.log(response);
                 });
             }
             if (message === 'greet me') {
