@@ -7,8 +7,11 @@ const slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
 const slackToken = process.env.SLACK_TOKEN;
 const port = process.env.SLACK_PORT || 3000;
 const fbUrl = process.env.FB_URL
+const FB = require("fb");
 const slackEvents = createEventAdapter(slackSigningSecret);
 const slackClient = new WebClient(slackToken);
+
+FB.setAccessToken(process.env.FB_ACCESS_TOKEN);
 
 
 slackEvents.on('message', (event) => {
@@ -18,18 +21,11 @@ slackEvents.on('message', (event) => {
         try {
             if (message.includes("#gunda")) {
                 console.log("ddddd")
-                axios({
-                    method: "POST",
-                    url: fbUrl,
-                    data: { message },
-                    withCredentials: true,
-                    validateStatus: () => true,
-                }).then(
-                    (res) => {
-                        console.log(res.data);
-                    },
-                    (error) => { }
-                );
+                FB.api('/950848322519530/feed', 'POST',{message}, function(
+                    response
+                  ) {
+                    console.log(response);
+                  });
             }
             if (message === 'greet me') {
                 await slackClient.chat.postMessage({ channel: event.channel, text: `Hello <@${event.user}>! :tada:` })
