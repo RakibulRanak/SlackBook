@@ -1,0 +1,26 @@
+{
+  "name": "slackbook-plugin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RakibulRanak/slackbook-plugin.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RakibulRanak/slackbook-plugin/issues"
+  },
+  "homepage": "https://github.com/RakibulRanak/slackbook-plugin#readme",
+  "dependencies": {
+    "@slack/events-api": "^3.0.1",
+    "@slack/web-api": "^6.5.1",
+    "axios": "^0.24.0",
+    "dotenv": "^10.0.0"
+  }
+}
