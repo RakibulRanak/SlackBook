@@ -7,7 +7,7 @@ const FB = require("fb");
 
 const slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
 const slackToken = process.env.SLACK_TOKEN;
-const port = process.env.SLACK_PORT || 3000;
+const port = process.env.PORT || 3000;
 const groupUrl = process.env.GROUP_URL;
 
 const slackEvents = createEventAdapter(slackSigningSecret);
