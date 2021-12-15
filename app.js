@@ -4,9 +4,11 @@ const { WebClient } = require('@slack/web-api');
 const { createEventAdapter } = require('@slack/events-api');
 const FB = require("fb");
 
+
 const slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
 const slackToken = process.env.SLACK_TOKEN;
 const port = process.env.SLACK_PORT || 3000;
+const groupUrl = process.env.GROUP_URL;
 
 const slackEvents = createEventAdapter(slackSigningSecret);
 const slackClient = new WebClient(slackToken);
@@ -22,7 +24,7 @@ slackEvents.on('message', (event) => {
             if (message.includes("#fbpost ")) {
                 console.log("Going to post in FB!")
                 message = message.replace("#fbpost ", "");
-                FB.api('/950848322519530/feed', 'POST', { message }, function (
+                FB.api(groupUrl, 'POST', { message }, function (
                     response
                 ) {
                     //console.log(response);
