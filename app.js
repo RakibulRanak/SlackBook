@@ -16,25 +16,32 @@ const slackClient = new WebClient(slackToken);
 FB.setAccessToken(process.env.FB_ACCESS_TOKEN);
 
 
-slackEvents.on('message', (event) => {
-    console.log(`Got message from user ${event.user}: ${event.text}`);
-    var message = event.text;
+slackEvents.on('message', async (event) => {
+    console.log(`Got message from user <@${event.user}>: ${event.text}`);
+    const userInfo = await slackClient.users.info({
+        user: event.user
+      });
+    const username = userInfo.user.name
+    console.log(username)
+    let message = event.text;
     (async () => {
         try {
             if (message.includes("#fbpost ")) {
                 console.log("Going to post in FB!")
                 message = message.replace("#fbpost ", "");
+                message += `\n Posted By ${username}`;
                 FB.api(groupUrl, 'POST', { message }, function (
                     response
                 ) {
-                    //console.log(response);
+                    console.log(response);
                 });
             }
             if (message === 'greet me') {
                 await slackClient.chat.postMessage({ channel: event.channel, text: `Hello <@${event.user}>! :tada:` })
             }
         } catch (error) {
-            console.log(error.data)
+            console.log("vul hoyeche")
+            console.log(error)
         }
     })();
 });
