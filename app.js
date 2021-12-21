@@ -16,15 +16,9 @@ const slackClient = new WebClient(slackToken);
 FB.setAccessToken(process.env.FB_ACCESS_TOKEN);
 
 const convertFormat = (str) => {
-    name = "";
+    let name = "";
     for (i = 0; i < str.length; i++) {
-        let charCode = str.charCodeAt(i) - 97;
-        if (charCode >= 0) {
-            name += myMap.get(str.charAt(i))
-        }
-        else {
-            name += str.charAt(i)
-        }
+        name += myMap.get(str.charAt(i))
     }
     return name;
 }
