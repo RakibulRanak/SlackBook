@@ -33,11 +33,15 @@ slackEvents.on('message', async (event) => {
     let message = event.text;
     (async () => {
         try {
-            if (message.includes("#fbpost ")) {
+            if (message.includes("#fbpost")) {
                 console.log("Going to post in FB!")
+                message = message.replace(" #fbpost ", "");
                 message = message.replace("#fbpost ", "");
+                message = message.replace(" #fbpost", "");
+                message = message.replace("#fbpost", "");
+
                 formatedUsername = convertFormat(username)
-                message += `\n ${formatedUsername}`;
+                message = formatedUsername + "@ˢˡᵃᶜᵏ" + `\n\n${message}`;
                 // let aa = `\u5E73\u621015`;
                 FB.api(groupUrl, 'POST', { message }, function (response) {
                     console.log(response);
