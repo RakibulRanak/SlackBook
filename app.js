@@ -36,12 +36,11 @@ slackEvents.on('message', async (event) => {
                 const mentions = message.match(regex);
                 if(mentions){
                     for(let i=0;i<mentions.length;i++){
-                        console.log(mentions[i].substring(2,13));
                         const mentionedUserInfo = await slackClient.users.info({
                             user: mentions[i].substring(2,13)
                         });
                         let userName = mentionedUserInfo.user.profile.display_name;
-                        if(!mentionedUserInfo.user.profile.display_name)
+                        if(!userName)
                             userName = mentionedUserInfo.user.name;
                         message = message.replace(mentions[i],'@'+ userName);
                     }
