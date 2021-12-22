@@ -21,17 +21,19 @@ const slackClient = new WebClient(slackToken);
 
 
 const slackSlashCommand = (req, res, next) => {
-    console.log(req.body)
-    if (req.body.token === slackVerificationToken && req.body.command === '/zork') {
-        try {
+    try {
+        console.log(req.body)
+        if (req.body.token === slackVerificationToken && req.body.command === '/zork') {
+
             axios.post(req.body.response_url, {
                 response_type: "in_channel",
                 text: req.body.text || "",
             })
             res.status(200).send()
-        } catch (err) {
-            console.log(err)
+
         }
+    } catch (err) {
+        console.log(err)
     }
 }
 app.use('/slack/events', slackEvents.expressMiddleware())
@@ -56,15 +58,16 @@ const convertFormat = (str) => {
 
 
 slackEvents.on('message', async (event) => {
-    if (event.user) {
-        console.log(`Got message from user <@${event.user}>: ${event.text}`);
-        const userInfo = await slackClient.users.info({
-            user: event.user
-        });
-        const username = userInfo.user.name
-        let message = event.text;
-        (async () => {
-            try {
+    try {
+        if (event.user) {
+            console.log(`Got message from user <@${event.user}>: ${event.text}`);
+            const userInfo = await slackClient.users.info({
+                user: event.user
+            });
+            const username = userInfo.user.name
+            let message = event.text;
+            (async () => {
+
                 if (message.includes("#fbpost")) {
                     console.log("Going to post in FB!")
                     const regex = /<@[a-zA-Z0-9]{11}>/g;
@@ -101,10 +104,11 @@ slackEvents.on('message', async (event) => {
                 if (message === 'greet me') {
                     await slackClient.chat.postMessage({ channel: event.channel, text: `Hello <@${event.user}>! :tada:` })
                 }
-            } catch (error) {
-                console.log(error.data)
-            }
-        })();
+
+            })();
+        }
+    } catch (error) {
+        console.log(error.data)
     }
 });
 
