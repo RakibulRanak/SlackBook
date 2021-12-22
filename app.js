@@ -26,7 +26,7 @@ const slackClient = new WebClient(slackToken);
 app.use('/slack/events', slackEvents.expressMiddleware())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
-// app.post('/slack/slash', slashCommand.serve)
+app.post('/slack/slash', slashCommand.serve)
 
 
 FB.setAccessToken(process.env.FB_ACCESS_TOKEN);
