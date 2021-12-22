@@ -30,7 +30,7 @@ const slackSlashCommand = (req, res, next) => {
         //     text: req.body.text,
         // }))
 
-        res.status(200).send(req.body.text)
+        res.status(200).send("aaa")
 
 
         //res.send('Use this command followed by `button`, `menu`, or `dialog`.');
