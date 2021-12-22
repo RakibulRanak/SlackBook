@@ -39,7 +39,7 @@ const slackSlashCommand = (req, res, next) => {
 }
 app.use('/slack/events', slackEvents.expressMiddleware())
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: false }))
 
 
 app.post('/slack/slash', slackSlashCommand)
