@@ -15,7 +15,11 @@ exports.serve = async (req, res, next) => {
                 })
                 return res.status(200).send()
             }
+            else
+                return res.status(200).send()
         }
+        else
+            return res.status(200).send()
     } catch (err) {
         console.log(err)
     }
