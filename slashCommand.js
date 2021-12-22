@@ -1,3 +1,5 @@
+const slackVerificationToken = process.env.SLACK_VERIFICATION_TOKEN;
+
 exports.serve = async (req, res, next) => {
     try {
         console.log(req.body)

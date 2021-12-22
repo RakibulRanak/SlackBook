@@ -13,7 +13,7 @@ const slashCommand = require('./slashCommand')
 const port = process.env.PORT || 3000
 const app = express()
 const slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
-const slackVerificationToken = process.env.SLACK_VERIFICATION_TOKEN;
+
 const slackToken = process.env.SLACK_TOKEN;
 const slackUserToken = process.env.SLACK_USER_TOKEN
 const groupUrl = process.env.GROUP_URL;
