@@ -1,17 +1,20 @@
 const { WebClient } = require('@slack/web-api');
 const { createEventAdapter } = require('@slack/events-api');
 const FB = require("fb");
+
 require('dotenv').config();
 const express = require('express')
 const bodyParser = require('body-parser')
-const myMap = require('./utils')
-const crawler = require('./crawler')
-
 const slashCommand = require('./slashCommand')
-
 
 const port = process.env.PORT || 3000
 const app = express()
+
+const format = require('./format')
+const crawler = require('./crawler')
+let prevEventId;
+
+
 const slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
 
 const slackToken = process.env.SLACK_TOKEN;
@@ -28,69 +31,6 @@ app.post('/slack/slash', slashCommand.serve)
 
 FB.setAccessToken(process.env.FB_ACCESS_TOKEN);
 
-const convertFormat = (str) => {
-    let name = "";
-    for (i = 0; i < str.length; i++) {
-        name += myMap.get(str.charAt(i))
-    }
-    return name;
-}
-
-
-slackEvents.on('message', async (event) => {
-    try {
-        if (event.user) {
-            console.log(`Got message from user <@${event.user}>: ${event.text}`);
-            const userInfo = await slackClient.users.info({
-                user: event.user
-            });
-            const username = userInfo.user.name
-            let message = event.text;
-            (async () => {
-
-                if (message.includes("#fbpost")) {
-                    console.log("Going to post in FB!")
-                    const regex = /<@[a-zA-Z0-9]{11}>/g;
-                    const mentions = message.match(regex);
-                    if (mentions) {
-                        for (let i = 0; i < mentions.length; i++) {
-                            const mentionedUserInfo = await slackClient.users.info({
-                                user: mentions[i].substring(2, 13)
-                            });
-                            let userName = mentionedUserInfo.user.profile.display_name;
-                            if (!mentionedUserInfo.user.profile.display_name)
-                                userName = mentionedUserInfo.user.name;
-                            message = message.replace(mentions[i], '@' + userName);
-                        }
-                    }
-                    message = message.replace("#fbpost", "");
-                    formatedUsername = convertFormat(username)
-                    message = formatedUsername + "@ˢˡᵃᶜᵏ" + `\n\n${message}`;
-
-                    if (event.files === undefined) {
-                        FB.api(`${groupUrl}/feed`, 'POST', { message }, function (response) {
-                            console.log(response);
-                        });
-                    }
-                    else {
-                        if (!event.files[0].public_url_shared) await slackClient.files.sharedPublicURL({ token: slackUserToken, file: event.files[0].id })
-                        const url = await crawler.crawl(event.files[0].permalink_public);
-                        FB.api(`${groupUrl}/photos?url=${url}`, 'POST', { message }, function (response) {
-                            console.log(response);
-                        });
-                    }
-
-                }
-                if (message === 'greet me') {
-                    await slackClient.chat.postMessage({ channel: event.channel, text: `Hello <@${event.user}>! :tada:` })
-                }
-
-            })();
-        }
-    } catch (error) {
-        console.log(error.data)
-    }
-});
 
 // Starts server
 app.listen(port, function () {
