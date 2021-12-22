@@ -4,9 +4,7 @@ const { createEventAdapter } = require('@slack/events-api');
 const FB = require("fb");
 const myMap = require('./utils')
 const crawler = require('./crawler')
-// const fs = require('fs');
-// const envfile = require('envfile')
-// const sourcePath = '.env'
+let prevEventId;
 require('dotenv').config();
 const slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
 const slackToken = process.env.SLACK_TOKEN;
@@ -17,7 +15,6 @@ const slackEvents = createEventAdapter(slackSigningSecret);
 const slackClient = new WebClient(slackToken);
 
 FB.setAccessToken(process.env.FB_ACCESS_TOKEN);
-
 
 const convertFormat = (str) => {
     let name = "";
@@ -36,7 +33,7 @@ slackEvents.on('message', async (event) => {
     let message = event.text;
     (async () => {
         try {
-            if (message.includes("#fbpost")) {
+            if (message.includes("#fbpost") && currentEventId != prevEventId) {
                 console.log("Going to post in FB!")
                 const regex = /<@[a-zA-Z0-9]{11}>/g;
                 const linkRegex = /<http.{1,500}>/g;
@@ -48,7 +45,6 @@ slackEvents.on('message', async (event) => {
                          link[i] = link[i].replace(">","");
                          message = message.replace(str,link[i]);
                      }
-                     console.log(message);
                 }
                 const mentions = message.match(regex);
                 if(mentions){
