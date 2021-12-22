@@ -2,7 +2,7 @@ const axios = require('axios')
 const { WebClient } = require('@slack/web-api');
 const { createEventAdapter } = require('@slack/events-api');
 const FB = require("fb");
-const myMap = require('./utils')
+const format = require('./format')
 const crawler = require('./crawler')
 let prevEventId;
 require('dotenv').config();
@@ -16,13 +16,13 @@ const slackClient = new WebClient(slackToken);
 
 FB.setAccessToken(process.env.FB_ACCESS_TOKEN);
 
-const convertFormat = (str) => {
-    let name = "";
-    for (i = 0; i < str.length; i++) {
-        name += myMap.get(str.charAt(i))
-    }
-    return name;
-}
+// const convertFormat = (str) => {
+//     let name = "";
+//     for (i = 0; i < str.length; i++) {
+//         name += myMap.get(str.charAt(i))
+//     }
+//     return name;
+// }
 slackEvents.on('message', async (event) => {
     const currentEventId = event.event_ts;
     console.log(`Got message from user <@${event.user}>: ${event.text}`);
@@ -59,7 +59,7 @@ slackEvents.on('message', async (event) => {
                     }
                 }
                 message = message.replace("#fbpost", "");
-                formatedUsername = convertFormat(username)
+                formatedUsername = format.convertFormat(username)
                 message = formatedUsername + "@ˢˡᵃᶜᵏ" + `\n\n${message}`;
                 if(event.files === undefined) {
                     if ( link === null) {
