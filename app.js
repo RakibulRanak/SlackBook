@@ -26,9 +26,6 @@ const slackSlashCommand = (req, res, next) => {
         // console.log("DHUKESE MAMA")
         const type = req.body.text.split(' ')[0];
 
-        // return (axios.post(req.body.response_url, {
-        //     text: req.body.text,
-        // }))
 
         res.status(200).json({
             "response_type": "in_channel",
@@ -39,9 +36,11 @@ const slackSlashCommand = (req, res, next) => {
                 }
             ]
         })
+        return (axios.post(req.body.response_url, {
+            text: req.body.text,
+        }))
 
 
-        //res.send('Use this command followed by `button`, `menu`, or `dialog`.');
 
     }
 }
