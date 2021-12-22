@@ -6,7 +6,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const myMap = require('./utils')
 const crawler = require('./crawler')
-const axios = require('axios')
+
 const slashCommand = require('./slashCommand')
 
 
