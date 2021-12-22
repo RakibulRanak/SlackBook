@@ -27,9 +27,9 @@ const slackSlashCommand = (req, res, next) => {
 
             axios.post(req.body.response_url, {
                 response_type: "in_channel",
-                text: req.body.text || "",
+                text: "aaa",
             })
-            res.status(200).send()
+            return res.status(200).send()
 
         }
     } catch (err) {
