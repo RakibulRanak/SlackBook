@@ -3,9 +3,11 @@ const { WebClient } = require('@slack/web-api');
 const { createEventAdapter } = require('@slack/events-api');
 const FB = require("fb");
 const myMap = require('./utils')
+const crawler = require('./crawler')
 require('dotenv').config();
 const slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
 const slackToken = process.env.SLACK_TOKEN;
+const slackUserToken = process.env.SLACK_USER_TOKEN
 const port = process.env.PORT || 3000;
 const groupUrl = process.env.GROUP_URL;
 const slackEvents = createEventAdapter(slackSigningSecret);
@@ -22,7 +24,10 @@ const convertFormat = (str) => {
 }
 
 slackEvents.on('message', async (event) => {
+    
     console.log(`Got message from user <@${event.user}>: ${event.text}`);
+    
+
     const userInfo = await slackClient.users.info({
         user: event.user
     });
@@ -48,9 +53,20 @@ slackEvents.on('message', async (event) => {
                 message = message.replace("#fbpost", "");
                 formatedUsername = convertFormat(username)
                 message = formatedUsername + "@ˢˡᵃᶜᵏ" + `\n\n${message}`;
-                FB.api(groupUrl, 'POST', { message }, function (response) {
+                 
+                if(event.files === undefined) {
+                   FB.api(`${groupUrl}/feed`, 'POST', { message }, function (response) {
+                       console.log(response);
+                   });
+                }
+                else {
+                   if(!event.files[0].public_url_shared) await slackClient.files.sharedPublicURL({ token: slackUserToken , file :event.files[0].id}) 
+                   const url = await crawler.crawl(event.files[0].permalink_public);
+                   FB.api(`${groupUrl}/photos?url=${url}`, 'POST', { message} , function (response) {
                     console.log(response);
-                });
+                   });
+                }
+
             }
             if (message === 'greet me') {
                 await slackClient.chat.postMessage({ channel: event.channel, text: `Hello <@${event.user}>! :tada:` })
