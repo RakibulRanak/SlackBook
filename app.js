@@ -7,6 +7,7 @@ const bodyParser = require('body-parser')
 const myMap = require('./utils')
 const crawler = require('./crawler')
 const axios = require('axios')
+const slashCommand = require('./slashCommand')
 
 
 const port = process.env.PORT || 3000
@@ -19,31 +20,10 @@ const groupUrl = process.env.GROUP_URL;
 const slackEvents = createEventAdapter(slackSigningSecret);
 const slackClient = new WebClient(slackToken);
 
-
-const slackSlashCommand = (req, res, next) => {
-    try {
-        console.log(req.body)
-        if (req.body.token === slackVerificationToken && req.body.command === '/zork') {
-
-            axios.post(req.body.response_url, {
-                response_type: "in_channel",
-                text: "aaa",
-            })
-            return res.status(200).send()
-
-        }
-    } catch (err) {
-        console.log(err)
-    }
-}
 app.use('/slack/events', slackEvents.expressMiddleware())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
-
-
-app.post('/slack/slash', slackSlashCommand)
-
-
+app.post('/slack/slash', slashCommand.serve)
 
 
 FB.setAccessToken(process.env.FB_ACCESS_TOKEN);
