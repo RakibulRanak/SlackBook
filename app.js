@@ -25,7 +25,7 @@ const slackSlashCommand = (req, res, next) => {
     if (req.body.token === slackVerificationToken && req.body.command === '/zork') {
         axios.post(req.body.response_url, {
             response_type: "in_channel",
-            text: req.body.text,
+            text: req.body.text || "",
         })
         res.status(200).send()
     }
