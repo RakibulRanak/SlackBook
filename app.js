@@ -25,11 +25,12 @@ const slackSlashCommand = (req, res, next) => {
     if (req.body.token === slackVerificationToken && req.body.command === '/zork') {
         // console.log("DHUKESE MAMA")
         const type = req.body.text.split(' ')[0];
-        res.status(200).send("aaa")
-        return (axios.post(req.body.response_url, {
+        axios.post(req.body.response_url, {
             response_type: "in_channel",
             text: req.body.text,
-        }))
+        })
+        res.status(200).send("aaa")
+
 
 
 
