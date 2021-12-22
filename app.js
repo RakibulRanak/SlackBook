@@ -29,7 +29,7 @@ const slackSlashCommand = (req, res, next) => {
             response_type: "in_channel",
             text: req.body.text,
         })
-        //  res.status(200).send("aaa")
+        res.status(200).send()
 
 
 
@@ -41,7 +41,7 @@ const slackSlashCommand = (req, res, next) => {
 }
 app.use('/slack/events', slackEvents.expressMiddleware())
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended:  }))
+app.use(bodyParser.urlencoded({ extended: false }))
 
 
 app.post('/slack/slash', slackSlashCommand)
