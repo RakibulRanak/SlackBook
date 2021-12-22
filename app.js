@@ -62,18 +62,33 @@ slackEvents.on('message', async (event) => {
                 formatedUsername = convertFormat(username)
                 message = formatedUsername + "@ˢˡᵃᶜᵏ" + `\n\n${message}`;
                 if(event.files === undefined) {
-                   FB.api(`${groupUrl}/feed`, 'POST', { message }, function (response) {
-                       console.log(response);
-                   });
-                }
-                else {
-                   if(!event.files[0].public_url_shared) await slackClient.files.sharedPublicURL({ token: slackUserToken , file :event.files[0].id}) 
-                   const url = await crawler.crawl(event.files[0].permalink_public);
-                   FB.api(`${groupUrl}/photos?url=${url}`, 'POST', { message} , function (response) {
-                    console.log(response);
-                   });
-                }
-                prevEventId = currentEventId;
+                    if ( link === null) {
+                        FB.api(`${groupUrl}/feed`, 'POST', { message }, function (response) {
+                            console.log(response);
+                        });
+                    }
+                    else {
+                     FB.api(`${groupUrl}/feed?link=${link[0]}`, 'POST', { message }, function (response) {
+                         console.log(response);
+                     });
+                    }
+                 }
+                 else {
+                    if(!event.files[0].public_url_shared) await slackClient.files.sharedPublicURL({ token: slackUserToken , file :event.files[0].id})
+                    console.log(event)
+                    if ( event.files[0].mimetype.includes('image')) {
+                        const url = await crawler.crawl(event.files[0].permalink_public);
+                        FB.api(`${groupUrl}/photos?url=${url}`, 'POST', { message} , function (response) {
+                            console.log(response);
+                        });
+                     }
+                    else {
+                        FB.api(`${groupUrl}/feed?link=${event.files[0].permalink_public}`, 'POST', { message }, function (response) {
+                            console.log(response);
+                        });
+                    }
+                 }
+                 prevEventId = currentEventId;
             }
             if (message === 'greet me') {
                 await slackClient.chat.postMessage({ channel: event.channel, text: `Hello <@${event.user}>! :tada:` })
