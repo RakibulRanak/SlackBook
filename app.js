@@ -25,28 +25,22 @@ const slackSlashCommand = (req, res, next) => {
     if (req.body.token === slackVerificationToken && req.body.command === '/zork') {
         // console.log("DHUKESE MAMA")
         const type = req.body.text.split(' ')[0];
-
-
-        res.status(200).json({
-            "response_type": "in_channel",
-            "text": "It's 80 degrees right now.",
-            "attachments": [
-                {
-                    "text": "Partly cloudy today and tomorrow"
-                }
-            ]
-        })
+        res.status(200).send("aaa")
         return (axios.post(req.body.response_url, {
+            response_type: "in_channel",
             text: req.body.text,
         }))
 
 
 
+
+        //res.send('Use this command followed by `button`, `menu`, or `dialog`.');
+
     }
 }
 app.use('/slack/events', slackEvents.expressMiddleware())
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended:  }))
 
 
 app.post('/slack/slash', slackSlashCommand)
