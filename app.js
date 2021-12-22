@@ -29,7 +29,7 @@ const slackSlashCommand = (req, res, next) => {
             response_type: "in_channel",
             text: req.body.text,
         })
-        res.status(200).send("aaa")
+        //  res.status(200).send("aaa")
 
 
 
