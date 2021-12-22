@@ -23,20 +23,11 @@ const slackClient = new WebClient(slackToken);
 const slackSlashCommand = (req, res, next) => {
     console.log(req.body)
     if (req.body.token === slackVerificationToken && req.body.command === '/zork') {
-        // console.log("DHUKESE MAMA")
-        const type = req.body.text.split(' ')[0];
         axios.post(req.body.response_url, {
             response_type: "in_channel",
             text: req.body.text,
         })
         res.status(200).send()
-
-
-
-
-
-        //res.send('Use this command followed by `button`, `menu`, or `dialog`.');
-
     }
 }
 app.use('/slack/events', slackEvents.expressMiddleware())
