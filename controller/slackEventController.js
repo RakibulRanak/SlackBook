@@ -34,7 +34,7 @@ slackEvents.on('message', async (event) => {
                 if (message.includes("#fbpost") && currentEventId != prevEventId) {
                     console.log("Going to post in FB!")
 
-                    const { link, formatedMessage } = linkExtractor.extract(message);
+                    const { links, formatedMessage } = linkExtractor.extract(message);
                     message = formatedMessage;
                     message = await mentionExtractor.extract(message);
 
@@ -44,8 +44,8 @@ slackEvents.on('message', async (event) => {
                     message = formatedUsername + "@ˢˡᵃᶜᵏ" + `\n\n${message}`;
 
                     if (event.files === undefined) {
-                        if (link === null) fbAPI.postWithoutLinkAndAttachments(message)
-                        else fbAPI.postWithLink(message, link[0])
+                        if (links === null) fbAPI.postWithoutLinkAndAttachments(message)
+                        else fbAPI.postWithLink(message, links[0])
                     }
                     else {
                         let publicUrl = event.files[0].permalink_public;
