@@ -1,6 +1,7 @@
 const Crawler = require("crawler");
 
 exports.crawl = (urlsite) => {
+    console.log(urlsite)
     return new Promise((resolve, reject) => {
         var c = new Crawler({
             callback: function (error, res, done) {
