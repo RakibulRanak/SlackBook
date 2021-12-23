@@ -1,25 +1,17 @@
 const { WebClient } = require('@slack/web-api');
 const { createEventAdapter } = require('@slack/events-api');
-
 const FB = require("fb");
-
 require('dotenv').config();
-
-
 const format = require('../utils/format')
 const crawler = require('../utils/crawler')
 const linkExtractor = require('../utils/linkExtractor');
 const mentionExtractor = require('../utils/mentionExtractor');
 let prevEventId;
-
-
 const slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
-
 const slackToken = process.env.SLACK_TOKEN;
 const slackUserToken = process.env.SLACK_USER_TOKEN
 const groupUrl = process.env.GROUP_URL;
 const slackEvents = createEventAdapter(slackSigningSecret);
-
 exports.slackEvents = slackEvents
 
 const slackClient = new WebClient(slackToken);
@@ -40,35 +32,10 @@ slackEvents.on('message', async (event) => {
 
                 if (message.includes("#fbpost") && currentEventId != prevEventId) {
                     console.log("Going to post in FB!")
-                    const regex = /<@[a-zA-Z0-9]{11}>/g;
-                    // const linkRegex = /<http.{1,500}>/g;
-                    // const link = message.match(linkRegex);
-                    // if (link) {
-                    //     for (let i = 0; i < link.length; i++) {
-                    //         const str = link[i];
-                    //         link[i] = link[i].replace("<", "");
-                    //         link[i] = link[i].replace(">", "");
-                    //         message = message.replace(str, link[i]);
-                    //     }
-                    // }
                     const {link,formatedMessage} = linkExtractor.extract(message);
                     message = formatedMessage;
-                    console.log(link);
-                    console.log(message)
-                    // const mentions = message.match(regex);
-                    // if (mentions) {
-                    //     for (let i = 0; i < mentions.length; i++) {
-                    //         const mentionedUserInfo = await slackClient.users.info({
-                    //             user: mentions[i].substring(2, 13)
-                    //         });
-                    //         let userName = mentionedUserInfo.user.profile.display_name;
-                    //         if (!mentionedUserInfo.user.profile.display_name)
-                    //             userName = mentionedUserInfo.user.name;
-                    //         message = message.replace(mentions[i], '@' + userName);
-                    //     }
-                    // }
                     message = await mentionExtractor.extract(message);
-                    console.log(message);
+                    
                     message = message.replace("#fbpost", "");
                     formatedUsername = format.convertFormat(username)
                     message = formatedUsername + "@ˢˡᵃᶜᵏ" + `\n\n${message}`;
