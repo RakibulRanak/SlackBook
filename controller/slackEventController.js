@@ -21,7 +21,6 @@ const slackEvents = createEventAdapter(slackSigningSecret);
 exports.slackEvents = slackEvents
 
 const slackClient = new WebClient(slackToken);
-// slackEvent Related Part 
 
 FB.setAccessToken(process.env.FB_ACCESS_TOKEN);
 
