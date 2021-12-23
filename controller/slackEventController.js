@@ -14,7 +14,7 @@ let prevEventId;
 const slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
 
 const slackToken = process.env.SLACK_TOKEN;
-const slackUserToken = process.env.SLACK_USER_TOKEN
+const slackUserToken = process.env.SLACK_USER_TOKEN;
 const groupUrl = process.env.GROUP_URL;
 const slackEvents = createEventAdapter(slackSigningSecret);
 
@@ -77,16 +77,14 @@ slackEvents.on('message', async (event) => {
                         }
                     }
                     else {
-                        // console.log("Image or attachments")
-                        try {
-                            if (!event.files[0].public_url_shared) await slackClient.files.sharedPublicURL({ token: slackUserToken, file: event.files[0].id })
+                        let publicUrl = event.files[0].permalink_public;
+                        if (!event.files[0].public_url_shared) {
+                            const modifiedEvent = await slackClient.files.sharedPublicURL({ token: slackUserToken, file: event.files[0].id })
+                            publicUrl = modifiedEvent.file.permalink_public;
                         }
-                        catch (error) {
-                            console.log(error);
-                        }
-                        console.log(event)
+
                         if (event.files[0].mimetype.includes('image')) {
-                            const url = await crawler.crawl(event.files[0].permalink_public);
+                            const url = await crawler.crawl(publicUrl);
                             FB.api(`${groupUrl}/photos?url=${url}`, 'POST', { message }, function (response) {
                                 console.log(response);
                             });

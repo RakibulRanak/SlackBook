@@ -1,7 +1,6 @@
 const Crawler = require("crawler");
 
 exports.crawl = (urlsite) => {
-    console.log(urlsite)
     return new Promise((resolve, reject) => {
         var c = new Crawler({
             callback: function (error, res, done) {
@@ -10,7 +9,6 @@ exports.crawl = (urlsite) => {
                     console.log(error);
                     reject(error);
                 } else {
-                    console.log(image);
                     url = image[0].attribs.src
                     resolve(url);
                 }
