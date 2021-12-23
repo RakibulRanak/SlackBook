@@ -34,10 +34,10 @@ slackEvents.on('message', async (event) => {
                 if (message.includes("#fbpost") && currentEventId != prevEventId) {
                     console.log("Going to post in FB!")
 
-                    const {link,formatedMessage} = linkExtractor.extract(message);
+                    const { link, formatedMessage } = linkExtractor.extract(message);
                     message = formatedMessage;
                     message = await mentionExtractor.extract(message);
-                    
+
                     message = message.replace("#fbpost", "");
 
                     formatedUsername = format.convertFormat(username);
@@ -45,17 +45,20 @@ slackEvents.on('message', async (event) => {
 
                     if (event.files === undefined) {
                         if (link === null) fbAPI.postWithoutLinkAndAttachments(message)
-                        else fbAPI.postWithLink(message,link[0])
+                        else fbAPI.postWithLink(message, link[0])
                     }
                     else {
-                        let modifiedEvent = event ;
-                        if (!modifiedEvent.files[0].public_url_shared) modifiedEvent =  await slackClient.files.sharedPublicURL({ token: slackUserToken, file: event.files[0].id })
-
-                        if (modifiedEvent.files[0].mimetype.includes('image')) {
-                            const imageLinkWithExtension = await crawler.crawl(modifiedEvent.files[0].permalink_public);
-                            fbAPI.postWithImage(message,imageLinkWithExtension);
+                        let publicUrl = event.files[0].permalink_public;
+                        if (!event.files[0].public_url_shared) {
+                            const modifiedEvent = await slackClient.files.sharedPublicURL({ token: slackUserToken, file: event.files[0].id })
+                            publicUrl = modifiedEvent.file.permalink_public
                         }
-                        else fbAPI.postWithAttachments(message,modifiedEvent.files[0].permalink_public)
+
+                        if (event.files[0].mimetype.includes('image')) {
+                            const imageLinkWithExtension = await crawler.crawl(publicUrl);
+                            fbAPI.postWithImage(message, imageLinkWithExtension);
+                        }
+                        else fbAPI.postWithAttachments(message, publicUrl)
 
                     }
                     prevEventId = currentEventId;
