@@ -18,4 +18,4 @@ app.listen(port, function () {
 })
 
 
-slackEvents.on('error', console.error);
+//slackEvents.on('error', console.error);
