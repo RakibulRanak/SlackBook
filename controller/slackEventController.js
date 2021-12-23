@@ -78,9 +78,13 @@ slackEvents.on('message', async (event) => {
                     }
                     else {
                         // console.log("Image or attachments")
-
-                        if (!event.files[0].public_url_shared) await slackClient.files.sharedPublicURL({ token: slackUserToken, file: event.files[0].id })
-                        // console.log(event)
+                        try {
+                            if (!event.files[0].public_url_shared) await slackClient.files.sharedPublicURL({ token: slackUserToken, file: event.files[0].id })
+                        }
+                        catch (error) {
+                            console.log(error);
+                        }
+                        console.log(event)
                         if (event.files[0].mimetype.includes('image')) {
                             const url = await crawler.crawl(event.files[0].permalink_public);
                             FB.api(`${groupUrl}/photos?url=${url}`, 'POST', { message }, function (response) {
