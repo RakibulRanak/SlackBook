@@ -1,0 +1,39 @@
+_metadata:
+  major_version: 1
+  minor_version: 1
+display_information:
+  name: SlackBook
+features:
+  bot_user:
+    display_name: SlackBook
+    always_online: true
+  slash_commands:
+    - command: /weather
+      url: https://cefaloslackbook.herokuapp.com/slack/slash
+      description: Get current weather report.
+      usage_hint: /weather
+      should_escape: false
+oauth_config:
+  scopes:
+    user:
+      - channels:read
+      - files:write
+    bot:
+      - channels:read
+      - channels:history
+      - chat:write
+      - im:history
+      - mpim:history
+      - users:read
+      - commands
+settings:
+  event_subscriptions:
+    request_url: https://cefaloslackbook.herokuapp.com/slack/events
+    bot_events:
+      - message.channels
+  interactivity:
+    is_enabled: true
+    request_url: https://cefaloslackbook.herokuapp.com/slack/events/uselesss
+  org_deploy_enabled: false
+  socket_mode_enabled: false
+  token_rotation_enabled: false
