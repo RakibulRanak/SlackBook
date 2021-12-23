@@ -6,8 +6,8 @@ const FB = require("fb");
 require('dotenv').config();
 
 
-const format = require('../format')
-const crawler = require('../crawler')
+const format = require('../utils/format')
+const crawler = require('../utils/crawler')
 const linkExtractor = require('../utils/linkExtractor');
 const mentionExtractor = require('../utils/mentionExtractor');
 let prevEventId;
