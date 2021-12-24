@@ -1,0 +1,10 @@
+event supscription
+- message.groups >>> will send message events to server from private groups
+
+
+      - im:history
+      - im:read
+      - mpim:history
+
+
+            - groups:history
