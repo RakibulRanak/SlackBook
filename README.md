@@ -39,12 +39,20 @@ For use this functionality user must have to install this slack app in slack wor
 # Process of Posting Data from Server to Facebook
 <br>
 
-## Process to Post Status without Link and Attachments in Facebook
+## Posting Status without Link and Attachments in Facebook\
+
+<br>
+
  - System catches the event passed in slack using a slack app called **slackbot**.
+
  - It checks whether the event is a **message** type . If it is a message type event , then system moves to the next step .
- - Then the system checks if the message contains any file . If the message doesn’t contain any file then the system moves to the next step .
- - Now the system checks whether the text field of the message consists of any link . If it doesn’t contain any link, the system moves to the next step.
+  
+ - Then the system checks if the message contains any file . If the message doesn’t contain any file then the system moves to the next step .         
+
+ - Now the system checks whether the text field of the message contains any link . If it doesn’t contain any link, the system moves to the next step.
+
 - Now it’s the final step for the system to call the Corresponding Endpoint of Facebook API . Credentials to Post a Status without Links and Attachments are : 
+
 <pre>
 
   Method Name: POST
@@ -57,11 +65,20 @@ For use this functionality user must have to install this slack app in slack wor
 
 </pre>
 
-## Process to Post Status with Links in Facebook
+<br>
+
+## Posting Status with Links in Facebook
+  
+  <br>
+
  - System catches the event passed in slack using a slack app called **slackbot**.
+
  - It checks whether the event is a **message** type . If it is a message type event , then system moves to the next step .
+
  - Then the system checks if the message contains any file . If the message doesn’t contain any file then the system moves to the next step .
+
  - Now the system checks whether the text field of the message consists of any link . If it  contains any link, the system moves to the next step.
+
  - Now it’s the final step for the system to call the Corresponding Endpoint of Facebook API .Credentials to Post a Status with Links are :
 
  <pre>
@@ -78,15 +95,24 @@ For use this functionality user must have to install this slack app in slack wor
 
 - **Limitations** : Facebook doesn’t allow one user to share more than one link on Facebook . Other Links including  the first one will remain in the message as a link but will not be shared . That’s Why systems passess the first link in the link parameter but all the links will remain in the message .
 
+<br>
 
-## Process to Post Status with Photo in Facebook
+## Posting Status with Photo in Facebook
+
+<br>
 
  - System catches the event passed in slack using a slack app called **slackbot**.
+
  - It checks whether the event is a **message** type . If it is a message type event , then system moves to the next step .
+
 - Then the system checks if the message contains any file . If the message  contains any file then the system moves to the next step .
+
 - Then system checks how many files are attached with the event . If there are multiple files then system can’t post this in facebook because facebook doesn't allow one to post multiple files in facebook . So , If there is only one file then the system will move to next step.
+
 - Now system makes the url of the file  in the slack server public . For this system uses a method which takes the user token of bot and file id of file as arguments .
+
 - Now system checks if the file type is an image . If the file type is image then system moves to the next step.
+
 - System scraps the image url with extension from the public url and saves it .
 - Now it’s the final step for the system to call the Corresponding Endpoint of Facebook API .Credentials to Post a Status with photos are :
 
@@ -103,13 +129,24 @@ For use this functionality user must have to install this slack app in slack wor
 </pre>
 - **Limitations** : Can not post multiple photos using this endpoint because the parameter **url** takes only one link .
 
-## Process to Post with Attachment Except photo in Facebook
+<br>
+
+## Posting with Attachment Except photo in Facebook
+
+<br>
+
  - System catches the event passed in slack using a slack app called **slackbot**.
+
  - It checks whether the event is a **message** type . If it is a message type event , then system moves to the next step .
+
 - Then the system checks if the message contains any file . If the message  contains any file then the system moves to the next step .
+
 - Then system checks how many files are attached with the event . If there are multiple files then system can’t post this in facebook because facebook doesn't allow one to post multiple files in facebook . So , If there is only one file then the system will move to next step.
+
 - Now system makes the url of the file  in the slack server public . For this system uses a method which takes the user token of bot and file id of file as arguments .
+
 - Now system checks if the file type is an image . If the file type is not an image then system moves to the next step.
+
 - Now it’s the final step for the system to call the Corresponding Endpoint of Facebook API .Credentials to Post a Status with attachment except photo are :
 
 <pre>
