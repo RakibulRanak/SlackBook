@@ -86,23 +86,32 @@ oauth_config:
 
 ## Scopes of Access tokens ( as per slack api documentation )
 
-### user : ( means, following permission has to be accessed using user token).
+### user :
+> following permission will be accessed using user token.
 
-    Files:write Upload, edit, and delete files as your slack app
+  files:write 
+  > Upload, edit, and delete files as your slack app
 
-### bot :	( means, following permissions have to be accessed using bot token).
+### bot :
+> following permissions will be accessed using bot token.
 
-    Channels:read View basic information about public channels in a workspace 
+  Channels:read 
+  > View basic information about public channels in a workspace 
 
-    Channels:history View messages and other content in public channels that your slack app has been added to  
+  Channels:history 
+  > View messages and other content in public channels that your slack app has been added to  
 
-    Chat:write  Post messages in approved channels & conversations  
+  Chat:write  
+  > Post messages in approved channels & conversations  
 
-    Im:history View messages and other content in direct messages that your slack app has been added to 
+  Im:history 
+  > View messages and other content in direct messages that your slack app has been added to 
 
-    Users:read View people in a workspace
+  Users:read 
+  > View people in a workspace
 
-    Commands Add shortcuts and/or slash commands that people can use
+  Commands 
+  > Add shortcuts and/or slash commands that people can use
  
  ```yaml
  app_home:
