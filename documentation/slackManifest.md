@@ -66,7 +66,7 @@ event_subscriptions:
 ```
 SlackBook bot is subscribed to  message events only in public channels and SlackBook’s inbox. Each message event keeps hitting request_url ( Our node backend server) after every 3 seconds, until our server responds with confirmation of receiving the event.
 
-	- message.channels ( public channels message)
+	- message.channels ( Public channels message)
 	- message.im ( SlackBook bot’s inbox message)
 
 ```yaml
@@ -95,22 +95,22 @@ oauth_config:
 ### bot :
 > following permissions will be accessed using bot token.
 
-  Channels:read 
+  channels:read 
   > View basic information about public channels in a workspace 
 
-  Channels:history 
+  channels:history 
   > View messages and other content in public channels that your slack app has been added to  
 
-  Chat:write  
+  chat:write  
   > Post messages in approved channels & conversations  
 
-  Im:history 
+  im:history 
   > View messages and other content in direct messages that your slack app has been added to 
 
-  Users:read 
+  users:read 
   > View people in a workspace
 
-  Commands 
+  commands 
   > Add shortcuts and/or slash commands that people can use
  
  ```yaml
