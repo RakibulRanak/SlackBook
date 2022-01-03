@@ -1,4 +1,4 @@
-# slackbook-plugin
+# SlackBook
 
 It is a slack app which automate the process of posting slack channel **#fbpost** mentioned message in facebook group.
 
