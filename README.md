@@ -1,8 +1,15 @@
 # SlackBook
 
-It is a slack app which automate the process of posting slack channel **#fbpost** mentioned message in facebook group.
+This is the server for SlackBook  
 
-For use this functionality user must have to install this slack app in slack workspace. After that you have to add this app in slack channel. From this channel if a user send message contain #fbpost word, slackook app will post this message in facebook group. Slackbook app can listen all the messages which are send in slack channel but only respond to those messages which contain **#fbpost** word.
+# Features
+-   Can automatically post your slack messages/attachments/media to your organization’s facebook group by a fixed organizational facebook user.
+
+-   Can help you with current weather updates and many more according to needs
+
+
+
+
 
 # Slack App Integration
 
@@ -14,19 +21,39 @@ For use this functionality user must have to install this slack app in slack wor
 
 3. Click on the `create new app` button.
 
-4. You will see a create an app dialog. Select `From an app manifest button`.
+4. You will see a `create an app` dialog. Select `From an app manifest button`.
 
-5. Select your workspace where you have to install the slack app and proceed `Next` .
+5. Select your workspace where you want to install the slack app and proceed `Next` .
 
-6. Copy and paste this [manifest.yaml](./documentation/slackManifest.md) , proceed `Next` and then `Create`
+6. Edit this [manifest.yaml](./documentation/slackManifest.md) according to your needs, copy and paste, then proceed `Next` and  `Create` .
 
-## Install Slack App to your workspace
+## Install Slack App into your workspace
 
 1. Go to install app section > `install to workspace`
 
-2. Give the permission to the slack app to access your slack workspace.
+2. Grant the permission to the slack app to access your slack workspace.
 
-3. Integrate the app in slack channel: Go to your slack channel > `integration section` > `add apps` > add the newly installed slack app.
+
+## Integrate Slack Bot into a public channel
+
+
+1. Enter into the channel where you want to integrate the bot.
+
+2. Type @name_of_the_bot in message and press enter.
+
+3. You will see `Want to add this person instead?` pop up and press `Add to Channel`.
+
+# Data Flows
+## Events
+![slackbook data flow](files/facebook.png)
+
+According to our manifest.yaml configuration, our Slack Bot will be subsrcibed to message events of public channels and bot inbox. All the messages will be forwarded to our SlackBook server by slack server. Then our SlackBook server will do some processing and post on facebook group. 
+
+## Commands
+
+![slackbook data flow](files/weather.png)
+
+Maybe you want to perform some action/api calls without sending a message in public channel. In this case slack command subscription will help you creating custom commands and perform your desired actions. In our case, we have created a /weather command in our configuration that hits a specific route of our SlackBook server which is responsible for fetching weather data of the current time near Cefalo Bangladesh Limited and send back a formatted response which won't be able to be seen by others.
 
 # Limitation and Difficulties
 
