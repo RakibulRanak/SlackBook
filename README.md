@@ -88,7 +88,6 @@ Go to https://api.slack.com/apps > your app . In Basic Information , scroll down
 
 You have already got the facebook user access token at step 10 of `Create A Facebook App`. Go to your facebook group. In url of your group, you will get the id of the group as a like this `23425543523231114`
 
-
 # Data Flows
 
 ## Events
@@ -102,6 +101,10 @@ According to our manifest.yaml configuration, our Slack Bot will be subsrcibed t
 ![slackbook data flow](files/weather.png)
 
 Maybe you want to perform some action/api calls without sending a message in public channel. In this case slack command subscription will help you creating custom commands and perform your desired actions. In our case, we have created a /weather command in our configuration that hits a specific route of our SlackBook server which is responsible for fetching weather data of the current time near Cefalo Bangladesh Limited and send back a formatted response which won't be able to be seen by others.
+
+Weather command interaction in details :
+
+![](files/command.png)
 
 ## Data Processing:
 
@@ -127,32 +130,26 @@ Maybe you want to perform some action/api calls without sending a message in pub
   ![heroku](files/heroku.png)  
   Heroku goes to sleep mode after some time like 1 hour. And it will again active if a request hit the server. The moment request hit the server and the moment server got activated the time distance is more than 3 second. So when the heroku server is in sleep mode and if a user send message, slack server will send this message to SlackBook server, and it will again and again send this message in 3 second time period until it got a ok message from SlackBook server. As heroku need more than 3 second to active from sleep mode so 2-3 same messages will queued in heroku SlackBook server. And all this same messages will post in facebook. Here we solved this problem by using event id of the messages.
 
-## /command
-
-![](files/command.png)
-After command user get his/her desired data and here is the details data flow of this command.
 <br>
-
-
 
 # Process of Posting Data from Server to Facebook
 
 ![server to facebook](files/serverToFb.png)
 <br>
 
-
 - <h2> <a href = "#fbpostwithoutfiles" > Facebook post without files </a> </h2> <br>
-  
+
     <h3 > <a href = "#fbpostwithoutlink" > 1. Facebook post without link  </a> </h3> 
     <h3 > <a href = "#fbpostwithlink" > 2. Facebook post with link </a> </h3> <br>
 
- - <h2> <a href = "#fbpostwithfiles" > Facebook post with files </a> </h2> <br>
-    <h3 > <a href = "#fbpostwithimage" >1. Facebook post with image </a></h3> 
-    <h3 > <a href = "#fbpostwithoutimage" >2. Facebook Post with files except image </a> </h3> <br>
+- <h2> <a href = "#fbpostwithfiles" > Facebook post with files </a> </h2> <br>
+   <h3 > <a href = "#fbpostwithimage" >1. Facebook post with image </a></h3> 
+   <h3 > <a href = "#fbpostwithoutimage" >2. Facebook Post with files except image </a> </h3> <br>
 
 <br>
 
 ### <h3 id = "commonphase" > Common steps in Facebook post with or without files <h3>
+
 <br>
 
 <details>
@@ -173,8 +170,6 @@ After command user get his/her desired data and here is the details data flow of
 
 <br>
 
-
-
 ### <h3 id = "commonlink"> Common steps in facebook post with or without links </h3>
 
 <br>
@@ -191,7 +186,7 @@ After command user get his/her desired data and here is the details data flow of
 
 <br>
 
-###  <h3 id = "fbpostwithoutlink"> Facebook post without Link <h3>
+### <h3 id = "fbpostwithoutlink"> Facebook post without Link <h3>
 
 <br>
 
@@ -201,7 +196,7 @@ After command user get his/her desired data and here is the details data flow of
 
 <br>
 
-- <a href = "#commonphase"> common steps for facebook post with or without files</a> . These steps are perfomed by the system first . 
+- <a href = "#commonphase"> common steps for facebook post with or without files</a> . These steps are perfomed by the system first .
 - Secondly , system performs this steps . <a href = "#commonlink"> common steps for facebook post with or without links </a>
 - Now the system checks whether the text field of the message contains any link . If it doesn’t contain any link, the system moves to the next step.
 
@@ -223,9 +218,9 @@ After command user get his/her desired data and here is the details data flow of
 
 <br>
 
-###  <h3 id = "fbpostwithlink">Facebook post with link <h3>
+### <h3 id = "fbpostwithlink">Facebook post with link <h3>
 
-<br> 
+<br>
 
 <details>
 
@@ -233,7 +228,7 @@ After command user get his/her desired data and here is the details data flow of
 
   <br>
 
-- <a href = "#commonphase"> common steps for facebook post with or without files</a> . These steps are perfomed by the system first. 
+- <a href = "#commonphase"> common steps for facebook post with or without files</a> . These steps are perfomed by the system first.
 
 - Secondly , system performs this steps . <a href = "#commonlink"> common steps for facebook post with or without links </a>
 
@@ -317,7 +312,6 @@ After command user get his/her desired data and here is the details data flow of
 
 <br>
 
-
 </details>
 
 <br>
@@ -330,7 +324,6 @@ After command user get his/her desired data and here is the details data flow of
 <summary> Expand </summary>
 
 <br>
-
 
 - <a href = "#commonphase"> common steps for facebook post with or without files </a> . These steps are perfomed by the system first .
 
