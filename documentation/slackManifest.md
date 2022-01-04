@@ -120,3 +120,5 @@ oauth_config:
    messages_tab_read_only_enabled: false
 ```
 This configuration allows us to send messages to our bot inbox. 
+
+** You must replace `https://cefaloslackbook.herokuapp.com` from url's as per your server host address.

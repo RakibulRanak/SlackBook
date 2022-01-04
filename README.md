@@ -78,6 +78,17 @@ This is the server for SlackBook
 
 10. You wil get a long-lived access token for 3 months. Copy and Store it somewhere. It will be needed in SlackBook server to call graph api.
 
+# SlackBook Server Configuration
+
+Clone this repository and host it. The server will be needed some environment variables listed below:
+
+![slackbook server environment variables](files/environment.png)
+
+Go to https://api.slack.com/apps > your app . In Basic Information , scroll down and you will get the signing secret and verification secret for your slack app. And in OAuth & Permission, you will get the user token and bot token.
+
+You have already got the facebook user access token at step 10 of `Create A Facebook App`. Go to your facebook group. In url of your group, you will get the id of the group as a like this `23425543523231114`
+
+
 # Data Flows
 
 ## Events
