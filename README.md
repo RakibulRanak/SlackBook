@@ -132,34 +132,34 @@ Maybe you want to perform some action/api calls without sending a message in pub
 
 <br>
 
-# Process of Posting Data from Server to Facebook
+# Steps To Post Data from Server to Facebook
 
 ![server to facebook](files/serverToFb.png)
 
 <br>
 
 
-- **Step 1** : System catches the event passed in slack using a slack app called **slackbot**.
+- **Step 1** : Server catches the event passed by slack.
 
-- **Step 2** : It checks whether the event is a **message** type . If it is a message type event , then system moves to the next step .
+- **Step 2** : It checks whether the event is a **message** type . If it is a message type event system moves to the next step .
 
-- **Step 3** : Then the system checks if the message contains any file . 
+- **Step 3** : System checks if the message contains any file . 
 
   <br>
 
-  <details>
+  <details open>
   <summary> If the message doesn’t contain any file  </summary>
 
   <br>
 
-  - **Step 4** : Now the system checks whether the text field of the message contains any link . 
+  - **Step 4** : System checks whether the the message contains any link . 
 
-    <details>
+    <details open>
     <summary> If it doesn’t contain any link</summary>
 
     <br>
 
-    - **Step 5** : Now it’s the final step for the system to call the Corresponding Endpoint of Facebook API . Credentials to Post a Status without Links and Attachments are :
+    - **Step 5** : The final step for the system to call the corresponding EndPoint of Facebook API . Credentials to Post a Status without Links and Attachments are :
 
       <pre>
 
@@ -176,12 +176,12 @@ Maybe you want to perform some action/api calls without sending a message in pub
     </details>
 
     <br>
-    <details>
+    <details open>
     <summary>If it contains link</summary>
 
     <br>
 
-    - **Step 5** : Now it’s the final step for the system to call the Corresponding Endpoint of Facebook API .Credentials to Post a Status with Links are :
+    - **Step 5** : The final step for the system to call the Corresponding Endpoint of Facebook API .Credentials to Post a Status with Links are :
 
        <pre>
       
@@ -195,7 +195,7 @@ Maybe you want to perform some action/api calls without sending a message in pub
       
       </pre>
       
-    - **Limitations** : Facebook doesn’t allow one user to share more than one link on Facebook . Other Links including the first one will remain in the message as a link but will not be shared . That’s Why systems passess the first link in the link parameter but all the links will remain in the message .
+    - **Limitations** : Facebook doesn’t preview more than one link on Facebook . Other Links including the first one will remain in the message as a link but will not be previewd . That’s Why system has to pass the first link in the link parameter but all the links will remain in the message .
       
       <br>
       
@@ -209,25 +209,25 @@ Maybe you want to perform some action/api calls without sending a message in pub
 
     <br>
 
-    <details>
+    <details open>
     <summary> If the message contains any file </summary>
     
     <br>
 
-    - **Step 4** : Then system checks how many files are attached with the event . If there are multiple files then system can’t post this in facebook because facebook doesn't allow one to post multiple files in facebook . So , If there is only one file then the system will move to next step. 
+    - **Step 4** : System checks how many files are attached with the event . If there are multiple files then system can’t post this on facebook because facebook doesn't allow to post multiple files on facebook . So , If there is only one file then the system will move to next step. Otherwise the system response back  `Hello @username!, you can not post multiple files/photos to facebook`
 
-    - **Step 5** : Now system makes the url of the file in the slack server public . For this system uses a method which takes the user token of slack app and file id of file as arguments .
+    - **Step 5** : System makes the url of the file  public in the slack server. For this system uses a method which takes the user token of slack app and file id of file as arguments .
 
-    - **Step 6** : Now system checks if the file type is an image .
+    - **Step 6** : System checks if the file type is an image .
 
       <br>
 
-        <details>
+        <details open>
         <summary> If file type is image</summary>
 
         <br>
 
-        - **Step 7** : Now it’s the final step for the system to call the Corresponding Endpoint of Facebook API .Credentials to Post a Status with photos are
+        - **Step 7** : The final step for the system to call the Corresponding Endpoint of Facebook API .Credentials to Post a Status with photos are
           <pre>
 
           Method Name: POST 
@@ -246,12 +246,12 @@ Maybe you want to perform some action/api calls without sending a message in pub
         </details>
 
         <br>
-        <details>
+        <details open>
         <summary>If file type is not image</summary>
 
         <br>
 
-        - **Step 7** : Now it’s the final step for the system to call the Corresponding Endpoint of Facebook API .Credentials to Post a Status with attachment except photo are :
+        - **Step 7** : The final step for the system is to call the Corresponding Endpoint of Facebook API .Credentials to Post a Status with attachment except photo are :
 
            <pre>
           
@@ -265,7 +265,7 @@ Maybe you want to perform some action/api calls without sending a message in pub
           
           </pre>
           
-        - **Limitations** : Can not post multiple files because Facebook doesn’t allow one user to post multiple files .
+        - **Limitations** : Can not post multiple files because Facebook doesn’t allow to post multiple files .
           
           <br>
           
