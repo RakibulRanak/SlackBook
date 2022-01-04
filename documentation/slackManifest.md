@@ -16,7 +16,7 @@ features:
    always_online: true
  slash_commands:
    - command: /weather
-     url: https://cefaloslackbook.herokuapp.com/slack/slash
+     url: https://cefaloslackbook.herokuapp.com/slack/commands
      description: Get the current weather report.
      usage_hint: /weather
      should_escape: false
