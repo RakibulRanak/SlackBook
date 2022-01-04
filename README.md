@@ -92,8 +92,6 @@ According to our manifest.yaml configuration, our Slack Bot will be subsrcibed t
 
 Maybe you want to perform some action/api calls without sending a message in public channel. In this case slack command subscription will help you creating custom commands and perform your desired actions. In our case, we have created a /weather command in our configuration that hits a specific route of our SlackBook server which is responsible for fetching weather data of the current time near Cefalo Bangladesh Limited and send back a formatted response which won't be able to be seen by others.
 
-# Data Processing and Difficulties
-
 ## Data Processing:
 
 - **Mention Extraction :**  
@@ -108,10 +106,20 @@ Maybe you want to perform some action/api calls without sending a message in pub
   ![mobile link](files/mobileLink.png)  
   If a user sent message from mobile which contain link it got duplicated when comes to SlackBook server. So here we again need to extract all link and have to replace those pair of link with the single link.
 
-* **Heroku Server Problem:**  
+* **Concatenate User Name**
+  ![username](files/username.png)  
+  We post messages from slack workspace to facebook group. In facebook side it's important for user to know which message is from which user. Slack server only send the message to SlackBook server not the user name who actually sent this message in slack workspace. So in SlackBook server we need a method call to the salck server by using the user id for getting the user name. After getting the user name we concatenate it with the messages and post this in facebook.
+
+## Difficulties:
+
+- **Heroku Server Problem:**  
   ![heroku](files/heroku.png)  
   Heroku goes to sleep mode after some time like 1 hour. And it will again active if a request hit the server. The moment request hit the server and the moment server got activated the time distance is more than 3 second. So when the heroku server is in sleep mode and if a user send message, slack server will send this message to SlackBook server, and it will again and again send this message in 3 second time period until it got a ok message from SlackBook server. As heroku need more than 3 second to active from sleep mode so 2-3 same messages will queued in heroku SlackBook server. And all this same messages will post in facebook. Here we solved this problem by using event id of the messages.
 
+## /command
+
+![](files/command.png)
+After command user get his/her desired data and here is the details data flow of this command.
 <br>
 
 # Process of Posting Data from Server to Facebook
