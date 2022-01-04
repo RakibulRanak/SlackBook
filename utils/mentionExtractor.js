@@ -1,7 +1,7 @@
 const { WebClient } = require('@slack/web-api');
-const slackToken = process.env.SLACK_TOKEN;
-const slackClient = new WebClient(slackToken);
-exports.extract = async(message) =>{
+const slackBotToken = process.env.SLACK_BOT_TOKEN;
+const slackClient = new WebClient(slackBotToken);
+exports.extract = async (message) => {
     const regex = /<@[a-zA-Z0-9]{11}>/g;
     const mentions = message.match(regex);
     if (mentions) {
