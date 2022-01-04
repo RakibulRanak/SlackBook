@@ -74,22 +74,75 @@ Maybe you want to perform some action/api calls without sending a message in pub
 
 <br>
 
+
+
 # Process of Posting Data from Server to Facebook
 ![server to facebook](files/serverToFb.png)
 <br>
 
 
+- <h2> <a href = "#fbpostwithoutfiles" > Facebook post without files </a> </h2> <br>
+  
+    <h3 > <a href = "#fbpostwithoutlink" > 1. Facebook post without link  </a> </h3> 
+    <h3 > <a href = "#fbpostwithlink" > 2. Facebook post with link </a> </h3> <br>
 
-## Posting Status without Link and Attachments in Facebook
+ - <h2> <a href = "#fbpostwithfiles" > Facebook post with files </a> </h2> <br>
+    <h3 > <a href = "#fbpostwithimage" >1. Facebook post with image </a></h3> 
+    <h3 > <a href = "#fbpostwithoutimage" >2. Facebook Post with files except image </a> </h3> <br>
 
+<br>
+
+### <h3 id = "commonphase" > Common steps in Facebook post with or without files <h3>
+<br>
+
+<details>
+<summary>Expand</summary>
 <br>
 
 - System catches the event passed in slack using a slack app called **slackbot**.
 
 - It checks whether the event is a **message** type . If it is a message type event , then system moves to the next step .
 
+<br><br>
+
+</details>
+
+<br>
+
+## <h2 id = "fbpostwithoutfiles"> Facebook post without files <h2>
+
+<br>
+
+
+
+### <h3 id = "commonlink"> Common steps in facebook post with or without links </h3>
+
+<br>
+
+<details>
+<summary>Expand </summary>
+<br>
+
 - Then the system checks if the message contains any file . If the message doesn’t contain any file then the system moves to the next step .
 
+<br>
+
+</details>
+
+<br>
+
+###  <h3 id = "fbpostwithoutlink"> Facebook post without Link <h3>
+
+<br>
+
+<details>
+
+<summary> Expand </summary>
+
+<br>
+
+- <a href = "#commonphase"> common steps for facebook post with or without files</a> . These steps are perfomed by the system first . 
+- Secondly , system performs this steps . <a href = "#commonlink"> common steps for facebook post with or without links </a>
 - Now the system checks whether the text field of the message contains any link . If it doesn’t contain any link, the system moves to the next step.
 
 - Now it’s the final step for the system to call the Corresponding Endpoint of Facebook API . Credentials to Post a Status without Links and Attachments are :
@@ -106,17 +159,23 @@ Maybe you want to perform some action/api calls without sending a message in pub
 
 </pre>
 
+</details>
+
 <br>
 
-## Posting Status with Links in Facebook
+###  <h3 id = "fbpostwithlink">Facebook post with link <h3>
+
+<br> 
+
+<details>
+
+<summary>Expand</summary>
 
   <br>
 
-- System catches the event passed in slack using a slack app called **slackbot**.
+- <a href = "#commonphase"> common steps for facebook post with or without files</a> . These steps are perfomed by the system first. 
 
-- It checks whether the event is a **message** type . If it is a message type event , then system moves to the next step .
-
-- Then the system checks if the message contains any file . If the message doesn’t contain any file then the system moves to the next step .
+- Secondly , system performs this steps . <a href = "#commonlink"> common steps for facebook post with or without links </a>
 
 - Now the system checks whether the text field of the message consists of any link . If it contains any link, the system moves to the next step.
 
@@ -138,19 +197,44 @@ Maybe you want to perform some action/api calls without sending a message in pub
 
 <br>
 
-## Posting Status with Photo in Facebook
+</details>
 
 <br>
 
-- System catches the event passed in slack using a slack app called **slackbot**.
+## <h2 id = "fbpostwithfiles"> Facebook post with files </h2>
 
-- It checks whether the event is a **message** type . If it is a message type event , then system moves to the next step .
+<br>
+
+### <h3 id = "commonimage" > Common steps in facebook post with or without image <h3>
+
+<br>
+
+<details>
+<br>
+<summary> Expand </summary>
 
 - Then the system checks if the message contains any file . If the message contains any file then the system moves to the next step .
 
 - Then system checks how many files are attached with the event . If there are multiple files then system can’t post this in facebook because facebook doesn't allow one to post multiple files in facebook . So , If there is only one file then the system will move to next step.
 
 - Now system makes the url of the file in the slack server public . For this system uses a method which takes the user token of bot and file id of file as arguments .
+<br>
+</details>
+
+<br>
+
+### <h3 id = "fbpostwithimage"> Facebook post with image <h3>
+
+<br>
+
+<details>
+<summary> Expand </summary>
+
+<br>
+
+- <a href = "#commonphase"> common steps for facebook post with or without files </a> . These steps are perfomed by the system first .
+
+- Then the systems performs these steps . <a href = "#commonimage"> common steps for facebook post with or without image</a>
 
 - Now system checks if the file type is an image . If the file type is image then system moves to the next step.
 
@@ -173,19 +257,24 @@ Maybe you want to perform some action/api calls without sending a message in pub
 
 <br>
 
-## Posting with Attachment Except photo in Facebook
+
+</details>
 
 <br>
 
-- System catches the event passed in slack using a slack app called **slackbot**.
+### <h3 id = "fbpostwithoutimage"> Facebook post with files except image </h3>
 
-- It checks whether the event is a **message** type . If it is a message type event , then system moves to the next step .
+<br>
 
-- Then the system checks if the message contains any file . If the message contains any file then the system moves to the next step .
+<details> 
+<summary> Expand </summary>
 
-- Then system checks how many files are attached with the event . If there are multiple files then system can’t post this in facebook because facebook doesn't allow one to post multiple files in facebook . So , If there is only one file then the system will move to next step.
+<br>
 
-- Now system makes the url of the file in the slack server public . For this system uses a method which takes the user token of bot and file id of file as arguments .
+
+- <a href = "#commonphase"> common steps for facebook post with or without files </a> . These steps are perfomed by the system first .
+
+- Then the systems performs these steps . <a href = "#commonimage"> common steps for facebook post with or without image</a>
 
 - Now system checks if the file type is an image . If the file type is not an image then system moves to the next step.
 
@@ -202,4 +291,6 @@ Maybe you want to perform some action/api calls without sending a message in pub
 
 </pre>
 
-- **limitations** : Can not post multiple files because Facebook doesn’t allow one user to post multiple files .
+- **Limitations** : Can not post multiple files because Facebook doesn’t allow one user to post multiple files .
+
+</details>
