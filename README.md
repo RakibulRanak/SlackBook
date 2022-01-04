@@ -61,15 +61,31 @@ This is the server for SlackBook
 
 3. Enter app display name ( Ex: SlackBot), contact email and then click `Create App`
 
-4. Go to your app Settings > Basic , Enter any live valid URL in Privacy Policy ( Ex: `https://www.cefalo.com/en/`) , click `Save changes`and then switch on to live by toggling in development button on top.
+4. Go to your app Settings > Basic , Enter any live valid URL in Privacy Policy ( Ex: `https://www.cefalo.com/en/` and yes, it works ) , click `Save changes` and then switch on to live by toggling development button on top.
 
-5. Now again toggle from live to in development.
+5. Now again toggle from live to development.
     <details>
       <summary> You are thinking what we are actually doing   here, right?</summary>
 
+    <br>
+    
+    > Facebook doesn't allow users to see posts in development mode posted by graph api in a group, if the user is not a developer, administrator, tester, or analyst of the used facebook app . So we need to switch to live mode. After swtiching on to live mode, we don't have all the permission scopes by default that we get in development mode. We need `publish_to_groups` permission to post in group using graph api. So, either we need to submit privacy policy, business policy and other documents to facebook to review our app and grant us our required permission in live mode, or we could switch back to our development mode to use the permisson scopes we need. But does that solve our first problem? Posts not visible to all users? Yes, it does somehow. After switching once to live mode, you can than switch back to development and stay like this, but now all the posts, attachments, files are visible to all users except direct photos. Still we can post photos as an attachment preview which is visible to all. Is that a facebook bug? Don't know. But it offers us a great deal. Following links will be helpful to know more :
+
+    - [Publish To Groups](https://developers.facebook.com/docs/permissions/reference/publish_to_groups/) 
+    - [App Review](https://developers.facebook.com/docs/app-review)
+    - [Business Verification](https://developers.facebook.com/docs/development/release/business-verification)
   
-    > Okay, let me explain (You can skip anyway).Facebook doesn't allow users to see posts in development mode posted by graph api in a group, if the user is not a developer, administrator, tester, or analyst of the used facebook app . So we need to switch to live mode. After swtiching on to live mode, we don't have all the permission scopes by default that we get in development mode. We need `publish_to_groups` permission to post in group using graph api. So, either we need to submit privacy policy, business policy and other documents to facebook to review our app and grant us our required permission in live mode, or we could switch back to our development mode to use the permisson scopes we need. But does that solve our first problem? Posts not visible to all users? Yes, it does somehow. After switching once to live mode, you can than switch back to development and stay like this, but now all the posts, attachments, files are visible except direct photos. Still we can post photos as an attachment preview which is visible to all. Is that a facebook bug? But it offers us a great deal.
     </details>
+
+6. Go to https://developers.facebook.com/tools/explorer/, select your facebook app, click on `Get Token`, selct `Get User Access Token` and grant access.
+
+7. Clink on `Add a Permission` > `Evens Group Pages` > `publish_to_groups` .
+
+8. Click on `Generate Access Token` and grant permission.
+
+9. You will get an access token, but it will be expire in couple of hours. To extend the expire time ( Maximum of 3 months if the facebook user doesn't change password ) click on the ***i*** button on the left side of the access token dialogue > click on `Open in Access token Tool` > scroll down and click on `Extend Access token`.
+
+10. You wil get a long-lived access token for 3 months. Copy and Store it somewhere. It will be needed in SlackBook server to call graph api.
 
 # Data Flows
 ## Events
