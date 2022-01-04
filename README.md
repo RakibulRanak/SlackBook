@@ -102,25 +102,25 @@ According to our manifest.yaml configuration, our Slack Bot will be subsrcibed t
 
 Maybe you want to perform some action/api calls without sending a message in public channel. In this case slack command subscription will help you creating custom commands and perform your desired actions. In our case, we have created a /weather command in our configuration that hits a specific route of our SlackBook server which is responsible for fetching weather data of the current time near Cefalo Bangladesh Limited and send back a formatted response which won't be able to be seen by others.
 
-**Weather command interaction in details :**
+**/weather command interaction in details :**
 
 ![](files/command.png)
 
 ## Data Processing:
 
-- **Mention Extraction :**  
+- **Extract Mention:**  
   ![mention](files/mention.png)
   When a user mention someone in slack workspace and send the message it will comes in SlackBook server in a unformated way. Mentioned message contain some special character and user id but we need user name of that user id , for doing this first we extract the user id using regex and do a method call using this id in slack server after that we will get user name and will replace the user id with this user name.
 
-* **Extract Link :**  
+* **Extract Link (message sent from pc) :**  
    ![extract link](files/link.png)
   When someone send message with link it comes to SlackBook server in unformated way. By using regex we extract all the links and remove those unnecessary character.
 
-* **Extract link(message sent from mobile)**  
+* **Extract link(message sent from mobile) :**  
   ![mobile link](files/mobileLink.png)  
   If a user sent message from mobile which contain link it got duplicated when comes to SlackBook server. So here we again need to extract all link and have to replace those pair of link with the single link.
 
-* **Concatenate User Name**
+* **Concatenate User Name:**
   ![username](files/username.png)  
   We post messages from slack workspace to facebook group. In facebook side it's important for user to know which message is from which user. Slack server only send the message to SlackBook server not the user name who actually sent this message in slack workspace. So in SlackBook server we need a method call to the salck server by using the user id for getting the user name. After getting the user name we concatenate it with the messages and post this in facebook.
 
@@ -138,12 +138,11 @@ Maybe you want to perform some action/api calls without sending a message in pub
 
 <br>
 
-
 - **Step 1** : Server catches the event passed by slack.
 
 - **Step 2** : It checks whether the event is a **message** type . If it is a message type event system moves to the next step .
 
-- **Step 3** : System checks if the message contains any file . 
+- **Step 3** : System checks if the message contains any file .
 
   <br>
 
@@ -152,7 +151,7 @@ Maybe you want to perform some action/api calls without sending a message in pub
 
   <br>
 
-  - **Step 4** : System checks whether the the message contains any link . 
+  - **Step 4** : System checks whether the the message contains any link .
 
     <details open>
     <summary> If it doesn’t contain any link</summary>
@@ -162,7 +161,7 @@ Maybe you want to perform some action/api calls without sending a message in pub
     - **Step 5** : The final step for the system to call the corresponding EndPoint of Facebook API . Credentials to Post a Status without Links and Attachments are :
 
       <pre>
-
+      
       Method Name: POST
       API Endpoint: https://graph.facebook.com/{group_id}/feed/
       Parameter: message = {message_you_want_to_share}
@@ -170,7 +169,7 @@ Maybe you want to perform some action/api calls without sending a message in pub
       Token Type: User Token
       Access Token : generated access token in graph api explorer in facebook
       Permission Scope :  1. publish_to_groups  2. public_profile 
-
+      
       </pre>
 
     </details>
@@ -194,14 +193,10 @@ Maybe you want to perform some action/api calls without sending a message in pub
         Permission Scope :  1. publish_to_groups  2. public_profile 
       
       </pre>
-      
+
     - **Limitations** : Facebook doesn’t preview more than one link on Facebook . Other Links including the first one will remain in the message as a link but will not be previewd . That’s Why system has to pass the first link in the link parameter but all the links will remain in the message .
-      
+
       <br>
-      
-
-
-
 
     </details>
 
@@ -211,12 +206,12 @@ Maybe you want to perform some action/api calls without sending a message in pub
 
     <details open>
     <summary> If the message contains any file </summary>
-    
+
     <br>
 
-    - **Step 4** : System checks how many files are attached with the event . If there are multiple files then system can’t post this on facebook because facebook doesn't allow to post multiple files on facebook . So , If there is only one file then the system will move to next step. Otherwise the system response back  `Hello @username!, you can not post multiple files/photos to facebook`
+    - **Step 4** : System checks how many files are attached with the event . If there are multiple files then system can’t post this on facebook because facebook doesn't allow to post multiple files on facebook . So , If there is only one file then the system will move to next step. Otherwise the system response back `Hello @username!, you can not post multiple files/photos to facebook`
 
-    - **Step 5** : System makes the url of the file  public in the slack server. For this system uses a method which takes the user token of slack app and file id of file as arguments .
+    - **Step 5** : System makes the url of the file public in the slack server. For this system uses a method which takes the user token of slack app and file id of file as arguments .
 
     - **Step 6** : System checks if the file type is an image .
 
@@ -227,21 +222,20 @@ Maybe you want to perform some action/api calls without sending a message in pub
 
         <br>
 
-        - **Step 7** : The final step for the system to call the Corresponding Endpoint of Facebook API .Credentials to Post a Status with photos are
-          <pre>
+      - **Step 7** : The final step for the system to call the Corresponding Endpoint of Facebook API .Credentials to Post a Status with photos are
+        <pre>
+        
+        Method Name: POST 
+        API Endpoint: https://graph.facebook.com/{group_id}/photos?url={image_link_with_extension} 
+        Parameter: message = {message_you_want_to_share}
+        Facebook App : SlackBot
+        Token Type: User Token
+        Access Token : generated access token in graph api explorer in facebook
+        Permission Scope :  1. publish_to_groups  2. public_profile 
+        
+        </pre>
 
-          Method Name: POST 
-          API Endpoint: https://graph.facebook.com/{group_id}/photos?url={image_link_with_extension} 
-          Parameter: message = {message_you_want_to_share}
-          Facebook App : SlackBot
-          Token Type: User Token
-          Access Token : generated access token in graph api explorer in facebook
-          Permission Scope :  1. publish_to_groups  2. public_profile 
-
-          </pre>
-
-        - **Limitations** :  Can not post multiple photos using this endpoint because the parameter **url** takes only one link .
-
+      - **Limitations** : Can not post multiple photos using this endpoint because the parameter **url** takes only one link .
 
         </details>
 
@@ -251,33 +245,28 @@ Maybe you want to perform some action/api calls without sending a message in pub
 
         <br>
 
-        - **Step 7** : The final step for the system is to call the Corresponding Endpoint of Facebook API .Credentials to Post a Status with attachment except photo are :
+      - **Step 7** : The final step for the system is to call the Corresponding Endpoint of Facebook API .Credentials to Post a Status with attachment except photo are :
 
-           <pre>
-          
-            Method Name: POST
-            API Endpoint: https://graph.facebook.com/{group_id}/feed?link={public_link_of_the_file_in_slack_file_server}
-            Parameter: message = {message_you_want_to_share}
-            Facebook App: SlackBot
-            Token Type: User Token
-            Access Token : generated access token in graph api explorer in facebook
-            Permission Scope :  1. publish_to_groups  2. public_profile 
-          
-          </pre>
-          
-        - **Limitations** : Can not post multiple files because Facebook doesn’t allow to post multiple files .
-          
-          <br>
-          
+         <pre>
+        
+          Method Name: POST
+          API Endpoint: https://graph.facebook.com/{group_id}/feed?link={public_link_of_the_file_in_slack_file_server}
+          Parameter: message = {message_you_want_to_share}
+          Facebook App: SlackBot
+          Token Type: User Token
+          Access Token : generated access token in graph api explorer in facebook
+          Permission Scope :  1. publish_to_groups  2. public_profile 
+        
+        </pre>
+
+      - **Limitations** : Can not post multiple files because Facebook doesn’t allow to post multiple files .
+
+        <br>
+
         </details>
 
         </details>
 
     <br>
 
-    
-
     </details>
-
-
-
