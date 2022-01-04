@@ -60,6 +60,18 @@ Maybe you want to perform some action/api calls without sending a message in pub
   ![mention](files/mention.png)
   When a user mentioned someone in slack workspace and send the message it will comes in SlackBook server in a unformated way. Mentioned message contain some special character and user id but we need user name of that user id , for doing this first we extract the user id using regex and do a method call using this id in slack server after that we will get user name and will replace the user id with this user name.
 
+* **Extract Link :**  
+   ![extract link](files/link.png)
+  When someone send message with link it again comes to SlackBook server in unformated way. By using regex we extract all the links and remove those unnecessary character.
+
+* **Extract link(message sent from mobile)**  
+  ![mobile link](files/mobileLink.png)  
+  If a user sent message from mobile which contain link it got duplicated when comes to SlackBook server. So here we again need to extract all link and have to replace those pair of link with the single link.
+
+* **Heroku Server Problem:**  
+  ![heroku](files/heroku.png)  
+  Heroku is go to sleep mode after some time like 1 hour. And it will again active if a request hit the server. The moment request hit the server and the moment server got activated the time distance is more than 3 second. So when the heroku server is in sleep mode and if a user send message, slack server will send this message to SlackBook server, and it will again and again send this message in 3 second time period until it got a ok message from SlackBook server. As heroku need more than 3 second to active from sleep mode so 2-3 same messages will queued in heroku SlackBook server. And all this same messages will post in facebook. Here we solve this problem by using event id of the messages.
+
 <br>
 
 # Process of Posting Data from Server to Facebook
