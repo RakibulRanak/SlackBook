@@ -64,9 +64,12 @@ Maybe you want to perform some action/api calls without sending a message in pub
 <br>
 
 # Process of Posting Data from Server to Facebook
+![server to facebook](files/serverToFb.png)
 <br>
 
-## Posting Status without Link and Attachments in Facebook\
+
+
+## Posting Status without Link and Attachments in Facebook
 
 <br>
 
