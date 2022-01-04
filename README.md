@@ -102,7 +102,7 @@ According to our manifest.yaml configuration, our Slack Bot will be subsrcibed t
 
 Maybe you want to perform some action/api calls without sending a message in public channel. In this case slack command subscription will help you creating custom commands and perform your desired actions. In our case, we have created a /weather command in our configuration that hits a specific route of our SlackBook server which is responsible for fetching weather data of the current time near Cefalo Bangladesh Limited and send back a formatted response which won't be able to be seen by others.
 
-Weather command interaction in details :
+**Weather command interaction in details :**
 
 ![](files/command.png)
 
