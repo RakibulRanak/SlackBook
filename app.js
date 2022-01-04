@@ -10,7 +10,7 @@ const app = express()
 app.use('/slack/events', slackEvent.slackEvents.expressMiddleware())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
-app.post('/slack/slash', slackCommand.serve)
+app.post('/slack/commands', slackCommand.serve)
 
 // Starts server
 app.listen(port, function () {

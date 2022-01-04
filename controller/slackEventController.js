@@ -10,13 +10,13 @@ const fbAPI = require('../utils/fbAPICaller')
 let prevEventId;
 
 const slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
-const slackToken = process.env.SLACK_TOKEN;
+const slackBotToken = process.env.SLACK_BOT_TOKEN;
 const slackUserToken = process.env.SLACK_USER_TOKEN
 
 
 const slackEvents = createEventAdapter(slackSigningSecret);
 exports.slackEvents = slackEvents
-const slackClient = new WebClient(slackToken);
+const slackClient = new WebClient(slackBotToken);
 
 
 slackEvents.on('message', async (event) => {
@@ -51,7 +51,7 @@ slackEvents.on('message', async (event) => {
                         else fbAPI.postWithLink(message, links[0])
                     }
                     else {
-                        if ( event.files.length > 1) {
+                        if (event.files.length > 1) {
                             await slackClient.chat.postMessage({ channel: event.channel, text: `Hello <@${event.user}>!, you can not post multiple files/photos to facebook` })
                         }
                         else {
