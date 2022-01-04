@@ -130,10 +130,152 @@ Maybe you want to perform some action/api calls without sending a message in pub
 # Process of Posting Data from Server to Facebook
 
 ![server to facebook](files/serverToFb.png)
+
 <br>
 
 
-- <h2> <a href = "#fbpostwithoutfiles" > Facebook post without files </a> </h2> <br>
+- **Step 1** : System catches the event passed in slack using a slack app called **slackbot**.
+
+- **Step 2** : It checks whether the event is a **message** type . If it is a message type event , then system moves to the next step .
+
+- **Step 3** : Then the system checks if the message contains any file . 
+
+  <br>
+
+  <details>
+  <summary> If the message doesn’t contain any file  </summary>
+
+  <br>
+
+  - **Step 4** : Now the system checks whether the text field of the message contains any link . 
+
+    <details>
+    <summary> If it doesn’t contain any link</summary>
+
+    <br>
+
+    - **Step 5** : Now it’s the final step for the system to call the Corresponding Endpoint of Facebook API . Credentials to Post a Status without Links and Attachments are :
+
+      <pre>
+
+      Method Name: POST
+      API Endpoint: https://graph.facebook.com/{group_id}/feed/
+      Parameter: message = {message_you_want_to_share}
+      Facebook App: SlackBot
+      Token Type: User Token
+      Access Token : generated access token in graph api explorer in facebook
+      Permission Scope :  1. publish_to_groups  2. public_profile 
+
+      </pre>
+
+    </details>
+
+    <br>
+    <details>
+    <summary>If it contains link</summary>
+
+    <br>
+
+    - **Step 5** : Now it’s the final step for the system to call the Corresponding Endpoint of Facebook API .Credentials to Post a Status with Links are :
+
+       <pre>
+      
+        Method Name: POST
+        API Endpoint: https://graph.facebook.com/{group_id}/feed?link={link_you_want_to_share}
+        Parameter: message = {message_you_want_to_share}
+        Facebook App: SlackBot
+        Token Type: User Token
+        Access Token : generated access token in graph api explorer in facebook
+        Permission Scope :  1. publish_to_groups  2. public_profile 
+      
+      </pre>
+      
+    - **Limitations** : Facebook doesn’t allow one user to share more than one link on Facebook . Other Links including the first one will remain in the message as a link but will not be shared . That’s Why systems passess the first link in the link parameter but all the links will remain in the message .
+      
+      <br>
+      
+
+
+
+
+    </details>
+
+    </details>
+
+    <br>
+
+    <details>
+    <summary> If the message contains any file </summary>
+    
+    <br>
+
+    - **Step 4** : Then system checks how many files are attached with the event . If there are multiple files then system can’t post this in facebook because facebook doesn't allow one to post multiple files in facebook . So , If there is only one file then the system will move to next step. 
+
+    - **Step 5** : Now system makes the url of the file in the slack server public . For this system uses a method which takes the user token of slack app and file id of file as arguments .
+
+    - **Step 6** : Now system checks if the file type is an image .
+
+      <br>
+
+        <details>
+        <summary> If file type is image</summary>
+
+        <br>
+
+        - **Step 7** : Now it’s the final step for the system to call the Corresponding Endpoint of Facebook API .Credentials to Post a Status with photos are
+          <pre>
+
+          Method Name: POST 
+          API Endpoint: https://graph.facebook.com/{group_id}/photos?url={image_link_with_extension} 
+          Parameter: message = {message_you_want_to_share}
+          Facebook App : SlackBot
+          Token Type: User Token
+          Access Token : generated access token in graph api explorer in facebook
+          Permission Scope :  1. publish_to_groups  2. public_profile 
+
+          </pre>
+
+        - **Limitations** :  Can not post multiple photos using this endpoint because the parameter **url** takes only one link .
+
+
+        </details>
+
+        <br>
+        <details>
+        <summary>If file type is not image</summary>
+
+        <br>
+
+        - **Step 7** : Now it’s the final step for the system to call the Corresponding Endpoint of Facebook API .Credentials to Post a Status with attachment except photo are :
+
+           <pre>
+          
+            Method Name: POST
+            API Endpoint: https://graph.facebook.com/{group_id}/feed?link={public_link_of_the_file_in_slack_file_server}
+            Parameter: message = {message_you_want_to_share}
+            Facebook App: SlackBot
+            Token Type: User Token
+            Access Token : generated access token in graph api explorer in facebook
+            Permission Scope :  1. publish_to_groups  2. public_profile 
+          
+          </pre>
+          
+        - **Limitations** : Can not post multiple files because Facebook doesn’t allow one user to post multiple files .
+          
+          <br>
+          
+        </details>
+
+        </details>
+
+    <br>
+
+    
+
+    </details>
+
+
+<!-- - <h2> <a href = "#fbpostwithoutfiles" > Facebook post without files </a> </h2> <br>
   
     <h3 > <a href = "#fbpostwithoutlink" > 1. Facebook post without link  </a> </h3> 
     <h3 > <a href = "#fbpostwithlink" > 2. Facebook post with link </a> </h3> <br>
@@ -345,4 +487,4 @@ Maybe you want to perform some action/api calls without sending a message in pub
 
 - **Limitations** : Can not post multiple files because Facebook doesn’t allow one user to post multiple files .
 
-</details>
+</details> -->
