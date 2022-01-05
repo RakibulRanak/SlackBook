@@ -71,7 +71,7 @@ slackEvents.on('message', async (event) => {
                     }
                     prevEventId = currentEventId;
                 }
-                if (message === 'greet me') {
+                if (message === 'greet me' && currentEventId != prevEventId) {
                     await slackClient.chat.postMessage({ channel: event.channel, text: `Hello <@${event.user}>! :tada:` })
                 }
 
