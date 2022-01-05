@@ -96,7 +96,7 @@ You have already got the facebook user access token at step 10 of `Create A Face
 
 - Type any message, include any attachments/links/media . Just make sure to add `#fbpost` keyword anywhere of your message to post on facebook group.
 
-- Send your message on slack in check it on facebook group !
+- Send your message on slack and check it on facebook group !
 
 ![](files/slackToFb.png)
 
