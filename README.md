@@ -42,7 +42,7 @@ This is the server for SlackBook
 
 ## Create A Facebook User
 
-> SlackBook server needs an user token of a facebook user to call facebook graph apis . You can use your own facebook account user token but it is recommended to create an organizational facebook user account. Ex: Cefalo HR
+> SlackBook server needs an user token of a facebook user to call facebook graph apis . You can use your own facebook account user token but it is recommended to create an organizational facebook user account. Ex: Cefalo HR . And make sure, your facebook user account is an admin of your respective facebook group where you want to post status through slack.
 
 ## Create A Facebook App
 
@@ -88,7 +88,30 @@ Go to https://api.slack.com/apps > your app . In Basic Information , scroll down
 
 You have already got the facebook user access token at step 10 of `Create A Facebook App`. Go to your facebook group. In url of your group, you will get the id of the group as a like this `23425543523231114`
 
-# Data Flows
+# Demonstration & Manuals
+
+## Post On Facebook Group
+- Enter any of the public channels where bot is integrated or in bot inbox.
+
+- Type any message, include any attachments/links/media . Just make sure to add `#fbpost` keyword anywhere of your message to post on facebook group.
+
+- Send your message on slack in check it on facebook group !
+
+## Get Weather Update
+- Enter any public/private inbox in your workspace. 
+
+- Type `/weather` and send the message. Don't worry, it will not be treated as a message and nobody will see your message. 
+
+- You will get the current weather update near Cefalo, Dhaka. Even that reply response will be visible only to you.
+
+## Get A Greeting 
+- Enter any of the public channels where bot is integrated or in bot inbox.
+- Type `greet me` and send the message. Your message will be visible to others too.
+- You will get `Hello @your_username!` response from bot which will also be visible by others.
+
+  > This feature was actually implemented to test if the server was live. It can be modified to any other necessary task if needed.
+
+# Data Flow
 
 ## Events
 
