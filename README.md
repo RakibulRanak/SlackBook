@@ -275,35 +275,35 @@ Maybe you want to perform some action/api calls without sending a message in pub
 
         <br>
 
-      - **Step 7** : The final step for the system is to call the Corresponding Endpoint of Facebook API .Credentials to Post a Status with attachment except photo are :
+        - **Step 7** : The final step for the system is to call the   Corresponding Endpoint of Facebook API .Credentials to Post a Status with attachment except photo are :
+  
+          <pre>
+          
+            Method Name: POST
+            API Endpoint: https://graph.facebook.com/{group_id}/feed?link={public_link_of_the_file_in_slack_file_server}
+            Parameter: message = {message_you_want_to_share}
+            Facebook App: SlackBot
+            Token Type: User Token
+            Access Token : generated aDccess token in graph api   explorer in facebook
+            Permission Scope :  1. publish_to_groups  2.   public_profile 
+          
+          </pre>
+  
+        - **Limitations** : Can not post multiple files because   Facebook doesn’t allow to post multiple files.  Still you can   post multiple files by zipping all the files to one.
+  
 
-         <pre>
-        
-          Method Name: POST
-          API Endpoint: https://graph.facebook.com/{group_id}/feed?link={public_link_of_the_file_in_slack_file_server}
-          Parameter: message = {message_you_want_to_share}
-          Facebook App: SlackBot
-          Token Type: User Token
-          Access Token : generated access token in graph api explorer in facebook
-          Permission Scope :  1. publish_to_groups  2. public_profile 
-        
-        </pre>
+      <br>
 
-      - **Limitations** : Can not post multiple files because Facebook doesn’t allow to post multiple files.  Still you can post multiple files by zipping all the files to one.
+      </details>
 
-
-        <br>
-
-        </details>
-
-        </details>
+      </details>
 
     <br>
 
     </details>
 
-    <br>
+    
 
   
 
-.
+
