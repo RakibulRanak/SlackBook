@@ -91,20 +91,27 @@ You have already got the facebook user access token at step 10 of `Create A Face
 # Demonstration & Manuals
 
 ## Post On Facebook Group
+
 - Enter any of the public channels where bot is integrated or in bot inbox.
 
 - Type any message, include any attachments/links/media . Just make sure to add `#fbpost` keyword anywhere of your message to post on facebook group.
 
 - Send your message on slack in check it on facebook group !
 
-## Get Weather Update
-- Enter any public/private inbox in your workspace. 
+![](files/slackToFb.png)
 
-- Type `/weather` and send the message. Don't worry, it will not be treated as a message and nobody will see your message. 
+## Get Weather Update
+
+- Enter any public/private inbox in your workspace.
+
+- Type `/weather` and send the message. Don't worry, it will not be treated as a message and nobody will see your message.
 
 - You will get the current weather update near Cefalo, Dhaka. Even that reply response will be visible only to you.
 
-## Get A Greeting 
+![](files/weatherCommand.png)
+
+## Get A Greeting
+
 - Enter any of the public channels where bot is integrated or in bot inbox.
 - Type `greet me` and send the message. Your message will be visible to others too.
 - You will get `Hello @your_username!` response from bot which will also be visible by others.
@@ -293,7 +300,7 @@ Maybe you want to perform some action/api calls without sending a message in pub
     <br>
 
     </details>
-    
+
     <br>
 
   ## Is there any way to post multiple files ?
