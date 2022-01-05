@@ -162,7 +162,7 @@ Maybe you want to perform some action/api calls without sending a message in pub
 
 <br>
 
-# Steps To Post Data from Server to Facebook
+# Posting Data from Server to Facebook
 
 ![server to facebook](files/serverToFb.png)
 
@@ -289,7 +289,8 @@ Maybe you want to perform some action/api calls without sending a message in pub
         
         </pre>
 
-      - **Limitations** : Can not post multiple files because Facebook doesn’t allow to post multiple files .
+      - **Limitations** : Can not post multiple files because Facebook doesn’t allow to post multiple files.  Still you can post multiple files by zipping all the files to one.
+
 
         <br>
 
@@ -303,6 +304,6 @@ Maybe you want to perform some action/api calls without sending a message in pub
 
     <br>
 
-  ## Is there any way to post multiple files ?
+  
 
-  Yes , But in this case the user who wants to post multiple files needs to do some extra work by zipping all the files. Then he can upload the zip file like other files .
+.
