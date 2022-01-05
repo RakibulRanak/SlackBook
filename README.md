@@ -140,25 +140,30 @@ Maybe you want to perform some action/api calls without sending a message in pub
 
 - **Extract Mention:**  
   ![mention](files/mention.png)
-  When a user mention someone in slack workspace and send the message it will comes in SlackBook server in a unformated way. Mentioned message contain some special character and user id but we need user name of that user id , for doing this first we extract the user id using regex and do a method call using this id in slack server after that we will get user name and will replace the user id with this user name.
+  When a user mentions someone in slack workspace and sends a message it will be forwarded to SlackBook server in unformatted way. Mentioned message contains some special characters and user id. But we needed user name of that user id. For doing this first we extracted the user id using regex and then called a method using the id in slack server. After that we got the user name and replaced the user id with this user name.
 
 * **Extract Link (message sent from pc) :**  
    ![extract link](files/link.png)
-  When someone send message with link it comes to SlackBook server in unformated way. By using regex we extract all the links and remove those unnecessary character.
+  When a user sends message with link it will be forwarded to SlackBook server in unformatted way. By using regex we extracted all the links and remove those unnecessary characters.
 
 * **Extract link(message sent from mobile) :**  
   ![mobile link](files/mobileLink.png)  
-  If a user sent message from mobile which contain link it got duplicated when comes to SlackBook server. So here we again need to extract all link and have to replace those pair of link with the single link.
+  Message Sent from mobile containing link gets duplicated when it is forwarded to slackbook server . So here we again needed to extract all links and had to replace those pair of links with a single link.
 
 * **Concatenate User Name:**
   ![username](files/username.png)  
-  We post messages from slack workspace to facebook group. In facebook side it's important for user to know which message is from which user. Slack server only send the message to SlackBook server not the user name who actually sent this message in slack workspace. So in SlackBook server we need a method call to the salck server by using the user id for getting the user name. After getting the user name we concatenate it with the messages and post this in facebook.
+  In facebook side it's important for facebook group members to know which slack user is posting message.Message forwarded to SlackBook server doesn't contain the username of sender. So in SlackBook Server we needed to call a method of slack server which takes user id as argument and returns the user name .After getting the user name we concatenated it with the message and posted this in facebook.
 
 ## Difficulties:
 
 - **Heroku Server Problem:**  
-  ![heroku](files/heroku.png)  
-  Heroku goes to sleep mode after some time like 1 hour. And it will again active if a request hit the server. The moment request hit the server and the moment server got activated the time distance is more than 3 second. So when the heroku server is in sleep mode and if a user send message, slack server will send this message to SlackBook server, and it will again and again send this message in 3 second time period until it got a ok message from SlackBook server. As heroku need more than 3 second to active from sleep mode so 2-3 same messages will queued in heroku SlackBook server. And all this same messages will post in facebook. Here we solved this problem by using event id of the messages.
+  ![heroku](files/heroku.png)
+
+  If there is no activity then the Heroku server goes to sleep mode after around 1 hour of last message. It again gets active when a request hits the server . It takes more than 3 seconds for heroku server to get activated after the first request hits the server .
+
+  Suppose , the heroku server is in sleep mode and a user in slack sends a message . Then this message will be repeatedly forwarded to slackBook Server in every 3 seconds until slack server gets a OK (status code : 200) message from SlackBook server .
+
+  As heroku needs more than 3 seconds to get active from sleep mode so 2-3 same messages will be queued in heroku SlackBook server. And all this messages will be posted in facebook.We solved this problem by using event id of the messages.
 
 <br>
 
@@ -275,8 +280,8 @@ Maybe you want to perform some action/api calls without sending a message in pub
 
         <br>
 
-        - **Step 7** : The final step for the system is to call the   Corresponding Endpoint of Facebook API .Credentials to Post a Status with attachment except photo are :
-  
+        - **Step 7** : The final step for the system is to call the Corresponding Endpoint of Facebook API .Credentials to Post a Status with attachment except photo are :
+
           <pre>
           
             Method Name: POST
@@ -288,9 +293,8 @@ Maybe you want to perform some action/api calls without sending a message in pub
             Permission Scope :  1. publish_to_groups  2.   public_profile 
           
           </pre>
-  
-        - **Limitations** : Can not post multiple files because   Facebook doesn’t allow to post multiple files.  Still you can   post multiple files by zipping all the files to one.
-  
+
+        - **Limitations** : Can not post multiple files because Facebook doesn’t allow to post multiple files. Still you can post multiple files by zipping all the files to one.
 
       <br>
 
@@ -301,9 +305,3 @@ Maybe you want to perform some action/api calls without sending a message in pub
     <br>
 
     </details>
-
-    
-
-  
-
-
