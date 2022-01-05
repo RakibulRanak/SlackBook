@@ -293,3 +293,9 @@ Maybe you want to perform some action/api calls without sending a message in pub
     <br>
 
     </details>
+    
+    <br>
+
+  ## Is there any way to post multiple files ?
+
+  Yes , But in this case the user who wants to post multiple files needs to do some extra work by zipping all the files. Then he can upload the zip file like other files .
