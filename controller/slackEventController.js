@@ -44,7 +44,7 @@ slackEvents.on('message', async (event) => {
 
 
                     formatedUsername = format.convertFormat(username);
-                    message = formatedUsername + "@ˢˡᵃᶜᵏ" + `\n\n${message}`;
+                    message = formatedUsername + " shared via slack" + `\n\n${message}`;
 
                     if (event.files === undefined) {
                         if (links === null) fbAPI.postWithoutLinkAndAttachments(message)
