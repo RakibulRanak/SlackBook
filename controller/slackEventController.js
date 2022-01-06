@@ -5,6 +5,7 @@ const format = require('../utils/formatter')
 const crawler = require('../utils/crawler')
 const linkExtractor = require('../utils/linkExtractor');
 const mentionExtractor = require('../utils/mentionExtractor');
+const boldExtractor = require('../utils/boldExtractor');
 const fbAPI = require('../utils/fbAPICaller')
 
 let prevEventId;
@@ -37,7 +38,7 @@ slackEvents.on('message', async (event) => {
                     const { links, formatedMessage } = linkExtractor.extract(message);
                     message = formatedMessage;
                     message = await mentionExtractor.extract(message);
-                    
+                    message = await boldExtractor.extract(message);
                    
                     if (message.match("&gt")) for ( let i = 0 ; i < message.length ; i++) message = message.replace("&gt;", "");
                     
