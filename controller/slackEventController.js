@@ -39,10 +39,10 @@ slackEvents.on('message', async (event) => {
                     const { links, formatedMessage } = linkExtractor.extract(message);
                     message = formatedMessage;
                     message = await mentionExtractor.extract(message);
-                    
-                   
-                    if (message.match("&gt")) for ( let i = 0 ; i < message.length ; i++) message = message.replace("&gt;", "");
-                    
+
+
+                    if (message.match("&gt")) for (let i = 0; i < message.length; i++) message = message.replace("&gt;", "");
+
                     message = message.replace("#fbpost ", "");
                     message = message.replace("# fbpost", "");
                     message = message.replace("#fbpost", "");
