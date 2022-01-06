@@ -11,7 +11,7 @@ exports.extract = async (message) => {
             });
             let userName = mentionedUserInfo.user.profile.display_name;
             if (!mentionedUserInfo.user.profile.display_name)
-                userName = mentionedUserInfo.user.name;
+                userName = mentionedUserInfo.user.profile.real_name;
             message = message.replace(mentions[i], '@' + userName);
         }
     }
