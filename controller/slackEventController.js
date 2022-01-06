@@ -6,6 +6,7 @@ const crawler = require('../utils/crawler')
 const linkExtractor = require('../utils/linkExtractor');
 const mentionExtractor = require('../utils/mentionExtractor');
 const fbAPI = require('../utils/fbAPICaller')
+const messageFormattor = require('../utils/messageFormattor');
 
 let prevEventId;
 
@@ -33,7 +34,8 @@ slackEvents.on('message', async (event) => {
 
                 if (message.includes("#fbpost") && currentEventId != prevEventId) {
                     console.log("Going to post in FB!")
-
+                    const plainMessage = messageFormattor.extract(message);
+                    message = plainMessage;
                     const { links, formatedMessage } = linkExtractor.extract(message);
                     message = formatedMessage;
                     message = await mentionExtractor.extract(message);
