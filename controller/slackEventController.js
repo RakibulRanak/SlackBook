@@ -45,7 +45,7 @@ slackEvents.on('message', async (event) => {
                     message = message.replace("# fbpost", "");
                     message = message.replace("#fbpost", "");
 
-                    formatedUsername = format.convertToBold(username);
+                    formatedUsername = format.convertFormat(username);
                     message = formatedUsername + " shared via slack" + `\n\n${message}`;
 
                     if (event.files === undefined) {
