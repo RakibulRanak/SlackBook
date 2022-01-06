@@ -27,7 +27,7 @@ slackEvents.on('message', async (event) => {
             const userInfo = await slackClient.users.info({
                 user: event.user
             });
-            const username = userInfo.user.name
+            const username = userInfo.user.profile.real_name
             let message = event.text;
             (async () => {
 
