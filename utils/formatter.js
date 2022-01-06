@@ -1,8 +1,8 @@
 exports.convertFormat = (unformattedUsername) => {
   //Replace your character format
-  myCharFormat = "𝕒";
+  myCharFormat = process.env.Char_a || "𝕒";
   //Replace your number format
-  myNumFormat = "𝟘";
+  myNumFormat = process.env.Char_0 || "𝟘";
 
   charCode_F = myCharFormat.charCodeAt(0);
   charCode_S = myCharFormat.charCodeAt(1);
