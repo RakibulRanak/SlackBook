@@ -61,11 +61,12 @@ slackEvents.on('message', async (event) => {
                                 publicUrl = modifiedEvent.file.permalink_public
                             }
 
-                            if (event.files[0].mimetype.includes('image')) {
-                                const imageLinkWithExtension = await crawler.crawl(publicUrl);
-                                fbAPI.postWithImage(message, imageLinkWithExtension);
-                            }
-                            else fbAPI.postWithAttachments(message, publicUrl)
+                            // if (event.files[0].mimetype.includes('image')) {
+                            //     const imageLinkWithExtension = await crawler.crawl(publicUrl);
+                            //     fbAPI.postWithImage(message, imageLinkWithExtension);
+                            // }
+                            // else 
+                            fbAPI.postWithAttachments(message, publicUrl)
                         }
 
                     }
