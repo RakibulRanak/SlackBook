@@ -7,8 +7,7 @@ exports.extract = (message) => {
     if (codeBlocks) {
         for (let i = 0; i < codeBlocks.length; i++) {
             const str = codeBlocks[i];
-            codeBlocks[i] = codeBlocks[i].replace("```", "");
-            codeBlocks[i] = codeBlocks[i].replace("```", "");
+            codeBlocks[i] = codeBlocks[i].replace(codeBlocks[i],codeBlocks[i].substring(3,codeBlocks[i].length-3));
             message = message.replace(str, codeBlocks[i]);
         }
     } 
@@ -18,8 +17,7 @@ exports.extract = (message) => {
     if (codes) {
         for (let i = 0; i < codes.length; i++) {
             const str = codes[i];
-            codes[i] = codes[i].replace("`", "");
-            codes[i] = codes[i].replace("`", "");
+            codes[i] = codes[i].replace(codes[i],codes[i].substring(1,codes[i].length-1));
             message = message.replace(str, codes[i]);
         }
     }
