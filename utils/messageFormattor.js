@@ -1,17 +1,6 @@
 const { convertFormat } = require("./formatter");
 
 exports.extract = (message) => {
-    strikeThroughregex = /~[^~]{1,}~/g;
-    const strikeThroughs = message.match(strikeThroughregex);
-    let plainMessage = message;
-    if (strikeThroughs) {
-        for (let i = 0; i < strikeThroughs.length; i++) {
-            const str = strikeThroughs[i];
-            strikeThroughs[i] = strikeThroughs[i].replace("~", "");
-            strikeThroughs[i] = strikeThroughs[i].replace("~", "");
-            message = message.replace(str, convertFormat(strikeThroughs[i], 'strikethrough'));
-        }
-    }
 
     codeBlockRegex = /```[^```]{1,}```/g;
     const codeBlocks = message.match(codeBlockRegex);

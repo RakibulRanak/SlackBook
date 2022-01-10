@@ -1,14 +1,13 @@
 
-exports.convertFormat = (unformattedText, format) => {
-  myCharFormat = "A";
-  myNumFormat = "0";
+exports.convertFormat = (unformattedText, format, defaultFormat = false) => {
+  myCharFormat = "";
+  myNumFormat = "";
   strikethrough = "";
   // bold 
   if (format === 'bold') {
     myCharFormat = process.env.Bold_Char_A || "𝐀";
     myNumFormat = process.env.Bold_Char_0 || "𝟎";
   }
-
   // italic
   else if (format === 'italic') {
     myCharFormat = process.env.Italic_Char_A || "𝘈";
