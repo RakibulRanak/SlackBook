@@ -1,8 +1,9 @@
 
 exports.convertFormat = (unformattedText, format) => {
-
+  myCharFormat = "A";
+  myNumFormat = "0";
   strikethrough = "";
-  // bold by default
+  // bold 
   if (format === 'bold') {
     myCharFormat = process.env.Bold_Char_A || "𝐀";
     myNumFormat = process.env.Bold_Char_0 || "𝟎";
@@ -34,23 +35,18 @@ exports.convertFormat = (unformattedText, format) => {
   let formattedText = "";
   [...unformattedText].forEach(c => {
     num = c.charCodeAt(0);
-    if (num < 48) {
+    if (num < 48 || format == "strikethrough")
       formattedText += c;
-    }
-    else if (num < 59) {
-      num -= 48;
-      formattedText += String.fromCharCode(numCode_F, numCode_S + num);
-    }
-    else if (num < 91) {
-      num -= 65;
-      formattedText += String.fromCharCode(charCode_F, charCode_S + num);
-    }
     else {
-      num -= (65 + 6);
+      if (num < 59)
+        num -= 48;
+      else if (num < 91)
+        num -= 65;
+      else
+        num -= (65 + 6);
       formattedText += String.fromCharCode(charCode_F, charCode_S + num);
     }
     formattedText += strikethrough;
-
   });
   return formattedText;
 }
