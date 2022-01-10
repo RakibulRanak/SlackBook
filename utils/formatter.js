@@ -3,11 +3,13 @@ exports.convertFormat = (unformattedText, format) => {
 
   strikethrough = "";
   // bold by default
-  myCharFormat = process.env.Bold_Char_A || "𝐀";
-  myNumFormat = process.env.Bold_Char_0 || "𝟎";
+  if (format === 'bold') {
+    myCharFormat = process.env.Bold_Char_A || "𝐀";
+    myNumFormat = process.env.Bold_Char_0 || "𝟎";
+  }
 
   // italic
-  if (format === 'italic') {
+  else if (format === 'italic') {
     myCharFormat = process.env.Italic_Char_A || "𝘈";
     myNumFormat = process.env.Italic_Char_0 || "0";
   }
