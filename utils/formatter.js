@@ -1,6 +1,7 @@
 
 exports.convertFormat = (unformattedText, format) => {
 
+  strikethrough = "";
   // bold by default
   myCharFormat = process.env.Bold_Char_A || "𝐀";
   myNumFormat = process.env.Bold_Char_0 || "𝟎";
@@ -15,6 +16,11 @@ exports.convertFormat = (unformattedText, format) => {
   else if (format == 'bold_italic') {
     myCharFormat = process.env.Bold_Italic_Char_A || "𝘼";
     myNumFormat = process.env.Bold_Italic_Char_0 || "0";
+  }
+
+  else if (format == 'strikethrough') {
+    fontStyle = "A̶";
+    strikethrough = fontStyle[1];
   }
 
   charCode_F = myCharFormat.charCodeAt(0);
@@ -41,6 +47,7 @@ exports.convertFormat = (unformattedText, format) => {
       num -= (65 + 6);
       formattedText += String.fromCharCode(charCode_F, charCode_S + num);
     }
+    formattedText += strikethrough;
 
   });
   return formattedText;
