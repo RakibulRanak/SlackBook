@@ -1,8 +1,29 @@
-exports.convertFormat = (unformattedUsername) => {
-  //Replace your character format
-  myCharFormat = "𝕒";
-  //Replace your number format
-  myNumFormat = "𝟘";
+
+exports.convertFormat = (unformattedText, format, defaultFormat = false) => {
+  myCharFormat = "";
+  myNumFormat = "";
+  strikethrough = "";
+  // bold 
+  if (format === 'bold') {
+    myCharFormat = process.env.Bold_Char_A || "𝐀";
+    myNumFormat = process.env.Bold_Char_0 || "𝟎";
+  }
+  // italic
+  else if (format === 'italic') {
+    myCharFormat = process.env.Italic_Char_A || "𝘈";
+    myNumFormat = process.env.Italic_Char_0 || "0";
+  }
+
+  //bold_italic
+  else if (format == 'bold_italic') {
+    myCharFormat = process.env.Bold_Italic_Char_A || "𝘼";
+    myNumFormat = process.env.Bold_Italic_Char_0 || "0";
+  }
+
+  else if (format == 'strikethrough') {
+    fontStyle = "A̶";
+    strikethrough = fontStyle[1];
+  }
 
   charCode_F = myCharFormat.charCodeAt(0);
   charCode_S = myCharFormat.charCodeAt(1);
@@ -10,20 +31,21 @@ exports.convertFormat = (unformattedUsername) => {
   numCode_F = myNumFormat.charCodeAt(0);
   numCode_S = myNumFormat.charCodeAt(1);
 
-  allChars = "abcdefghijklmnopqrstuvwxyz"
-  allNums = "0123456789"
-
-  let formattedUsername = "";
-  [...unformattedUsername].forEach(c => {
-    num = c.charCodeAt(0) - 97;
-    if (num < 0) {
-      num += 49;
-      formattedUsername += String.fromCharCode(numCode_F, numCode_S + num);
-    }
+  let formattedText = "";
+  [...unformattedText].forEach(c => {
+    num = c.charCodeAt(0);
+    if (num < 48 || format == "strikethrough")
+      formattedText += c;
     else {
-      formattedUsername += String.fromCharCode(charCode_F, charCode_S + num);
+      if (num < 59)
+        num -= 48;
+      else if (num < 91)
+        num -= 65;
+      else
+        num -= (65 + 6);
+      formattedText += String.fromCharCode(charCode_F, charCode_S + num);
     }
-
+    formattedText += strikethrough;
   });
-  return formattedUsername;
-};
+  return formattedText;
+}

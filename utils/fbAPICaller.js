@@ -15,11 +15,12 @@ exports.postWithLink = (message, publicLink) => {
     });
 }
 
-exports.postWithImage = (message, imageLinkWithExtension) => {
-    FB.api(`/${fbGroupID}/photos?url=${imageLinkWithExtension}`, 'POST', { message }, function (response) {
-        console.log(response);
-    });
-}
+// exports.postWithImage = (message, imageLinkWithExtension) => {
+//     FB.api(`/${fbGroupID}/photos?url=${imageLinkWithExtension}`, 'POST', { message }, function (response) {
+//         console.log(response);
+//     });
+// }
+
 exports.postWithAttachments = (message, publicLink) => {
     FB.api(`/${fbGroupID}/feed?link=${publicLink}`, 'POST', { message }, function (response) {
         console.log(response);
