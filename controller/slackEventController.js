@@ -57,24 +57,20 @@ slackEvents.on('message', async (event) => {
                         else fbAPI.postWithLink(message, links[0])
                     }
                     else {
-                        if (event.files.length > 1) {
-                            await slackClient.chat.postMessage({ channel: event.channel, text: `Hello <@${event.user}>!, you can not post multiple files/photos to facebook` })
-                        }
-                        else {
                             let publicUrl = event.files[0].permalink_public;
-                            if (!event.files[0].public_url_shared) {
-                                const modifiedEvent = await slackClient.files.sharedPublicURL({ token: slackUserToken, file: event.files[0].id })
-                                publicUrl = modifiedEvent.file.permalink_public
+                            for ( let i = 0 ; i < event.files.length ; i++) {
+                                let otherPublicFllesUrl = event.files[i].permalink_public;
+                                if(!event.files[i].public_url_shared) {
+                                    const modifiedEvent = await slackClient.files.sharedPublicURL({ token: slackUserToken, file: event.files[i].id })
+                                    if ( i != 0 ) otherPublicFllesUrl = modifiedEvent.file.permalink_public;
+                                    else publicUrl = modifiedEvent.file.permalink_public
+                                }
+                                if ( i != 0 ) message += ( "\n" + `${i+1}. ` + otherPublicFllesUrl + "\n");
+                                else message += ( "\n" + `${i+1}. ` + publicUrl + "\n");
                             }
 
-                            // if (event.files[0].mimetype.includes('image')) {
-                            //     const imageLinkWithExtension = await crawler.crawl(publicUrl);
-                            //     fbAPI.postWithImage(message, imageLinkWithExtension);
-                            // }
-                            // else 
                             fbAPI.postWithAttachments(message, publicUrl)
-                        }
-
+                        
                     }
                 }
                 if (message === 'greet me' && currentEventId != prevEventId) {
