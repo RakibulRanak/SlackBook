@@ -3,7 +3,19 @@ exports.extract = async (message) => {
 
     const boldRegex = /\*.*?\*/g;
     const italicRegex = /\_.*?\_/g;
+    const boldItalicRegex = /_\*.[^_]{1,}\*_/g;
     const strikeThroughregex = /~[^~]{1,}~/g;
+
+    const boldItalicArray = message.match(boldItalicRegex);
+
+    if (boldItalicArray) {
+        for (let i = 0; i < boldItalicArray.length; i++) {
+            const boldItalicText = formatter.convertFormat(boldItalicArray[i].substring(2, boldItalicArray[i].length - 2), 'bold_italic');
+            message = message.replace(boldItalicArray[i], boldItalicText);
+        }
+    }
+
+
     const boldArray = message.match(boldRegex);
     const italicArray = message.match(italicRegex);
 

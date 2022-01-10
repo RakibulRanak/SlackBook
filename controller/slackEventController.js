@@ -7,7 +7,7 @@ const linkExtractor = require('../utils/linkExtractor');
 const mentionExtractor = require('../utils/mentionExtractor');
 const formatExtractor = require('../utils/formatExtractor');
 const fbAPI = require('../utils/fbAPICaller')
-const messageFormattor = require('../utils/messageFormattor');
+const messageFormattor = require('../utils/messageFormatter');
 
 let prevEventId;
 

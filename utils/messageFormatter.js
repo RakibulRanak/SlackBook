@@ -9,10 +9,9 @@ exports.extract = (message) => {
             const str = codeBlocks[i];
             codeBlocks[i] = codeBlocks[i].replace("```", "");
             codeBlocks[i] = codeBlocks[i].replace("```", "");
-            console.log(codeBlocks[i])
             message = message.replace(str, codeBlocks[i]);
         }
-    }
+    } 
 
     const codeRegex = /`[^`]{1,}`/g;
     const codes = message.match(codeRegex);
