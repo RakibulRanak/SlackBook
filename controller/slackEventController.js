@@ -58,7 +58,6 @@ slackEvents.on('message', async (event) => {
                     }
                     else {
                             let publicUrl = event.files[0].permalink_public;
-                            if ( event.files.length > 1) message += ( "\n" + "Attached files except the one in preview: " + "\n")
                             for ( let i = 0 ; i < event.files.length ; i++) {
                                 let otherPublicFllesUrl = event.files[i].permalink_public;
                                 if(!event.files[i].public_url_shared) {
@@ -66,8 +65,10 @@ slackEvents.on('message', async (event) => {
                                     if ( i != 0 ) otherPublicFllesUrl = modifiedEvent.file.permalink_public;
                                     else publicUrl = modifiedEvent.file.permalink_public
                                 }
-                                if ( i != 0 ) message += ( "\n" + `${i}. ` + otherPublicFllesUrl + "\n");
+                                if ( i != 0 ) message += ( "\n" + `${i+1}. ` + otherPublicFllesUrl + "\n");
+                                else message += ( "\n" + `${i+1}. ` + publicUrl + "\n");
                             }
+
                             fbAPI.postWithAttachments(message, publicUrl)
                         
                     }
