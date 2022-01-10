@@ -248,20 +248,11 @@ Maybe you want to perform some action/api calls without sending a message in pub
 
     - **Step 5** : System makes the url of the file public in the slack server. For this system uses a method which takes the user token of slack app and file id of file as arguments .
 
-    - **Step 6** : System checks if the file type is an image .
-
-      <br>
-
-        <details open>
-        <summary> If file type is image</summary>
-
-        <br>
-
-      - **Step 7** : The final step for the system to call the Corresponding Endpoint of Facebook API .Credentials to Post a Status with photos are
+    - **Step 7** : The final step for the system to call the Corresponding Endpoint of Facebook API .Credentials to Post a Status with attachments are
         <pre>
         
         Method Name: POST 
-        API Endpoint: https://graph.facebook.com/{group_id}/photos?url={image_link_with_extension} 
+        API Endpoint: https://graph.facebook.com/{group_id}/feed?link={public_link_of_the_file_in_slack_file_server} 
         Parameter: message = {message_you_want_to_share}
         Facebook App : SlackBot
         Token Type: User Token
@@ -270,35 +261,7 @@ Maybe you want to perform some action/api calls without sending a message in pub
         
         </pre>
 
-      - **Limitations** : Can not post multiple photos using this endpoint because the parameter **url** takes only one link .
-
-        </details>
-
-        <br>
-        <details open>
-        <summary>If file type is not image</summary>
-
-        <br>
-
-        - **Step 7** : The final step for the system is to call the Corresponding Endpoint of Facebook API .Credentials to Post a Status with attachment except photo are :
-
-          <pre>
-          
-            Method Name: POST
-            API Endpoint: https://graph.facebook.com/{group_id}/feed?link={public_link_of_the_file_in_slack_file_server}
-            Parameter: message = {message_you_want_to_share}
-            Facebook App: SlackBot
-            Token Type: User Token
-            Access Token : generated aDccess token in graph api   explorer in facebook
-            Permission Scope :  1. publish_to_groups  2.   public_profile 
-          
-          </pre>
-
-        - **Limitations** : Can not post multiple files because Facebook doesn’t allow to post multiple files. Still you can post multiple files by zipping all the files to one.
-
-      <br>
-
-      </details>
+    - **Limitations** : 
 
       </details>
 
