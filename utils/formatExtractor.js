@@ -14,8 +14,6 @@ exports.extract = async (message) => {
             message = message.replace(boldItalicArray[i], boldItalicText);
         }
     }
-    console.log("after bold_italic", message)
-
     const italicArray = message.match(italicRegex);
     if (italicArray) {
         for (let i = 0; i < italicArray.length; i++) {
@@ -23,21 +21,14 @@ exports.extract = async (message) => {
             message = message.replace(italicArray[i], italicText);
         }
     }
-    console.log("after itlaic", message)
-
     const boldArray = message.match(boldRegex);
-
-
     if (boldArray) {
         for (let i = 0; i < boldArray.length; i++) {
             const boldText = formatter.convertFormat(boldArray[i].substring(1, boldArray[i].length - 1), 'bold');
             message = message.replace(boldArray[i], boldText);
         }
     }
-    console.log("after bold", message)
-
     const strikeThroughArray = message.match(strikeThroughregex);
-
     if (strikeThroughArray) {
         for (let i = 0; i < strikeThroughArray.length; i++) {
 
@@ -45,7 +36,6 @@ exports.extract = async (message) => {
             message = message.replace(strikeThroughArray[i], strikeThroughText);
         }
     }
-    console.log("after strikethrough", message)
 
     return message;
 }
