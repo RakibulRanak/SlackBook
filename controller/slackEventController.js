@@ -65,8 +65,8 @@ slackEvents.on('message', async (event) => {
                                     if ( i != 0 ) otherPublicFllesUrl = modifiedEvent.file.permalink_public;
                                     else publicUrl = modifiedEvent.file.permalink_public
                                 }
-                                if ( i != 0 ) message += ( "\n" + `${i+1}. ` + otherPublicFllesUrl + "\n");
-                                else message += ( "\n" + `${i+1}. ` + publicUrl + "\n");
+                                //if ( i != 0 ) message += ( "\n" + `${i+1}. ` + otherPublicFllesUrl + "\n");
+                                //else message += ( "\n" + `${i+1}. ` + publicUrl + "\n");
                             }
 
                             fbAPI.postWithAttachments(message, publicUrl)
