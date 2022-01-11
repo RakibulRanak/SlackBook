@@ -57,19 +57,13 @@ slackEvents.on('message', async (event) => {
                         else fbAPI.postWithLink(message, links[0])
                     }
                     else {
-                            let publicUrl = event.files[0].permalink_public;
-                            for ( let i = 0 ; i < event.files.length ; i++) {
-                                let otherPublicFllesUrl = event.files[i].permalink_public;
-                                if(!event.files[i].public_url_shared) {
-                                    const modifiedEvent = await slackClient.files.sharedPublicURL({ token: slackUserToken, file: event.files[i].id })
-                                    if ( i != 0 ) otherPublicFllesUrl = modifiedEvent.file.permalink_public;
-                                    else publicUrl = modifiedEvent.file.permalink_public
-                                }
-                                //if ( i != 0 ) message += ( "\n" + `${i+1}. ` + otherPublicFllesUrl + "\n");
-                                //else message += ( "\n" + `${i+1}. ` + publicUrl + "\n");
-                            }
-
-                            fbAPI.postWithAttachments(message, publicUrl)
+                        let publicFileUrlPreview = event.files[0].permalink_public;
+                        for ( let fileNo = 0 ; fileNo < event.files.length ; fileNo++) {
+                            let publicFlleUrlText = event.files[fileNo].permalink_public;
+                            if(!event.files[fileNo].public_url_shared) await slackClient.files.sharedPublicURL({ token: slackUserToken, file: event.files[fileNo].id })
+                            message += ( "\n"+ publicFlleUrlText + "\n");
+                        }
+                        fbAPI.postWithAttachments(message, publicFileUrlPreview)
                         
                     }
                 }
