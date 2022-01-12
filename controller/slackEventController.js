@@ -2,12 +2,12 @@ require('dotenv').config();
 const { WebClient } = require('@slack/web-api');
 const { createEventAdapter } = require('@slack/events-api');
 const format = require('../utils/formatter')
-const crawler = require('../utils/crawler')
 const linkExtractor = require('../utils/linkExtractor');
 const mentionExtractor = require('../utils/mentionExtractor');
 const formatExtractor = require('../utils/formatExtractor');
 const fbAPI = require('../utils/fbAPICaller')
 const messageFormattor = require('../utils/messageFormatter');
+const fileSharing = require('../utils/fileSharing');
 
 const eventSet = new Set();
 
@@ -55,14 +55,8 @@ slackEvents.on('message', async (event) => {
                         else fbAPI.postWithLinkAndAttachments(message, links[0])
                     }
                     else {
-                        let publicFileUrlPreview = event.files[0].permalink_public;
-                        for (let fileNo = 0; fileNo < event.files.length; fileNo++) {
-                            let publicFlleUrlText = event.files[fileNo].permalink_public;
-                            if (!event.files[fileNo].public_url_shared) await slackClient.files.sharedPublicURL({ token: slackUserToken, file: event.files[fileNo].id })
-                            message += ("\n" + publicFlleUrlText + "\n");
-                        }
-                        fbAPI.postWithLinkAndAttachments(message, publicFileUrlPreview)
-                        
+                        const {message : messageWithAttachments,publicFileUrlPreview} = await fileSharing.share(event.files,slackClient,message,slackUserToken);
+                        fbAPI.postWithLinkAndAttachments(messageWithAttachments, publicFileUrlPreview)
                     }
                 }
                 if (message === 'greet me' && (!eventSet.has(currentEventId)))  {
