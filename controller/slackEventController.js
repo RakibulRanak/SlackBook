@@ -9,7 +9,7 @@ const formatExtractor = require('../utils/formatExtractor');
 const fbAPI = require('../utils/fbAPICaller')
 const messageFormattor = require('../utils/messageFormatter');
 
-let prevEventId;
+const eventSet = new Set();
 
 const slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
 const slackBotToken = process.env.SLACK_BOT_TOKEN;
@@ -27,14 +27,13 @@ slackEvents.on('message', async (event) => {
             user: event.user
         });
         if (!userInfo.user.is_bot) {
-            const currentEventId = event.event_ts;
+            const currentEventId = Math.floor(event.event_ts);
             console.log(`Got message from user <@${event.user}>: ${event.text}`);
-
             const username = userInfo.user.profile.real_name
             let message = event.text;
             (async () => {
-
-                if (message.includes("#fbpost") && currentEventId != prevEventId) {
+                if (message.includes("#fbpost") && (!eventSet.has(currentEventId))) {
+                    eventSet.add(currentEventId);
                     console.log("Going to post in FB!")
                     const plainMessage = messageFormattor.extract(message);
                     message = plainMessage;
@@ -68,10 +67,14 @@ slackEvents.on('message', async (event) => {
 
                     }
                 }
-                if (message === 'greet me' && currentEventId != prevEventId) {
+                if (message === 'greet me' && (!eventSet.has(currentEventId))) {
+                    eventSet.add(currentEventId);
                     await slackClient.chat.postMessage({ channel: event.channel, text: `Hello <@${event.user}>! :tada:` })
                 }
-                prevEventId = currentEventId;
+                if(eventSet.size>10){
+                    const val = Math.min(...eventSet);
+                    eventSet.delete(val);
+                }
             })();
         }
     } catch (error) {
