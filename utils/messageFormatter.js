@@ -1,5 +1,3 @@
-const { convertFormat } = require("./formatter");
-
 exports.extract = (message) => {
 
     codeBlockRegex = /```[^```]{1,}```/g;
