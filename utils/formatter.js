@@ -6,18 +6,18 @@ exports.convertFormat = (unformattedText, format, defaultFormat = false) => {
   //console.log(unformattedText, format)
   strikethrough = "";
 
-  if (format == 'strikethrough') {
-    fontStyle = "A̶";
-    strikethrough = fontStyle[1];
-  }
-
   let formattedText = "";
   [...unformattedText].forEach(c => {
     num = c.charCodeAt(1);
     charCode_F = c.charCodeAt(0);
     charCode_S = c.charCodeAt(1);
-    if (format === 'strikethrough')
-      formattedText += c + strikethrough;
+    if (format === 'strikethrough') {
+      fontStyle = "A̶";
+      formattedText += c;
+      strikethrough = fontStyle[1]
+      if (charCode_F < 256 || charCode_F == 55349)
+        formattedText += strikethrough;
+    }
 
     else if (charCode_F == 55349) {
       // already different format
@@ -53,9 +53,7 @@ exports.convertFormat = (unformattedText, format, defaultFormat = false) => {
     }
     else {
       if (charCode_F < 48 || (charCode_F > 57 && charCode_F < 65) || (charCode_F > 90 && charCode_F < 97) || charCode_F > 122) {
-        // console.log(formattedText, c)
         formattedText += c;
-        //console.log(formattedText, c)
       }
       else {
 
