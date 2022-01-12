@@ -2,7 +2,6 @@ require('dotenv').config();
 const { WebClient } = require('@slack/web-api');
 const { createEventAdapter } = require('@slack/events-api');
 const format = require('../utils/formatter')
-const crawler = require('../utils/crawler')
 const linkExtractor = require('../utils/linkExtractor');
 const mentionExtractor = require('../utils/mentionExtractor');
 const formatExtractor = require('../utils/formatExtractor');
@@ -54,7 +53,7 @@ slackEvents.on('message', async (event) => {
 
                     if (event.files === undefined) {
                         if (links === null) fbAPI.postWithoutLinkAndAttachments(message)
-                        else fbAPI.postWithLink(message, links[0])
+                        else fbAPI.postWithLinkAndAttachments(message, links ===[0])
                     }
                     else {
                         let publicFileUrlPreview = event.files[0].permalink_public;
@@ -63,7 +62,7 @@ slackEvents.on('message', async (event) => {
                             if(!event.files[fileNo].public_url_shared) await slackClient.files.sharedPublicURL({ token: slackUserToken, file: event.files[fileNo].id })
                             message += ( "\n"+ publicFlleUrlText + "\n");
                         }
-                        fbAPI.postWithAttachments(message, publicFileUrlPreview)
+                        fbAPI.postWithLinkAndAttachments(message, publicFileUrlPreview)
                         
                     }
                 }
