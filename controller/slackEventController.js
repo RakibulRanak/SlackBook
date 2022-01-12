@@ -20,7 +20,6 @@ const slackEvents = createEventAdapter(slackSigningSecret);
 exports.slackEvents = slackEvents
 const slackClient = new WebClient(slackBotToken);
 
-
 slackEvents.on('message', async (event) => {
     try {
         const userInfo = await slackClient.users.info({
@@ -69,7 +68,8 @@ slackEvents.on('message', async (event) => {
                     }
                 }
                 if (message === 'greet me' && currentEventId != prevEventId) {
-                    await slackClient.chat.postMessage({ channel: event.channel, text: `Hello <@${event.user}>! :tada:` })
+                    await slackClient.chat.postEphemeral({ thread_broadcast: false, thread_ts: event.thread_ts, channel: event.channel, user: event.user, text: `Hello <@${event.user}>! :tada:` })
+                    //await slackClient.chat.postMessage({ channel: event.channel, text: `Hello <@${event.user}>! :tada:` })
                 }
                 prevEventId = currentEventId;
             })();
