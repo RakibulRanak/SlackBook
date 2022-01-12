@@ -1,8 +1,8 @@
-exports.extract = (message) => {
+exports.extract = async (message) => {
     const regex = /<http.[^<]{1,500}>/g;
     const linkRegex = /.[^|]{1,500}/g;
     const links = message.match(regex);
-    let formatedMessage = message;
+    let formattedMessage = message;
     if (links) {
         for (let i = 0; i < links.length; i++) {
             const unformattedLink = links[i];
@@ -17,7 +17,7 @@ exports.extract = (message) => {
             }
             message = message.replace(unformattedLink, links[i]);
         }
-        formatedMessage = message;
+        formattedMessage = message;
     }
-    return { links, formatedMessage };
+    return { links, formattedMessage };
 }

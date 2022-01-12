@@ -1,21 +1,13 @@
 require('dotenv').config();
 const { WebClient } = require('@slack/web-api');
 const { createEventAdapter } = require('@slack/events-api');
-const format = require('../utils/formatter')
-const linkExtractor = require('../utils/linkExtractor');
-const mentionExtractor = require('../utils/mentionExtractor');
-const formatExtractor = require('../utils/formatExtractor');
 const fbAPI = require('../utils/fbAPICaller')
-const messageFormattor = require('../utils/messageFormatter');
+const messageFormatter = require('../utils/messageFormatter');
 const fileProcessor = require('../utils/fileProcessor');
-
 const eventSet = new Set();
-
 const slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
 const slackBotToken = process.env.SLACK_BOT_TOKEN;
 const slackUserToken = process.env.SLACK_USER_TOKEN
-
-
 const slackEvents = createEventAdapter(slackSigningSecret);
 exports.slackEvents = slackEvents
 const slackClient = new WebClient(slackBotToken);
@@ -34,37 +26,22 @@ slackEvents.on('message', async (event) => {
                 if (message.includes("#fbpost") && (!eventSet.has(currentEventId))) {
                     eventSet.add(currentEventId);
                     console.log("Going to post in FB!")
-                    const plainMessage = messageFormattor.extract(message);
-                    message = plainMessage;
-                    const { links, formatedMessage } = linkExtractor.extract(message);
-                    message = formatedMessage;
-                    message = await mentionExtractor.extract(message);
-                    if (message.match("&gt")) for (let i = 0; i < message.length; i++) message = message.replace("&gt;", "");
-                    if (message.match("&amp")) for (let i = 0; i < message.length; i++) message = message.replace("&amp;", "&");
-                    message = await formatExtractor.extract(message);
-
-                    message = message.replace("#fbpost ", "");
-                    message = message.replace("# fbpost", "");
-                    message = message.replace("#fbpost", "");
-
-                    formatedUsername = format.convertFormat(username, 'bold');
-                    message = formatedUsername + " shared via slack" + `\n\n${message}`;
-
+                    const { links, formattedMessage } = await messageFormatter.format(message, username);
+                    message = formattedMessage;
                     if (event.files === undefined) {
-                        if (links === null) fbAPI.postWithoutLinkAndAttachments(message)
+                        if (!links) fbAPI.postWithoutLinkAndAttachments(message)
                         else fbAPI.postWithLinkAndAttachments(message, links[0])
                     }
                     else {
-                        const {message : messageWithAttachments,publicFileUrlPreview} = await fileProcessor.process(event.files,slackClient,message,slackUserToken);
+                        const { message: messageWithAttachments, publicFileUrlPreview } = await fileProcessor.process(event.files, slackClient, message, slackUserToken);
                         fbAPI.postWithLinkAndAttachments(messageWithAttachments, publicFileUrlPreview)
                     }
                 }
-                if (message === 'greet me' && (!eventSet.has(currentEventId)))  {
+                if (message === 'greet me' && (!eventSet.has(currentEventId))) {
                     eventSet.add(currentEventId);
                     await slackClient.chat.postEphemeral({ thread_broadcast: false, thread_ts: event.thread_ts, channel: event.channel, user: event.user, text: `Hello <@${event.user}>! :tada:` })
-                    //await slackClient.chat.postMessage({ channel: event.channel, text: `Hello <@${event.user}>! :tada:` })
                 }
-                if(eventSet.size>10){
+                if (eventSet.size > 10) {
                     const val = Math.min(...eventSet);
                     eventSet.delete(val);
                 }
