@@ -20,7 +20,6 @@ const slackEvents = createEventAdapter(slackSigningSecret);
 exports.slackEvents = slackEvents
 const slackClient = new WebClient(slackBotToken);
 
-
 slackEvents.on('message', async (event) => {
     try {
         const userInfo = await slackClient.users.info({
@@ -40,10 +39,9 @@ slackEvents.on('message', async (event) => {
                     const { links, formatedMessage } = linkExtractor.extract(message);
                     message = formatedMessage;
                     message = await mentionExtractor.extract(message);
-
-                    message = await formatExtractor.extract(message);
-
                     if (message.match("&gt")) for (let i = 0; i < message.length; i++) message = message.replace("&gt;", "");
+                    if (message.match("&amp")) for (let i = 0; i < message.length; i++) message = message.replace("&amp;", "&");
+                    message = await formatExtractor.extract(message);
 
                     message = message.replace("#fbpost ", "");
                     message = message.replace("# fbpost", "");
@@ -64,12 +62,11 @@ slackEvents.on('message', async (event) => {
                             message += ("\n" + publicFlleUrlText + "\n");
                         }
                         fbAPI.postWithAttachments(message, publicFileUrlPreview)
-
                     }
                 }
-                if (message === 'greet me' && (!eventSet.has(currentEventId))) {
-                    eventSet.add(currentEventId);
-                    await slackClient.chat.postMessage({ channel: event.channel, text: `Hello <@${event.user}>! :tada:` })
+                if (message === 'greet me' && (!eventSet.has(currentEventId)))  {
+                    await slackClient.chat.postEphemeral({ thread_broadcast: false, thread_ts: event.thread_ts, channel: event.channel, user: event.user, text: `Hello <@${event.user}>! :tada:` })
+                    //await slackClient.chat.postMessage({ channel: event.channel, text: `Hello <@${event.user}>! :tada:` })
                 }
                 if(eventSet.size>10){
                     const val = Math.min(...eventSet);
