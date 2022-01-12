@@ -33,7 +33,7 @@ slackEvents.on('message', async (event) => {
                         else fbAPI.postWithLinkAndAttachments(message, links[0])
                     }
                     else {
-                        const { message: messageWithAttachments, publicFileUrlPreview } = await fileProcessor.process(event.files, slackClient, message, slackUserToken);
+                        const {messageWithAttachments, publicFileUrlPreview } = await fileProcessor.process(event.files, slackClient, message, slackUserToken);
                         fbAPI.postWithLinkAndAttachments(messageWithAttachments, publicFileUrlPreview)
                     }
                 }
