@@ -1,8 +1,8 @@
 require('dotenv').config();
 const express = require('express')
 const bodyParser = require('body-parser')
-const slackCommand = require('./controller/slackCommandController')
-const slackEvent = require('./controller/slackEventController.js');
+const slackCommand = require('./controllers/slackCommandController')
+const slackEvent = require('./controllers/slackEventController.js');
 
 const port = process.env.PORT || 3000
 const app = express()
