@@ -7,7 +7,7 @@ const mentionExtractor = require('../utils/mentionExtractor');
 const formatExtractor = require('../utils/formatExtractor');
 const fbAPI = require('../utils/fbAPICaller')
 const messageFormattor = require('../utils/messageFormatter');
-const fileSharing = require('../utils/fileSharing');
+const fileProcessor = require('../utils/fileProcessor');
 
 const eventSet = new Set();
 
@@ -55,7 +55,7 @@ slackEvents.on('message', async (event) => {
                         else fbAPI.postWithLinkAndAttachments(message, links[0])
                     }
                     else {
-                        const {message : messageWithAttachments,publicFileUrlPreview} = await fileSharing.share(event.files,slackClient,message,slackUserToken);
+                        const {message : messageWithAttachments,publicFileUrlPreview} = await fileProcessor.process(event.files,slackClient,message,slackUserToken);
                         fbAPI.postWithLinkAndAttachments(messageWithAttachments, publicFileUrlPreview)
                     }
                 }

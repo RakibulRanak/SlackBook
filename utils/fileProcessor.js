@@ -1,4 +1,4 @@
-exports.share = async (files,slackClient,message,slackUserToken) => {
+exports.process = async (files,slackClient,message,slackUserToken) => {
     let publicFileUrlPreview = files[0].permalink_public;
     for (let fileNo = 0; fileNo < files.length; fileNo++) {
         let publicFlleUrlText = files[fileNo].permalink_public;
