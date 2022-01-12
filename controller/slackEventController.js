@@ -52,7 +52,7 @@ slackEvents.on('message', async (event) => {
 
                     if (event.files === undefined) {
                         if (links === null) fbAPI.postWithoutLinkAndAttachments(message)
-                        else fbAPI.postWithLink(message, links[0])
+                        else fbAPI.postWithLinkAndAttachments(message, links[0])
                     }
                     else {
                         let publicFileUrlPreview = event.files[0].permalink_public;
@@ -61,7 +61,8 @@ slackEvents.on('message', async (event) => {
                             if (!event.files[fileNo].public_url_shared) await slackClient.files.sharedPublicURL({ token: slackUserToken, file: event.files[fileNo].id })
                             message += ("\n" + publicFlleUrlText + "\n");
                         }
-                        fbAPI.postWithAttachments(message, publicFileUrlPreview)
+                        fbAPI.postWithLinkAndAttachments(message, publicFileUrlPreview)
+                        
                     }
                 }
                 if (message === 'greet me' && (!eventSet.has(currentEventId)))  {
