@@ -16,15 +16,6 @@ exports.serve = async (req, res, next) => {
                 const sunSet = `${sunSetDate.getHour()}:${sunSetDate.getMinute()}`
                 const message = `Sunrise : ${sunRise}\nSunset : ${sunSet} \nTemperature : ${weatherData.temp}°C \nWind Speed : ${1.61 * weatherData.wind_speed}Km/h\nCondition : ${weatherData.weather[0].description}`
 
-                // axios.post(req.body.response_url, {
-                //     response_type: "in_channel",
-                //     text: `Current weather report near CEFALO at ${currentTime}`,
-                //     attachments: [
-                //         {
-                //             text: message
-                //         }
-                //     ]
-                // })
                 return res.status(200).send({
                     text: `Current weather report near CEFALO at ${currentTime}`,
                     attachments: [

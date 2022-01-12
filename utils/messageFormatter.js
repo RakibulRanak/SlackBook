@@ -34,5 +34,6 @@ exports.format = async (message, username) => {
     message = message.replace("#fbpost", "");
     formattedUsername = encoder.encode(username, 'bold');
     message = formattedUsername + " shared via slack" + `\n\n${message}`;
+
     return { links, formattedMessage: message };
 }
