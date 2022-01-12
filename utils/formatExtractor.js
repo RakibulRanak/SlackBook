@@ -21,6 +21,7 @@ exports.extract = async (message) => {
             message = message.replace(italicArray[i], italicText);
         }
     }
+
     const boldArray = message.match(boldRegex);
     if (boldArray) {
         for (let i = 0; i < boldArray.length; i++) {

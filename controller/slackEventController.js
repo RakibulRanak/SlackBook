@@ -44,8 +44,6 @@ slackEvents.on('message', async (event) => {
                     if (message.match("&amp")) for (let i = 0; i < message.length; i++) message = message.replace("&amp;", "&");
                     message = await formatExtractor.extract(message);
 
-
-
                     message = message.replace("#fbpost ", "");
                     message = message.replace("# fbpost", "");
                     message = message.replace("#fbpost", "");
