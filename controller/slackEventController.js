@@ -23,12 +23,13 @@ const slackClient = new WebClient(slackBotToken);
 
 slackEvents.on('message', async (event) => {
     try {
-        if (event.user) {
+        const userInfo = await slackClient.users.info({
+            user: event.user
+        });
+        if (!userInfo.user.is_bot) {
             const currentEventId = event.event_ts;
             console.log(`Got message from user <@${event.user}>: ${event.text}`);
-            const userInfo = await slackClient.users.info({
-                user: event.user
-            });
+
             const username = userInfo.user.profile.real_name
             let message = event.text;
             (async () => {
@@ -58,13 +59,13 @@ slackEvents.on('message', async (event) => {
                     }
                     else {
                         let publicFileUrlPreview = event.files[0].permalink_public;
-                        for ( let fileNo = 0 ; fileNo < event.files.length ; fileNo++) {
+                        for (let fileNo = 0; fileNo < event.files.length; fileNo++) {
                             let publicFlleUrlText = event.files[fileNo].permalink_public;
-                            if(!event.files[fileNo].public_url_shared) await slackClient.files.sharedPublicURL({ token: slackUserToken, file: event.files[fileNo].id })
-                            message += ( "\n"+ publicFlleUrlText + "\n");
+                            if (!event.files[fileNo].public_url_shared) await slackClient.files.sharedPublicURL({ token: slackUserToken, file: event.files[fileNo].id })
+                            message += ("\n" + publicFlleUrlText + "\n");
                         }
                         fbAPI.postWithAttachments(message, publicFileUrlPreview)
-                        
+
                     }
                 }
                 if (message === 'greet me' && currentEventId != prevEventId) {
