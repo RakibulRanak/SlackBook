@@ -65,6 +65,7 @@ slackEvents.on('message', async (event) => {
                     }
                 }
                 if (message === 'greet me' && (!eventSet.has(currentEventId)))  {
+                    eventSet.add(currentEventId);
                     await slackClient.chat.postEphemeral({ thread_broadcast: false, thread_ts: event.thread_ts, channel: event.channel, user: event.user, text: `Hello <@${event.user}>! :tada:` })
                     //await slackClient.chat.postMessage({ channel: event.channel, text: `Hello <@${event.user}>! :tada:` })
                 }
