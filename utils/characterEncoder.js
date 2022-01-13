@@ -18,7 +18,7 @@ exports.encode = (rowText, format, defaultFormat = false) => {
       fontStyle = "A̶";
       encodedText += c;
       strikethrough = fontStyle[1]
-      if (charCode_F < 256 || charCode_F == 55349)
+      if (charCode_F < 256 || charCode_F == englishCustomFontBase)
         encodedText += strikethrough;
     }
 
