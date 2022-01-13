@@ -3,6 +3,7 @@ const slackBotToken = process.env.SLACK_BOT_TOKEN;
 const slackClient = new WebClient(slackBotToken);
 exports.extract = async (message) => {
     const regex = /<@[a-zA-Z0-9]{11}>/g;
+    if (message.match("<!here>")) for (let i = 0; i < message.length; i++) message = message.replace('<!here>', "@𝐡𝐞𝐫𝐞");
     const mentions = message.match(regex);
     if (mentions) {
         for (let i = 0; i < mentions.length; i++) {
