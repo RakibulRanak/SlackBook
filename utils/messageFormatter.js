@@ -2,6 +2,7 @@ const encoder = require('./characterEncoder')
 const linkExtractor = require('./linkExtractor');
 const mentionExtractor = require('./mentionExtractor');
 const formatExtractor = require('./formatExtractor');
+const mailExtractor = require('./mailExtractor');
 
 exports.format = async (message, username) => {
 
@@ -25,6 +26,7 @@ exports.format = async (message, username) => {
     }
     let { links, formattedMessage } = await linkExtractor.extract(message);
     message = formattedMessage;
+    message  = await mailExtractor.extract(message);
     message = await mentionExtractor.extract(message);
     if (message.match("&gt")) for (let i = 0; i < message.length; i++) message = message.replace("&gt;", "");
     if (message.match("&amp")) for (let i = 0; i < message.length; i++) message = message.replace("&amp;", "&");
