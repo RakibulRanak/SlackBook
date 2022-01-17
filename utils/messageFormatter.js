@@ -6,6 +6,9 @@ const mailExtractor = require('./mailExtractor');
 
 exports.format = async (message, username) => {
 
+    message = message.replace("#fbpost ", "");
+    message = message.replace(" #fbpost", "");
+    message = message.replace("#fbpost", "");
     codeBlockRegex = /```[^```]{1,}```/g;
     const codeBlocks = message.match(codeBlockRegex);
     if (codeBlocks) {
@@ -26,14 +29,11 @@ exports.format = async (message, username) => {
     }
     let { links, formattedMessage } = await linkExtractor.extract(message);
     message = formattedMessage;
-    message  = await mailExtractor.extract(message);
+    message = await mailExtractor.extract(message);
     message = await mentionExtractor.extract(message);
     if (message.match("&gt")) for (let i = 0; i < message.length; i++) message = message.replace("&gt;", "");
     if (message.match("&amp")) for (let i = 0; i < message.length; i++) message = message.replace("&amp;", "&");
     message = await formatExtractor.extract(message);
-    message = message.replace("#fbpost ", "");
-    message = message.replace("# fbpost", "");
-    message = message.replace("#fbpost", "");
     formattedUsername = encoder.encode(username, 'bold');
     message = formattedUsername + " shared via slack" + `\n\n${message}`;
 
