@@ -16,7 +16,7 @@ exports.extract = (message) => {
                 const linklen = Math.min(linkText[0].length, 10);
                 const linkTextlen = Math.min(linkText[1].length, 10);
                 if (linkText[1].substring(0, linkTextlen) != linkText[0].substring(0, linklen)) {
-                    message = message.substring(0, ind) + encoder.encode(linkText[1], 'italic') + " : " + message.substring(ind);
+                    message = message.substring(0, ind) + encoder.encode(linkText[1]) + " : " + message.substring(ind);
                 }
                 links[i] = linkText[0];
             }
