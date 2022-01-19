@@ -9,12 +9,13 @@ exports.format = async (message, username) => {
     message = message.replace("#fbpost ", "");
     message = message.replace(" #fbpost", "");
     message = message.replace("#fbpost", "");
+    message = await formatExtractor.extract(message);
     codeBlockRegex = /```[^```]{1,}```/g;
     const codeBlocks = message.match(codeBlockRegex);
     if (codeBlocks) {
         for (let i = 0; i < codeBlocks.length; i++) {
             const str = codeBlocks[i];
-            codeBlocks[i] = "\n***\n" + codeBlocks[i].replace(codeBlocks[i], codeBlocks[i].substring(3, codeBlocks[i].length - 3)) + "\n***\n";
+            codeBlocks[i] = "***\n" + codeBlocks[i].replace(codeBlocks[i], codeBlocks[i].substring(3, codeBlocks[i].length - 3)) + "\n***";
             message = message.replace(str, codeBlocks[i]);
         }
     }
@@ -34,7 +35,7 @@ exports.format = async (message, username) => {
     message = await mentionExtractor.extract(message);
     if (message.match("&gt")) for (let i = 0; i < message.length; i++) message = message.replace("&gt;", "|  ");
     if (message.match("&amp")) for (let i = 0; i < message.length; i++) message = message.replace("&amp;", "&");
-    message = await formatExtractor.extract(message);
+    // message = await formatExtractor.extract(message);
     formattedUsername = encoder.encode(username, 'bold');
     message = formattedUsername + " shared via slack" + `\n\n${message}`;
 
