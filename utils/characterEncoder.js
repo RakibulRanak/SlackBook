@@ -1,5 +1,5 @@
 exports.encode = (rowText, format, defaultFormat = false) => {
-  boldFont_Char_Start = 56320;
+  boldFont_Char_Start = 56788;
   boldFont_Digit_Start = 57294;
   italicFont_Char_Start = 56840;
   itlaicFont_Digit_Start = 48;
