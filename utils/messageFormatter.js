@@ -11,7 +11,7 @@ exports.format = async (message, username) => {
     message = message.replace("#fbpost", "");
     message = await mailExtractor.extract(message);
     message = await mentionExtractor.extract(message);
-    let { links, formattedMessage, lastLink } = await linkExtractor.extract(message);
+    let { links, formattedMessage,lastLink,linksLength} = await linkExtractor.extract(message);
     message = formattedMessage;
     message = await formatExtractor.extract(message);
 
@@ -24,8 +24,6 @@ exports.format = async (message, username) => {
             message = message.replace(str, codeBlocks[i]);
         }
     }
-    let { links, formattedMessage,lastLink,linksLength} = await linkExtractor.extract(message);
-    message = formattedMessage;
     const codeRegex = /`[^`]{1,}`/g;
     const codes = message.match(codeRegex);
     if (codes) {
