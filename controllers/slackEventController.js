@@ -26,15 +26,15 @@ slackEvents.on('message', async (event) => {
                 if (message.includes("#fbpost") && (!eventSet.has(currentEventId))) {
                     eventSet.add(currentEventId);
                     console.log("Going to post in FB!")
-                    const { links, formattedMessage,lastLink} = await messageFormatter.format(message, username);
+                    const { links, formattedMessage,lastLink,linksLength} = await messageFormatter.format(message, username);
                     message = formattedMessage;
                     if (event.files === undefined) {
                         if (!links) fbAPI.postWithoutLinkAndAttachments(message)
-                        else fbAPI.postWithLinkAndAttachments(message,links[0],lastLink)
+                        else fbAPI.postWithLinkAndAttachments(message,links[0],lastLink,linksLength)
                     }
                     else {
-                        const {messageWithAttachments, publicFileUrlPreview} = await fileProcessor.process(event.files, slackClient, message, slackUserToken);
-                        fbAPI.postWithLinkAndAttachments(messageWithAttachments, publicFileUrlPreview)
+                        const {messageWithAttachments, publicFileUrlPreview,lastLink,linksLength} = await fileProcessor.process(event.files, slackClient, message, slackUserToken);
+                        fbAPI.postWithLinkAndAttachments(messageWithAttachments, publicFileUrlPreview,lastLink,linksLength)
                     }
                 }
                 if (message === 'greet me' && (!eventSet.has(currentEventId))) {

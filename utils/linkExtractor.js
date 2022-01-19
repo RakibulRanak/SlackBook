@@ -6,7 +6,9 @@ exports.extract = (message) => {
     const links = message.match(linkExtractorRegex);
     let formattedMessage = message;
     let lastLink ;
+    let linksLength = 0 ;
     if (links) {
+        linksLength = links.length;
         for (let i = 0; i < links.length; i++) {
             const unformattedLink = links[i];
             let ind = message.indexOf(links[i]);
@@ -26,6 +28,7 @@ exports.extract = (message) => {
             message = message.replace(unformattedLink, links[i]);
         }
         formattedMessage = message;
+        
     }
-    return { links, formattedMessage,lastLink};
+    return {links, formattedMessage,lastLink,linksLength};
 }
