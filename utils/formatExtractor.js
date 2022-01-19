@@ -10,32 +10,30 @@ exports.extract = async (message) => {
 
     if (boldItalicArray) {
         for (let i = 0; i < boldItalicArray.length; i++) {
-            if ( process.env.FORMATTER === "true" ) {
-                const boldItalicText = encoder.encode(boldItalicArray[i].substring(2, boldItalicArray[i].length - 2), 'bold_italic');
-                message = message.replace(boldItalicArray[i], boldItalicText);
-            }
-            else message = message.replace(boldItalicArray[i],boldItalicArray[i].substring(2, boldItalicArray[i].length - 2));
+            let sub_Message = boldItalicArray[i].substring(2, boldItalicArray[i].length - 2);
+            if (process.env.MARKUP === "true")
+                sub_Message = encoder.encode(sub_Message, 'bold_italic');
+            message = message.replace(boldItalicArray[i], sub_Message);
         }
     }
     const italicArray = message.match(italicRegex);
     if (italicArray) {
         for (let i = 0; i < italicArray.length; i++) {
-            if (process.env.FORMATTER === "true") {
-                const italicText = encoder.encode(italicArray[i].substring(1, italicArray[i].length - 1), 'italic');
-                message = message.replace(italicArray[i], italicText);
-            }
-            else message = message.replace(italicArray[i],italicArray[i].substring(1, italicArray[i].length - 1))
+            let sub_Message = italicArray[i].substring(1, italicArray[i].length - 1);
+            if (process.env.MARKUP === "true")
+                sub_Message = encoder.encode(sub_Message, 'italic');
+            message = message.replace(italicArray[i], sub_Message)
         }
     }
 
     const boldArray = message.match(boldRegex);
     if (boldArray) {
         for (let i = 0; i < boldArray.length; i++) {
-            if (process.env.FORMATTER === "true") {
-                const boldText = encoder.encode(boldArray[i].substring(1, boldArray[i].length - 1), 'bold');
-                message = message.replace(boldArray[i], boldText);
-            }
-            else message = message.replace(boldArray[i],boldArray[i].substring(1, boldArray[i].length - 1));
+            let sub_Message = boldArray[i].substring(1, boldArray[i].length - 1)
+            if (process.env.MARKUP === "true")
+                sub_Message = encoder.encode(sub_Message, 'bold');
+            message = message.replace(boldArray[i], sub_Message);
+
         }
     }
     const strikeThroughArray = message.match(strikeThroughregex);
