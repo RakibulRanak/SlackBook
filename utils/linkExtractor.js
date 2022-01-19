@@ -15,8 +15,9 @@ exports.extract = (message) => {
                 linkText[1] = linkText[1].replace(linkText[1], linkText[1].substring(1));
                 const linklen = Math.min(linkText[0].length, 10);
                 const linkTextlen = Math.min(linkText[1].length, 10);
+                console.log(linkText[1])
                 if (linkText[1].substring(0, linkTextlen) != linkText[0].substring(0, linklen)) {
-                    message = message.substring(0, ind) + encoder.encode(linkText[1]) + " : " + message.substring(ind);
+                    message = message.substring(0, ind) + linkText[1] + " : " + message.substring(ind);
                 }
                 links[i] = linkText[0];
             }
