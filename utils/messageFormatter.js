@@ -9,7 +9,12 @@ exports.format = async (message, username) => {
     message = message.replace("#fbpost ", "");
     message = message.replace(" #fbpost", "");
     message = message.replace("#fbpost", "");
+    message = await mailExtractor.extract(message);
+    message = await mentionExtractor.extract(message);
+    let { links, formattedMessage, lastLink } = await linkExtractor.extract(message);
+    message = formattedMessage;
     message = await formatExtractor.extract(message);
+
     codeBlockRegex = /```[^```]{1,}```/g;
     const codeBlocks = message.match(codeBlockRegex);
     if (codeBlocks) {
@@ -26,13 +31,12 @@ exports.format = async (message, username) => {
     if (codes) {
         for (let i = 0; i < codes.length; i++) {
             const str = codes[i];
-            codes[i] = ">  " + codes[i].replace(codes[i], codes[i].substring(1, codes[i].length - 1));
+            codes[i] = ">   " + codes[i].replace(codes[i], codes[i].substring(1, codes[i].length - 1));
             message = message.replace(str, codes[i]);
         }
     }
-   
-    message = await mailExtractor.extract(message);
-    message = await mentionExtractor.extract(message);
+
+
     if (message.match("&gt")) for (let i = 0; i < message.length; i++) message = message.replace("&gt;", "|  ");
     if (message.match("&amp")) for (let i = 0; i < message.length; i++) message = message.replace("&amp;", "&");
     // message = await formatExtractor.extract(message);

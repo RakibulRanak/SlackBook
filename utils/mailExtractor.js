@@ -3,10 +3,10 @@ exports.extract = (message) => {
     const mailLinks = message.match(mailExtractorRegex);
     if (mailLinks) {
         for (let i = 0; i < mailLinks.length; i++) {
-            const mailTo = mailLinks[i].split("|",1);
+            const mailTo = mailLinks[i].split("|", 1);
             const email = mailTo[0].substring(8);
-            message = message.replace(mailLinks[i],email)
+            message = message.replace(mailLinks[i], email)
         }
     }
-    return message ;
+    return message;
 }
