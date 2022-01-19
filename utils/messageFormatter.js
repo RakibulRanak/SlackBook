@@ -19,7 +19,7 @@ exports.format = async (message, username) => {
             message = message.replace(str, codeBlocks[i]);
         }
     }
-    let { links, formattedMessage } = await linkExtractor.extract(message);
+    let { links, formattedMessage,lastLink} = await linkExtractor.extract(message);
     message = formattedMessage;
     const codeRegex = /`[^`]{1,}`/g;
     const codes = message.match(codeRegex);
@@ -39,5 +39,5 @@ exports.format = async (message, username) => {
     formattedUsername = encoder.encode(username, 'bold');
     message = formattedUsername + " shared via slack" + `\n\n${message}`;
 
-    return { links, formattedMessage: message };
+    return { links, formattedMessage: message ,lastLink};
 }

@@ -9,7 +9,9 @@ exports.postWithoutLinkAndAttachments = (message) => {
     });
 }
 
-exports.postWithLinkAndAttachments = (message, publicLink) => {
+exports.postWithLinkAndAttachments = (message, publicLink,lastLink) => {
+    const words = message.split(" ");
+    if(lastLink && words[words.length -1] === lastLink) message += " .\n" ;
     FB.api(`/${fbGroupID}/feed?link=${publicLink}`, 'POST', { message }, function (response) {
         console.log(response);
     });

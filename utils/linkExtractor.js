@@ -5,6 +5,7 @@ exports.extract = (message) => {
     const linkTextExtractorRegex = /.[^|]{1,5000}/g;
     const links = message.match(linkExtractorRegex);
     let formattedMessage = message;
+    let lastLink ;
     if (links) {
         for (let i = 0; i < links.length; i++) {
             const unformattedLink = links[i];
@@ -15,15 +16,16 @@ exports.extract = (message) => {
                 linkText[1] = linkText[1].replace(linkText[1], linkText[1].substring(1));
                 const linklen = Math.min(linkText[0].length, 10);
                 const linkTextlen = Math.min(linkText[1].length, 10);
-                console.log(linkText[1])
                 if (linkText[1].substring(0, linkTextlen) != linkText[0].substring(0, linklen)) {
                     message = message.substring(0, ind) + linkText[1] + " : " + message.substring(ind);
                 }
                 links[i] = linkText[0];
+                if ( i === links.length-1) lastLink = linkText[0];
             }
+            
             message = message.replace(unformattedLink, links[i]);
         }
         formattedMessage = message;
     }
-    return { links, formattedMessage };
+    return { links, formattedMessage,lastLink};
 }
