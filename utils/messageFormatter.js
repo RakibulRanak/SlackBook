@@ -34,8 +34,7 @@ exports.format = async (message, username) => {
     message = await mentionExtractor.extract(message);
     if (message.match("&gt")) for (let i = 0; i < message.length; i++) message = message.replace("&gt;", "|  ");
     if (message.match("&amp")) for (let i = 0; i < message.length; i++) message = message.replace("&amp;", "&");
-    if (process.env.MARKUP === "true")
-        message = await formatExtractor.extract(message);
+    message = await formatExtractor.extract(message);
     formattedUsername = encoder.encode(username, 'bold');
     message = formattedUsername + " shared via slack" + `\n\n${message}`;
 

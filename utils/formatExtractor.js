@@ -10,29 +10,35 @@ exports.extract = async (message) => {
 
     if (boldItalicArray) {
         for (let i = 0; i < boldItalicArray.length; i++) {
-            const boldItalicText = encoder.encode(boldItalicArray[i].substring(2, boldItalicArray[i].length - 2), 'bold_italic');
-            message = message.replace(boldItalicArray[i], boldItalicText);
+            let sub_Message = boldItalicArray[i].substring(2, boldItalicArray[i].length - 2);
+            if (process.env.MARKUP === "true")
+                sub_Message = encoder.encode(sub_Message, 'bold_italic');
+            message = message.replace(boldItalicArray[i], sub_Message);
         }
     }
     const italicArray = message.match(italicRegex);
     if (italicArray) {
         for (let i = 0; i < italicArray.length; i++) {
-            const italicText = encoder.encode(italicArray[i].substring(1, italicArray[i].length - 1), 'italic');
-            message = message.replace(italicArray[i], italicText);
+            let sub_Message = italicArray[i].substring(1, italicArray[i].length - 1);
+            if (process.env.MARKUP === "true")
+                sub_Message = encoder.encode(sub_Message, 'italic');
+            message = message.replace(italicArray[i], sub_Message)
         }
     }
 
     const boldArray = message.match(boldRegex);
     if (boldArray) {
         for (let i = 0; i < boldArray.length; i++) {
-            const boldText = encoder.encode(boldArray[i].substring(1, boldArray[i].length - 1), 'bold');
-            message = message.replace(boldArray[i], boldText);
+            let sub_Message = boldArray[i].substring(1, boldArray[i].length - 1)
+            if (process.env.MARKUP === "true")
+                sub_Message = encoder.encode(sub_Message, 'bold');
+            message = message.replace(boldArray[i], sub_Message);
+
         }
     }
     const strikeThroughArray = message.match(strikeThroughregex);
     if (strikeThroughArray) {
         for (let i = 0; i < strikeThroughArray.length; i++) {
-
             const strikeThroughText = encoder.encode(strikeThroughArray[i].substring(1, strikeThroughArray[i].length - 1), 'strikethrough');
             message = message.replace(strikeThroughArray[i], strikeThroughText);
         }
