@@ -1,8 +1,13 @@
 'use strict'
 const slackVerificationToken = process.env.SLACK_VERIFICATION_TOKEN;
 const axios = require('axios')
+const fs = require('fs')
+const { promisify } = require('util')
+const writeFileAsync = promisify(fs.writeFile)
 const Converter = require('timestamp-conv');
 exports.serve = async (req, res, next) => {
+    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
+    // console.log(ip)
     try {
         if (req.body.token === slackVerificationToken) {
             if (req.body.command === '/weather') {
@@ -25,12 +30,25 @@ exports.serve = async (req, res, next) => {
                     ]
                 })
             }
+            if (req.body.command === '/config') {
+                const content = req.body.text
+                await writeFileAsync('./.env', content)
+                res.status(200).send({
+                    text: `Successfully configured environment!`,
+                    attachments: [
+                        {
+                            text: content
+                        }
+                    ]
+                })
+                process.exit(1)
+            }
             else
                 return res.status(200).send()
         }
         else
             return res.status(200).send()
     } catch (err) {
-        console.log(err.data)
+        fs.writeFileSync('./error.txt', err.message)
     }
 }

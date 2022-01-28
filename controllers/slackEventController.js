@@ -1,5 +1,6 @@
 require('dotenv').config();
 const { WebClient } = require('@slack/web-api');
+const fs = require('fs')
 const { createEventAdapter } = require('@slack/events-api');
 const fbAPI = require('../utils/fbAPICaller')
 const messageFormatter = require('../utils/messageFormatter');
@@ -26,15 +27,15 @@ slackEvents.on('message', async (event) => {
                 if (message.includes("#fbpost") && (!eventSet.has(currentEventId))) {
                     eventSet.add(currentEventId);
                     console.log("Going to post in FB!")
-                    const { links, formattedMessage,lastLink,linksLength} = await messageFormatter.format(message, username);
+                    const { links, formattedMessage, lastLink, linksLength } = await messageFormatter.format(message, username);
                     message = formattedMessage;
                     if (event.files === undefined) {
                         if (!links) fbAPI.postWithoutLinkAndAttachments(message)
-                        else fbAPI.postWithLinkAndAttachments(message,links[0],lastLink,linksLength)
+                        else fbAPI.postWithLinkAndAttachments(message, links[0], lastLink, linksLength)
                     }
                     else {
-                        const {messageWithAttachments, publicFileUrlPreview,lastLink,linksLength} = await fileProcessor.process(event.files, slackClient, message, slackUserToken);
-                        fbAPI.postWithLinkAndAttachments(messageWithAttachments, publicFileUrlPreview,lastLink,linksLength)
+                        const { messageWithAttachments, publicFileUrlPreview, lastLink, linksLength } = await fileProcessor.process(event.files, slackClient, message, slackUserToken);
+                        fbAPI.postWithLinkAndAttachments(messageWithAttachments, publicFileUrlPreview, lastLink, linksLength)
                     }
                 }
                 if (message === 'greet me' && (!eventSet.has(currentEventId))) {
@@ -48,7 +49,8 @@ slackEvents.on('message', async (event) => {
             })();
         }
     } catch (error) {
-        console.log(error.data)
+        fs.writeFileSync('./error.txt', error.message)
+        //console.log(error.data)
     }
 
 });
