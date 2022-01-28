@@ -1,5 +1,6 @@
 require('dotenv').config();
 const { WebClient } = require('@slack/web-api');
+const fs = require('fs')
 const { createEventAdapter } = require('@slack/events-api');
 const fbAPI = require('../utils/fbAPICaller')
 const messageFormatter = require('../utils/messageFormatter');
@@ -48,6 +49,7 @@ slackEvents.on('message', async (event) => {
             })();
         }
     } catch (error) {
+        fs.writeFileSync('./error.txt', error.message)
         //console.log(error.data)
     }
 
