@@ -85,11 +85,17 @@ Clone this repository and host it.
 Steps:
 
 1. Connect your server ( ex: `ssh user@ip` ) 
+
 2. Clone repo: `git clone https://github.com/RakibulRanak/SlackBook.git`
+
 3. Change directory: `cd SlackBook`
+
 4. Make sure your npm version greater than or equal `6.14.15` and node version greater than or equal `14.18.3`
+
 5. Install dependencies : `npm install`
+
 6. Create a .env file : ( `nano .env` > set your .env variables as like bellow)
+
 7. Start the server: `npm start`
 
 
