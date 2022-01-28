@@ -142,7 +142,7 @@ You have already got the facebook user access token at step 10 of `Create A Face
 
 - Enter any public/private inbox in your workspace.
 
-- Type `/config` SPACE `full configuration text` send the message.
+- Type `/config` SPACE `full configuration text` and send the message.
 
 - SlackBook server configuration will be replaced totally by the full configuration text and the server will be restart immediately with latest configuration.
 

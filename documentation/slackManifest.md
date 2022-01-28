@@ -20,6 +20,11 @@ features:
      description: Get the current weather report.
      usage_hint: /weather
      should_escape: false
+  - command: /config
+     url: https://cefaloslackbook.herokuapp.com/slack/commands
+     description: Set SlackBook server configuration.
+     usage_hint: /config configuration
+     should_escape: false
 oauth_config:
  scopes:
    user:
