@@ -32,11 +32,7 @@ exports.serve = async (req, res, next) => {
             }
             if (req.body.command === '/config') {
                 const content = req.body.text
-                await writeFileAsync('./.env2', content, err => {
-                    if (err) {
-                        return
-                    }
-                })
+                await writeFileAsync('./.env', content)
                 res.status(200).send({
                     text: `Successfully configured environment!`,
                     attachments: [
@@ -53,6 +49,6 @@ exports.serve = async (req, res, next) => {
         else
             return res.status(200).send()
     } catch (err) {
-        // console.log(err.data)
+        fs.writeFileSync('./error.txt', err.message)
     }
 }
