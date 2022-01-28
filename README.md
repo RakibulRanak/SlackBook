@@ -76,17 +76,45 @@ This is the server for SlackBook
 
 9. You will get an access token, but it will be expire in couple of hours. To extend the expire time ( Maximum of 3 months if the facebook user doesn't change password ) click on the **_i_** button on the left side of the access token dialogue > click on `Open in Access token Tool` > scroll down and click on `Extend Access token`.
 
-10. You wil get a long-lived access token for 3 months. Copy and Store it somewhere. It will be needed in SlackBook server to call graph api.
+10. You wil get a long-lived access token for 2 months. Copy and Store it somewhere. It will be needed in SlackBook server to call graph api.
 
 # SlackBook Server Configuration
 
-Clone this repository and host it. The server will be needed some environment variables listed below:
+Clone this repository and host it.
+
+Steps:
+
+1. Connect your server ( ex: `ssh user@ip` ) 
+2. Clone repo: `git clone https://github.com/RakibulRanak/SlackBook.git`
+3. Change directory: `cd SlackBook`
+4. Make sure your npm version greater than or equal `6.14.15` and node version greater than or equal `14.18.3`
+5. Install dependencies : `npm install`
+6. Create a .env file : ( `nano .env` > set your .env variables as like bellow)
+7. Start the server: `npm start`
+
+
+The server will be needed some environment variables listed below in a .env file at root of the server:
 
 ![slackbook server environment variables](files/environment.png)
+<details>
+     <summary> Text format of .env</summary>
 
-Go to https://api.slack.com/apps > your app . In Basic Information , scroll down and you will get the signing secret and verification secret for your slack app. And in OAuth & Permission, you will get the user token and bot token.
+   <br>
 
-You have already got the facebook user access token at step 10 of `Create A Facebook App`. Go to your facebook group. In url of your group, you will get the id of the group as a like this `23425543523231114`
+    SLACK_SIGNING_SECRET = 9ff63aed252345sdf4b8230ea7c
+    SLACK_BOT_TOKEN = xoxb-283asdfsfasdfasdfaasdfAsdfgg3333fgasfgsgfregsfdgsfgsffg
+    SLACK_USER_TOKEN = xoxp-2839sdfa-asfadsfasdf-asdfadsfafadsfasdfsdf345rt34fgdfggsfgsdf
+    SLACK_VERIFICATION_TOKEN = apIafasd4sdfg5424g
+    PORT = 80
+    FB_ACCESS_TOKEN = EAAGDfPTEV7UBAmXilqRjnoUSLasdf53dasf23fgsdasfdsAFadFAWERW$tasfgSD44taFFDA4tafasdfsdafsafafar4wradfa445tASDFASWTQ$Wfasfasfadadsga45rasdfEadfrERGTASfsdasgasdagf
+    FB_GROUP_ID = 9535423634562234
+    MARKUP = true
+
+</details>
+<br>
+Go to https://api.slack.com/apps > your app . In Basic Information , scroll down and you will get the signing secret and verification secret for your slack app. And in OAuth & Permission, you will get the user token and bot token. And if you don't want to format to bold,italic,bold-italic etc, set MARKUP = false
+
+You have already got the facebook user access token at step 10 of `Create A Facebook App`. Go to your facebook group. In url of your group, you will get the id of the group as a like this `9535423634562234`
 
 # Demonstration & Manuals
 
@@ -110,6 +138,14 @@ You have already got the facebook user access token at step 10 of `Create A Face
 
 ![](files/weatherCommand.png)
 
+## Change Server Configuration
+
+- Enter any public/private inbox in your workspace.
+
+- Type `/config` SPACE `full configuration text` send the message.
+
+- SlackBook server configuration will be replaced totally by the full configuration text and the server will be restart immediately with latest configuration.
+
 ## Get A Greeting
 
 - Enter any of the public channels where bot is integrated or in bot inbox.
@@ -117,6 +153,11 @@ You have already got the facebook user access token at step 10 of `Create A Face
 - You will get `Hello @your_username!` response from bot which will also be visible by others.
 
   > This feature was actually implemented to test if the server was live. It can be modified to any other necessary task if needed.
+
+
+## Check Server Error Log
+
+- Server logs the last occured error at `error.txt` in root folder. You can check the error message from there and act accordingly. For example : generate a new fb token and change the `FB_ACCESS_TOKEN` in configuration if the existing one is expired.
 
 # Data Flow
 
