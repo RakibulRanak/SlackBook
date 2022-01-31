@@ -1,1 +1,1 @@
-getaddrinfo ENOTFOUND api.oenweathermap.org
+Slack request signing verification failed
