@@ -96,7 +96,27 @@ Steps:
 
 6. Create a .env file : ( `nano .env` > set your .env variables as like bellow)
 
-7. Start the server: `npm start`
+7. Start the server: `npm start` 
+
+In this case, if server computer or node server get stopped for any reason, slackbook server won't be start again automatically. So, if you want to host the server for production level, skip step 7 and follow the following steps.
+
+8. Install pm2 globally: ( `sudo npm i -g pm2` )
+
+9. `sudo pm2 startup systemd`
+
+10. `sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u cefalo --hp /home/cefalo` ( this command can be get by the output of step 9 )
+
+11. Start the server using pm2 : `sudo pm2 start --name slackbook app.js --watch`
+12. Save the current process: `sudo pm2 save`
+
+Thats it. Some helpful pm2 commands are listed bellow:
+
+- `sudo pm2 ls` (to see the current process)
+- `sudo pm2 logs` ( to see the pm2 logs)
+- `sudo pm2 stop slackbook` ( to kill the slackbook process)
+- `sudo pm2 kill` ( to kill all the pm2 process)
+
+
 
 
 The server will be needed some environment variables listed below in a .env file at root of the server:
