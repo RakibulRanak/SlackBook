@@ -30,19 +30,27 @@ exports.serve = async (req, res, next) => {
                     ]
                 })
             }
-            if (req.body.command === '/config') {
-                const content = req.body.text
-                await writeFileAsync('./.env', content)
+            if (req.body.command === '/config' ) {
+                if(req.body.user_name === 'shaon' || req.body.user_name === 'rakibul05'){
+                    const content = req.body.text
+                    await writeFileAsync('./.env', content)
+                    res.status(200).send({
+                        text: `Successfully configured environment!`,
+                        attachments: [
+                            {
+                                text: content
+                            }
+                        ]
+                    })
+                    console.log('Successfully configured environment! Server is restarting!')
+                    process.exit(1)
+                }
+            else{
                 res.status(200).send({
-                    text: `Successfully configured environment!`,
-                    attachments: [
-                        {
-                            text: content
-                        }
-                    ]
+                    text: `You don't have permission to change config file`,
                 })
-                console.log('Successfully configured environment! Server is restarting!')
-                process.exit(1)
+                console.log('You do not have permission to change config file')
+            }
             }
             else
                 return res.status(200).send()
