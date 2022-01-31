@@ -84,7 +84,7 @@ Clone this repository and host it.
 
 Steps:
 
-1. Connect your server ( ex: `ssh user@ip` ) 
+1. Connect your server ( ex: `ssh user@ip` )
 
 2. Clone repo: `git clone https://github.com/RakibulRanak/SlackBook.git`
 
@@ -98,10 +98,10 @@ Steps:
 
 7. Start the server: `npm start`
 
-
 The server will be needed some environment variables listed below in a .env file at root of the server:
 
 ![slackbook server environment variables](files/environment.png)
+
 <details>
      <summary> Text format of .env</summary>
 
@@ -160,7 +160,6 @@ You have already got the facebook user access token at step 10 of `Create A Face
 
   > This feature was actually implemented to test if the server was live. It can be modified to any other necessary task if needed.
 
-
 ## Check Server Error Log
 
 - Server logs the last occured error at `error.txt` in root folder. You can check the error message from there and act accordingly. For example : generate a new fb token and change the `FB_ACCESS_TOKEN` in configuration if the existing one is expired.
@@ -200,6 +199,11 @@ Maybe you want to perform some action/api calls without sending a message in pub
 * **Concatenate User Name:**
   ![username](files/username.png)  
   In facebook side it's important for facebook group members to know which slack user is posting message.Message forwarded to SlackBook server doesn't contain the username of sender. So in SlackBook Server we needed to call a method of slack server which takes user id as argument and returns the user name .After getting the user name we concatenated it with the message and posted this in facebook.
+* **Others:**
+  - Extract email.
+  - Extract @here mention.
+  - Extract linktext and link and format them(linktext : link).
+  - Extract bold,italic,strikethrough,code and code block messages and format them in different unicode.
 
 ## Difficulties:
 
@@ -308,7 +312,7 @@ Maybe you want to perform some action/api calls without sending a message in pub
         
         </pre>
 
-    - **Limitations** : 
+    - **Limitations** :
 
       </details>
 
