@@ -23,5 +23,5 @@ app.listen(port, function () {
     console.log('Bot is listening on port ' + port)
 })
 
-slackEvent.slackEvents.on('error', (err) => { console.log(err.message));
+slackEvent.slackEvents.on('error', (err) => { console.log(err.message) });
 
