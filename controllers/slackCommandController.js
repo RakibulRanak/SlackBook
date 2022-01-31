@@ -41,6 +41,7 @@ exports.serve = async (req, res, next) => {
                         }
                     ]
                 })
+                console.log('Successfully configured environment! Server is restarting!')
                 process.exit(1)
             }
             else
@@ -49,6 +50,6 @@ exports.serve = async (req, res, next) => {
         else
             return res.status(200).send()
     } catch (err) {
-        fs.writeFileSync('./error.txt', err.message)
+        console.log(err.message)
     }
 }

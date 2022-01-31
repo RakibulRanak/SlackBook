@@ -1,6 +1,5 @@
 require('dotenv').config();
 const { WebClient } = require('@slack/web-api');
-const fs = require('fs')
 const { createEventAdapter } = require('@slack/events-api');
 const fbAPI = require('../utils/fbAPICaller')
 const messageFormatter = require('../utils/messageFormatter');
@@ -20,13 +19,12 @@ slackEvents.on('message', async (event) => {
         });
         if (!userInfo.user.is_bot) {
             const currentEventId = Math.floor(event.event_ts);
-            console.log(`Got message from user <@${event.user}>: ${event.text}`);
+            // console.log(`Got message from user <@${event.user}>: ${event.text}`);
             const username = userInfo.user.profile.real_name
             let message = event.text;
             (async () => {
                 if (message.includes("#fbpost") && (!eventSet.has(currentEventId))) {
                     eventSet.add(currentEventId);
-                    console.log("Going to post in FB!")
                     const { links, formattedMessage, lastLink, linksLength } = await messageFormatter.format(message, username);
                     message = formattedMessage;
                     if (event.files === undefined) {
@@ -49,8 +47,7 @@ slackEvents.on('message', async (event) => {
             })();
         }
     } catch (error) {
-        fs.writeFileSync('./error.txt', error.message)
-        //console.log(error.data)
+        console.log(error.message)
     }
 
 });

@@ -1,7 +1,6 @@
 require('dotenv').config();
 const express = require('express')
 const bodyParser = require('body-parser')
-const fs = require('fs')
 const slackCommand = require('./controllers/slackCommandController')
 const slackEvent = require('./controllers/slackEventController.js');
 const port = process.env.PORT || 3000
@@ -24,5 +23,5 @@ app.listen(port, function () {
     console.log('Bot is listening on port ' + port)
 })
 
-slackEvent.slackEvents.on('error', (err) => { fs.writeFileSync('./error.txt', err.message) });
+slackEvent.slackEvents.on('error', (err) => { console.log(err.message));
 

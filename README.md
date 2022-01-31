@@ -180,9 +180,9 @@ You have already got the facebook user access token at step 10 of `Create A Face
 
   > This feature was actually implemented to test if the server was live. It can be modified to any other necessary task if needed.
 
-## Check Server Error Log
+## Check Server Logs
 
-- Server logs the last occured error at `error.txt` in root folder. You can check the error message from there and act accordingly. For example : generate a new fb token and change the `FB_ACCESS_TOKEN` in configuration if the existing one is expired.
+- To see the server logs, enter into the server and insert `sudo pm2 logs` . All the console logs, and error messages will be there.
 
 # Data Flow
 
