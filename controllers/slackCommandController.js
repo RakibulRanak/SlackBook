@@ -35,7 +35,7 @@ exports.serve = async (req, res, next) => {
                 })
             }
             else if (req.body.command === '/setConfig') {
-                if (req.body.user_name === administrator_1 || req.body.user_name === administrator_2) {
+                if (req.body.user_id === administrator_1 || req.body.user_id === administrator_2) {
                     const content = req.body.text
                     await writeFileAsync('./.env', content)
                     res.status(200).send({
