@@ -9,9 +9,9 @@ exports.postWithoutLinkAndAttachments = (message) => {
     FB.api(`/${fbGroupID}/feed`, 'POST', { message }, function (response) {
         if (response.error) {
             console.log(`Fb api error: ${response.error.message}`);
-            if(response.error.type === 'OAuthException' ) {
+            if (response.error.type === 'OAuthException') {
                 fbTokenExpirationNotifier.notify();
-                console.log("Need to Generate Token");
+                console.log("Need to generate new fb access token");
             }
         }
         else
@@ -25,9 +25,9 @@ exports.postWithLinkAndAttachments = (message, publicLink, lastLink, linksLength
     FB.api(`/${fbGroupID}/feed?link=${publicLink}`, 'POST', { message }, function (response) {
         if (response.error) {
             console.log(`Fb api error: ${response.error.message}`);
-            if(response.error.type === 'OAuthException' ) {
+            if (response.error.type === 'OAuthException') {
                 fbTokenExpirationNotifier.notify();
-                console.log("Need to generate Token");
+                console.log("Need to generate new fb access token");
             }
         }
         else

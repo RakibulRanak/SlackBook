@@ -1,17 +1,20 @@
 'use strict'
-const slackVerificationToken = process.env.SLACK_VERIFICATION_TOKEN;
 const axios = require('axios')
 const fs = require('fs')
 const { promisify } = require('util')
 const writeFileAsync = promisify(fs.writeFile)
 const readFileAsync = promisify(fs.readFile)
 const Converter = require('timestamp-conv');
+const slackVerificationToken = process.env.SLACK_VERIFICATION_TOKEN || 'NOT_UNDEFINED'
+const administrator_1 = process.env.ADMINISTRATOR_SLACK_MEMBER_ID_1;
+const administrator_2 = process.env.ADMINISTRATOR_SLACK_MEMBER_ID_2;
+
 exports.serve = async (req, res, next) => {
     const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
     // console.log(ip)
     try {
         if (req.body.token === slackVerificationToken) {
-            if (req.body.command === '/weatherJoga') {
+            if (req.body.command === '/weather') {
                 let weatherData = await axios.get('https://api.openweathermap.org/data/2.5/onecall?lat=23.75280331031433&lon=90.37563165753778&exclude=hourly,daily,minutely&appid=d361ccad530aae28dce5d7a8e04b240d&units=metric')
                 weatherData = weatherData.data.current;
                 const currentDate = new Converter.date(weatherData.dt, { forceTimezone: true, timezone: 6 });
@@ -32,7 +35,7 @@ exports.serve = async (req, res, next) => {
                 })
             }
             else if (req.body.command === '/setConfig') {
-                if (req.body.user_name === 'shaon' || req.body.user_name === 'rakibul05' || req.body.user_name === 'jagonmoydey1997') {
+                if (req.body.user_name === administrator_1 || req.body.user_name === administrator_2) {
                     const content = req.body.text
                     await writeFileAsync('./.env', content)
                     res.status(200).send({
@@ -54,9 +57,8 @@ exports.serve = async (req, res, next) => {
                 }
             }
             else if (req.body.command === '/getConfig') {
-                if (req.body.user_name === 'jagonmoydey1997') {
+                if (req.body.user_id === administrator_1 || req.body.user_id === administrator_2) {
                     const content = await readFileAsync('./.env', 'utf8')
-                    console.log(content);
                     res.status(200).send({
                         text: `Current environment setup!`,
                         attachments: [
@@ -78,6 +80,6 @@ exports.serve = async (req, res, next) => {
         }
     }
     catch (err) {
-    console.log(err.message)
+        console.log(err.message)
     }
 }

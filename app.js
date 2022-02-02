@@ -10,7 +10,7 @@ app.set('trust proxy', 1);
 const limiter = rateLimit({
     max: 10, //1 request
     windowMs: 60 * 1000, //1000 = 1 second
-    message: 'too many requests sent by this ip, please try again in an hour !'
+    message: 'Too many requests sent by this ip, please try again in an hour !'
 });
 
 app.use('/slack/events', limiter, slackEvent.slackEvents.expressMiddleware())
