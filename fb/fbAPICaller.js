@@ -7,7 +7,7 @@ const fbGroupID = process.env.FB_GROUP_ID;
 
 exports.postWithoutLinkAndAttachments = (message, event) => {
     FB.api(`/${fbGroupID}/feed`, 'POST', { message }, function (response) {
-        if (response.error) {
+        if (response.error && response.error.type !== "GraphMethodException") {
             console.log(`Fb api error: ${response.error.message}`);
             if (response.error.type === 'OAuthException') {
                 fbTokenExpirationNotifier.notify(event);
@@ -23,7 +23,7 @@ exports.postWithLinkAndAttachments = (message, publicLink, lastLink, linksLength
     const words = message.split(" ");
     if ((words[words.length - 1] === lastLink || words[words.length - 1] === `\n\n\n${lastLink}`) && linksLength === 1) message += " .\n";
     FB.api(`/${fbGroupID}/feed?link=${publicLink}`, 'POST', { message }, function (response) {
-        if (response.error) {
+        if (response.error && response.error.type !== "GraphMethodException") {
             console.log(`Fb api error: ${response.error.message}`);
             if (response.error.type === 'OAuthException') {
                 fbTokenExpirationNotifier.notify(event);
