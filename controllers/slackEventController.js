@@ -1,7 +1,7 @@
 require('dotenv').config();
 const { WebClient } = require('@slack/web-api');
 const { createEventAdapter } = require('@slack/events-api');
-const fbAPI = require('../utils/fbAPICaller')
+const fbAPI = require('../fb/fbAPICaller')
 const messageFormatter = require('../utils/messageFormatter');
 const fileProcessor = require('../utils/fileProcessor');
 const eventSet = new Set();

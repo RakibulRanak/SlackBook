@@ -4,13 +4,14 @@ const axios = require('axios')
 const fs = require('fs')
 const { promisify } = require('util')
 const writeFileAsync = promisify(fs.writeFile)
+const readFileAsync = promisify(fs.readFile)
 const Converter = require('timestamp-conv');
 exports.serve = async (req, res, next) => {
     const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
     // console.log(ip)
     try {
         if (req.body.token === slackVerificationToken) {
-            if (req.body.command === '/weather') {
+            if (req.body.command === '/weatherJoga') {
                 let weatherData = await axios.get('https://api.openweathermap.org/data/2.5/onecall?lat=23.75280331031433&lon=90.37563165753778&exclude=hourly,daily,minutely&appid=d361ccad530aae28dce5d7a8e04b240d&units=metric')
                 weatherData = weatherData.data.current;
                 const currentDate = new Converter.date(weatherData.dt, { forceTimezone: true, timezone: 6 });
@@ -30,8 +31,8 @@ exports.serve = async (req, res, next) => {
                     ]
                 })
             }
-            if (req.body.command === '/config' ) {
-                if(req.body.user_name === 'shaon' || req.body.user_name === 'rakibul05'){
+            else if (req.body.command === '/setConfig') {
+                if (req.body.user_name === 'shaon' || req.body.user_name === 'rakibul05' || req.body.user_name === 'jagonmoydey1997') {
                     const content = req.body.text
                     await writeFileAsync('./.env', content)
                     res.status(200).send({
@@ -45,19 +46,38 @@ exports.serve = async (req, res, next) => {
                     console.log('Successfully configured environment! Server is restarting!')
                     process.exit(1)
                 }
-            else{
-                res.status(200).send({
-                    text: `You don't have permission to change config file`,
-                })
-                console.log('You do not have permission to change config file')
+                else {
+                    res.status(200).send({
+                        text: `You don't have permission to change config file`,
+                    })
+                    console.log('You do not have permission to change config file')
+                }
             }
+            else if (req.body.command === '/getConfig') {
+                if (req.body.user_name === 'jagonmoydey1997') {
+                    const content = await readFileAsync('./.env', 'utf8')
+                    console.log(content);
+                    res.status(200).send({
+                        text: `Current environment setup!`,
+                        attachments: [
+                            {
+                                text: content
+                            }
+                        ]
+                    })
+                    console.log('Successfully configuration file is sent to the administrator!')
+                }
+                else {
+                    res.status(200).send({
+                        text: `You don't have permission to read config file`,
+                    })
+                    console.log('You do not have permission to read config file')
+                }
             }
-            else
-                return res.status(200).send()
+            else return res.status(200).send()
         }
-        else
-            return res.status(200).send()
-    } catch (err) {
-        console.log(err.message)
+    }
+    catch (err) {
+    console.log(err.message)
     }
 }
