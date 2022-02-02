@@ -47,7 +47,7 @@ slackEvents.on('message', async (event) => {
             })();
         }
     } catch (error) {
-        console.log(error.message)
+        console.log("Slack error " + error.message)
     }
 
 });
