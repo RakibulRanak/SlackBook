@@ -5,12 +5,12 @@ FB.setAccessToken(fbAccessToken);
 const fbGroupID = process.env.FB_GROUP_ID;
 
 
-exports.postWithoutLinkAndAttachments = (message) => {
+exports.postWithoutLinkAndAttachments = (message, event) => {
     FB.api(`/${fbGroupID}/feed`, 'POST', { message }, function (response) {
         if (response.error) {
             console.log(`Fb api error: ${response.error.message}`);
             if (response.error.type === 'OAuthException') {
-                fbTokenExpirationNotifier.notify();
+                fbTokenExpirationNotifier.notify(event);
                 console.log("Need to generate new fb access token");
             }
         }
@@ -19,14 +19,14 @@ exports.postWithoutLinkAndAttachments = (message) => {
     });
 }
 
-exports.postWithLinkAndAttachments = (message, publicLink, lastLink, linksLength) => {
+exports.postWithLinkAndAttachments = (message, publicLink, lastLink, linksLength, event) => {
     const words = message.split(" ");
     if ((words[words.length - 1] === lastLink || words[words.length - 1] === `\n\n\n${lastLink}`) && linksLength === 1) message += " .\n";
     FB.api(`/${fbGroupID}/feed?link=${publicLink}`, 'POST', { message }, function (response) {
         if (response.error) {
             console.log(`Fb api error: ${response.error.message}`);
             if (response.error.type === 'OAuthException') {
-                fbTokenExpirationNotifier.notify();
+                fbTokenExpirationNotifier.notify(event);
                 console.log("Need to generate new fb access token");
             }
         }

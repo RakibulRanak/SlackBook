@@ -19,8 +19,9 @@ slackEvents.on('message', async (event) => {
         });
         if (!userInfo.user.is_bot) {
             const currentEventId = Math.floor(event.event_ts);
-            // console.log(`Got message from user <@${event.user}>: ${event.text}`);
             const username = userInfo.user.profile.real_name
+            // console.log(`Got message from user <@${username}>: ${event.text}`);
+
             let message = event.text;
             (async () => {
                 if (message.includes("#fbpost") && (!eventSet.has(currentEventId))) {
@@ -28,12 +29,12 @@ slackEvents.on('message', async (event) => {
                     const { links, formattedMessage, lastLink, linksLength } = await messageFormatter.format(message, username);
                     message = formattedMessage;
                     if (event.files === undefined) {
-                        if (!links) fbAPI.postWithoutLinkAndAttachments(message)
-                        else fbAPI.postWithLinkAndAttachments(message, links[0], lastLink, linksLength)
+                        if (!links) fbAPI.postWithoutLinkAndAttachments(message, event)
+                        else fbAPI.postWithLinkAndAttachments(message, links[0], lastLink, linksLength, event)
                     }
                     else {
                         const { messageWithAttachments, publicFileUrlPreview, lastLink, linksLength } = await fileProcessor.process(event.files, slackClient, message, slackUserToken);
-                        fbAPI.postWithLinkAndAttachments(messageWithAttachments, publicFileUrlPreview, lastLink, linksLength)
+                        fbAPI.postWithLinkAndAttachments(messageWithAttachments, publicFileUrlPreview, lastLink, linksLength, event)
                     }
                 }
                 if (message === 'greet me' && (!eventSet.has(currentEventId))) {
