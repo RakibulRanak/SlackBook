@@ -20,11 +20,16 @@ features:
      description: Get the current weather report.
      usage_hint: /weather
      should_escape: false
-  - command: /config
-     url: https://cefaloslackbook.herokuapp.com/slack/commands
-     description: Set SlackBook server configuration.
-     usage_hint: /config configuration
-     should_escape: false
+  - command: /getConfig
+      url: https://cefaloslackbook.herokuapp.com/slack/commands
+      description: Get current server environment set up.
+      usage_hint: /getConfig
+      should_escape: false
+  - command: /setConfig
+      url: https://cefaloslackbook.herokuapp.com/slack/commands
+      description: Set or Update server environment.
+      usage_hint: /setConfig configuration
+      should_escape: false
 oauth_config:
  scopes:
    user:
@@ -62,6 +67,28 @@ bot_user:
 ```
 
 We also kept our bot display name as SlackBook. 
+
+```yaml
+ slash_commands:
+   - command: /weather
+     url: https://cefaloslackbook.herokuapp.com/slack/commands
+     description: Get the current weather report.
+     usage_hint: /weather
+     should_escape: false
+  - command: /getConfig
+      url: https://cefaloslackbook.herokuapp.com/slack/commands
+      description: Get current server environment set up.
+      usage_hint: /getConfig
+      should_escape: false
+  - command: /setConfig
+      url: https://cefaloslackbook.herokuapp.com/slack/commands
+      description: Set or Update server environment.
+      usage_hint: /setConfig configuration
+      should_escape: false
+```
+
+These are some of the commands that will be available in workspace for different actions.
+
 ```yaml
 event_subscriptions:
    request_url: https://cefaloslackbook.herokuapp.com/slack/events

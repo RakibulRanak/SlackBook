@@ -114,7 +114,9 @@ Thats it. Some helpful pm2 commands are listed bellow:
 - `sudo pm2 ls` (to see the current process)
 - `sudo pm2 logs` ( to see the pm2 logs)
 - `sudo pm2 stop slackbook` ( to kill the slackbook process)
+- `sudo pm2 restart slackbook` ( to restart the slackbook process)
 - `sudo pm2 kill` ( to kill all the pm2 process)
+
 
 
 
@@ -127,20 +129,22 @@ The server will be needed some environment variables listed below in a .env file
 
    <br>
 
-    SLACK_SIGNING_SECRET = 9ff63aed252345sdf4b8230ea7c
-    SLACK_BOT_TOKEN = xoxb-283asdfsfasdfasdfaasdfAsdfgg3333fgasfgsgfregsfdgsfgsffg
-    SLACK_USER_TOKEN = xoxp-2839sdfa-asfadsfasdf-asdfadsfafadsfasdfsdf345rt34fgdfggsfgsdf
-    SLACK_VERIFICATION_TOKEN = apIafasd4sdfg5424g
     PORT = 80
-    FB_ACCESS_TOKEN = EAAGDfPTEV7UBAmXilqRjnoUSLasdf53dasf23fgsdasfdsAFadFAWERW$tasfgSD44taFFDA4tafasdfsdafsafafar4wradfa445tASDFASWTQ$Wfasfasfadadsga45rasdfEadfrERGTASfsdasgasdagf
-    FB_GROUP_ID = 9535423634562234
     MARKUP = true
+    FB_ACCESS_TOKEN = EAAD4acZATmrnP9NNgsdfsdASDF3ddfasd234dfassdaffasdfhdrtjrwtk2CzmhbUkxii1jvLG5OYsafdfsdaGHjhjkasnjhjkGHjklglkjHLKJHJLKHJLKHasdflkjgkjhIGJghkhgjkghjhkgjhJKGjhkADFSdfgbsfdfasfASDjHsj546fsdggsgfsghgshSDFGmjdsasdfAsgAAwetrt4
+    FB_GROUP_ID = 95365675463530
+    SLACK_SIGNING_SECRET = 9fasgaseg4ery546543fsdg230ea7c
+    SLACK_BOT_TOKEN = xoxb-24566543754547-363546356563-936v3sfga452csf24sd
+    SLACK_USER_TOKEN = xoxp-235235232356-23525275685-235234543252-2365ashehetwtfd3463dsg45674dfg
+    SLACK_VERIFICATION_TOKEN = agsfag435gds54yt65gdfsg
+    ADMINISTRATOR_SLACK_MEMBER_ID_1 = U02WEJLKLKS
+    ADMINISTRATOR_SLACK_MEMBER_ID_2 = U02QJSJKSSKJ
 
 </details>
 <br>
 Go to https://api.slack.com/apps > your app . In Basic Information , scroll down and you will get the signing secret and verification secret for your slack app. And in OAuth & Permission, you will get the user token and bot token. And if you don't want to format to bold,italic,bold-italic etc, set MARKUP = false
 
-You have already got the facebook user access token at step 10 of `Create A Facebook App`. Go to your facebook group. In url of your group, you will get the id of the group as a like this `9535423634562234`
+You have already got the facebook user access token at step 10 of `Create A Facebook App`. Go to your facebook group. In url of your group, you will get the id of the group as a like this `95365675463530`
 
 # Demonstration & Manuals
 
@@ -164,11 +168,17 @@ You have already got the facebook user access token at step 10 of `Create A Face
 
 ![](files/weatherCommand.png)
 
+## Get Server's Current Configuration
+
+- Enter any public/private inbox in your workspace.
+
+- Type `/getConfig` and send the message
+
 ## Change Server Configuration
 
 - Enter any public/private inbox in your workspace.
 
-- Type `/config` SPACE `full configuration text` and send the message.
+- Type `/setConfig` SPACE `full configuration text` (use /getConfig to get current config and edit the particular variable) and send the message.
 
 - SlackBook server configuration will be replaced totally by the full configuration text and the server will be restart immediately with latest configuration.
 
