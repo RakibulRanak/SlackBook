@@ -2,6 +2,7 @@ const FB = require("fb");
 const fbTokenExpirationNotifier = require('./fbTokenExpirationNotifier');
 const fbAccessToken = process.env.FB_ACCESS_TOKEN
 FB.setAccessToken(fbAccessToken);
+FB.options({ version: 'v12.0' });
 const fbGroupID = process.env.FB_GROUP_ID;
 
 
