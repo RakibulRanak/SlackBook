@@ -39,13 +39,18 @@ exports.format = async (message, username) => {
         }
     }
 
-
-    if (message.match("&gt")) for (let i = 0; i < message.length; i++){
-        if(textFormatter === "true")
-            message = message.replace("&gt;", "|  ");
-        else
-            message = message.replace("&gt;", "");
-    } 
+    const blockquoteRegex = /&gt;[^&gt;]{0,}/g;
+    const blockquote = message.match(blockquoteRegex);
+    if(blockquote){
+        for (let i = 0; i < blockquote.length; i++) {
+            const str = blockquote[i];
+            blockquote[i] = blockquote[i].replace(blockquote[i], blockquote[i].substring(4, blockquote[i].length));
+            blockquote[i] = blockquote[i].trimStart();
+            if(textFormatter === "true" && blockquote[i])
+                blockquote[i] = "|  " + blockquote[i];
+            message = message.replace(str, blockquote[i]);
+        }
+    }
 
     if (message.match("&amp")) for (let i = 0; i < message.length; i++){
         if(textFormatter === "true")
