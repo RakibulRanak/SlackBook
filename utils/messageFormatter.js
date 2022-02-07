@@ -24,7 +24,6 @@ exports.format = async (message, username) => {
             codeBlocks[i] = codeBlocks[i].replace(codeBlocks[i], codeBlocks[i].substring(3, codeBlocks[i].length - 3));
             if(textFormatter === "true")
                 codeBlocks[i] = "***\n" + codeBlocks[i] + "\n***";
-            //codeBlocks[i] = "***\n" + codeBlocks[i].replace(codeBlocks[i], codeBlocks[i].substring(3, codeBlocks[i].length - 3)) + "\n***";
             message = message.replace(str, codeBlocks[i]);
         }
     }
@@ -36,7 +35,6 @@ exports.format = async (message, username) => {
             codes[i] = codes[i].replace(codes[i], codes[i].substring(1, codes[i].length - 1));
             if(textFormatter === "true" && codes[i])
                 codes[i] = ">   " + codes[i];
-            //codes[i] = ">   " + codes[i].replace(codes[i], codes[i].substring(1, codes[i].length - 1));
             message = message.replace(str, codes[i]);
         }
     }
