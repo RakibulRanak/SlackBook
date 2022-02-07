@@ -3,6 +3,7 @@ const linkExtractor = require('./linkExtractor');
 const mentionExtractor = require('./mentionExtractor');
 const formatExtractor = require('./formatExtractor');
 const mailExtractor = require('./mailExtractor');
+const textFormatter = process.env.TEXT_FORMATTER;
 
 exports.format = async (message, username) => {
 
@@ -20,23 +21,41 @@ exports.format = async (message, username) => {
     if (codeBlocks) {
         for (let i = 0; i < codeBlocks.length; i++) {
             const str = codeBlocks[i];
-            codeBlocks[i] = "***\n" + codeBlocks[i].replace(codeBlocks[i], codeBlocks[i].substring(3, codeBlocks[i].length - 3)) + "\n***";
+            codeBlocks[i] = codeBlocks[i].replace(codeBlocks[i], codeBlocks[i].substring(3, codeBlocks[i].length - 3));
+            if(textFormatter === "true")
+                codeBlocks[i] = "***\n" + codeBlocks[i] + "\n***";
+            //codeBlocks[i] = "***\n" + codeBlocks[i].replace(codeBlocks[i], codeBlocks[i].substring(3, codeBlocks[i].length - 3)) + "\n***";
             message = message.replace(str, codeBlocks[i]);
         }
     }
-    const codeRegex = /`[^`]{1,}`/g;
+    const codeRegex = /`[^`]{0,}`/g;
     const codes = message.match(codeRegex);
     if (codes) {
         for (let i = 0; i < codes.length; i++) {
             const str = codes[i];
-            codes[i] = ">   " + codes[i].replace(codes[i], codes[i].substring(1, codes[i].length - 1));
+            codes[i] = codes[i].replace(codes[i], codes[i].substring(1, codes[i].length - 1));
+            if(textFormatter === "true" && codes[i])
+                codes[i] = ">   " + codes[i];
+            //codes[i] = ">   " + codes[i].replace(codes[i], codes[i].substring(1, codes[i].length - 1));
             message = message.replace(str, codes[i]);
         }
     }
 
 
-    if (message.match("&gt")) for (let i = 0; i < message.length; i++) message = message.replace("&gt;", "|  ");
-    if (message.match("&amp")) for (let i = 0; i < message.length; i++) message = message.replace("&amp;", "&");
+    if (message.match("&gt")) for (let i = 0; i < message.length; i++){
+        if(textFormatter === "true")
+            message = message.replace("&gt;", "|  ");
+        else
+            message = message.replace("&gt;", "");
+    } 
+
+    if (message.match("&amp")) for (let i = 0; i < message.length; i++){
+        if(textFormatter === "true")
+            message = message.replace("&amp;", "&");
+        else
+            message = message.replace("&amp;", "");
+    } 
+
     formattedUsername = encoder.encode(username, 'bold');
     message = formattedUsername + " shared via slack " + `\n\n${message}`;
 
