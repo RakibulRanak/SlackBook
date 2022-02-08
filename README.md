@@ -60,7 +60,7 @@ This is the server for SlackBook
 
    <br>
 
-   > Facebook doesn't allow users to see posts in development mode posted by graph api in a group, if the user is not a developer, administrator, tester, or analyst of the used facebook app . So we need to switch to live mode. After swtiching on to live mode, we don't have all the permission scopes by default that we get in development mode. We need `publish_to_groups` permission to post in group using graph api. So, either we need to submit privacy policy, business policy and other documents to facebook to review our app and grant us our required permission in live mode, or we could switch back to our development mode to use the permisson scopes we need. But does that solve our first problem? Posts not visible to all users? Yes, it does somehow. After switching once to live mode, you can than switch back to development and stay like this, but now all the posts, attachments, files are visible to all users except direct photos. Still we can post photos as an attachment preview which is visible to all. Is that a facebook bug? Don't know. But it offers us a great deal. Following links will be helpful to know more :
+   > Facebook doesn't allow users to see posts in development mode posted by graph api in a group, if the user is not a developer, administrator, tester, or analyst of the used facebook app . So we need to switch to live mode. After swtiching on to live mode, we don't have all the permission scopes by default that we get in development mode. So, either we need to submit privacy policy, business policy and other documents to facebook to review our app and grant us our required permission in live mode, or we could switch back to our development mode to use the permisson scopes we need. But does that solve our first problem? Posts not visible to all users? Yes, it does somehow. After switching once to live mode, you can than switch back to development and stay like this, but now all the posts, attachments, files are visible to all users except direct photos. Still we can post photos as an attachment preview which is visible to all. Is that a facebook bug? Don't know. But it offers us a great deal. Following links will be helpful to know more :
 
    - [Publish To Groups](https://developers.facebook.com/docs/permissions/reference/publish_to_groups/)
    - [App Review](https://developers.facebook.com/docs/app-review)
@@ -68,15 +68,34 @@ This is the server for SlackBook
 
    </details>
 
-6. Go to https://developers.facebook.com/tools/explorer/, select your facebook app, click on `Get Token`, selct `Get User Access Token` and grant access.
+6. Go to https://developers.facebook.com/tools/explorer/, select your facebook app, click on `Get Token`, select `Get Page Access Token` if you want to post by a facebook page or `Get User Access Token` if you want to post by a facebook user and grant access.
 
-7. Clink on `Add a Permission` > `Evens Group Pages` > `publish_to_groups` .
+7. i) For posting by user add the following permissions: (You can type and select) 
+
+    > public_profile
+
+    > publish_to_groups
+
+   ii) For posting by page add the following permissions: (You can type and select)
+   > public_profile
+
+   > pages_show_list
+
+   > pages_read_engagement
+
+   > pages_manage_posts
 
 8. Click on `Generate Access Token` and grant permission.
 
-9. You will get an access token, but it will be expire in couple of hours. To extend the expire time ( Maximum of 3 months if the facebook user doesn't change password ) click on the **_i_** button on the left side of the access token dialogue > click on `Open in Access token Tool` > scroll down and click on `Extend Access token`.
+9. Get the access token, but it will be expire in 1 hour. To extend the expire time ( Maximum of 2 months if the facebook user doesn't change password ) click on the **_i_** button on the left side of the access token dialogue > click on `Open in Access token Tool` > scroll down and click on `Extend Access token`. You can also debug any access token here `https://developers.facebook.com/tools/debug/accesstoken/`
 
-10. You wil get a long-lived access token for 2 months. Copy and Store it somewhere. It will be needed in SlackBook server to call graph api.
+10. You wil get a long-lived access token for 2 months. Copy and Store it somewhere. It will be needed in SlackBook server to call graph api and post on facebook group by a facebook `user`. But to post by a `page`, follow the following steps : 
+
+    * Go to `https://developers.facebook.com/tools/explorer/`
+    * Replace the Access Token by your `long lived user access token`.
+    * Hit `GET /me` in graph api gui and receive an `id` of your facebook account.
+    * Hit `Get id/accounts` and get an access token for your respective page.
+    * Go to `https://developers.facebook.com/tools/debug/accesstoken` and debug the access token you got. You will see the type of token is `Page`, Page ID is `your page name` and it will expires `Never`. Use this page access token in SlackBook server's environment.
 
 # SlackBook Server Configuration
 
