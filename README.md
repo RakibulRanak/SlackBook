@@ -152,13 +152,15 @@ The server will be needed some environment variables listed below in a .env file
    <br>
 
     PORT = 80
-    TEXT_FORMATTER = true
+    TEXT_FONT_FORMATTER = true
+    TEXT_BLOCK_FORMATTER = false
     FB_ACCESS_TOKEN = EAAD4acZATmrnP9NNgsdfsdASDF3ddfasd234dfassdaffasdfhdrtjrwtk2CzmhbUkxii1jvLG5OYsafdfsdaGHjhjkasnjhjkGHjklglkjHLKJHJLKHJLKHasdflkjgkjhIGJghkhgjkghjhkgjhJKGjhkADFSdfgbsfdfasfASDjHsj546fsdggsgfsghgshSDFGmjdsasdfAsgAAwetrt4
     FB_GROUP_ID = 95365675463530
     SLACK_SIGNING_SECRET = 9fasgaseg4ery546543fsdg230ea7c
     SLACK_BOT_TOKEN = xoxb-24566543754547-363546356563-936v3sfga452csf24sd
     SLACK_USER_TOKEN = xoxp-235235232356-23525275685-235234543252-2365ashehetwtfd3463dsg45674dfg
     SLACK_VERIFICATION_TOKEN = agsfag435gds54yt65gdfsg
+    WEATHER_API_SECRET = fsafr2354sdaf2345sfadasf
     ADMINISTRATOR_SLACK_MEMBER_ID_1 = U02WEJLKLKS
     ADMINISTRATOR_SLACK_MEMBER_ID_2 = U02QJSJKSSKJ
 

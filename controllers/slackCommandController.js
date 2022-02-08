@@ -8,6 +8,7 @@ const Converter = require('timestamp-conv');
 const slackVerificationToken = process.env.SLACK_VERIFICATION_TOKEN || 'NOT_UNDEFINED'
 const administrator_1 = process.env.ADMINISTRATOR_SLACK_MEMBER_ID_1;
 const administrator_2 = process.env.ADMINISTRATOR_SLACK_MEMBER_ID_2;
+const weatherApiSecret = process.env.WEATHER_API_SECRET;
 
 exports.serve = async (req, res, next) => {
     const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
@@ -15,7 +16,7 @@ exports.serve = async (req, res, next) => {
     try {
         if (req.body.token === slackVerificationToken) {
             if (req.body.command === '/weather') {
-                let weatherData = await axios.get('https://api.openweathermap.org/data/2.5/onecall?lat=23.75280331031433&lon=90.37563165753778&exclude=hourly,daily,minutely&appid=d361ccad530aae28dce5d7a8e04b240d&units=metric')
+                let weatherData = await axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=23.75280331031433&lon=90.37563165753778&exclude=hourly,daily,minutely&appid=${weatherApiSecret}&units=metric`)
                 weatherData = weatherData.data.current;
                 const currentDate = new Converter.date(weatherData.dt, { forceTimezone: true, timezone: 6 });
                 const sunRiseDate = new Converter.date(weatherData.sunrise, { forceTimezone: true, timezone: 6 });
