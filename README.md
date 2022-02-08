@@ -40,9 +40,12 @@ This is the server for SlackBook
 
 # Facebook App Integration
 
-## Create A Facebook User
+## Create A Facebook User 
 
-> SlackBook server needs an user token of a facebook user to call facebook graph apis . You can use your own facebook account user token but it is recommended to create an organizational facebook user account. Ex: Cefalo HR . And make sure, your facebook user account is an admin of your respective facebook group where you want to post status through slack.
+> SlackBook server needs an `user token` of a facebook user to call facebook graph apis . You can use your own facebook account user token but it is recommended to create an organizational facebook user account. Ex: Cefalo HR . And make sure, your facebook user account is an admin of your respective facebook group where you want to post status through slack.
+> * If you want to post to group on behalf of a page, create a facebook page and link your facebook page to your respective group before moving forword. In this case, you will be needed `page token` instead of `user token`.
+
+
 
 ## Create A Facebook App
 
@@ -91,11 +94,11 @@ This is the server for SlackBook
 
 10. You wil get a long-lived access token for 2 months. Copy and Store it somewhere. It will be needed in SlackBook server to call graph api and post on facebook group by a facebook `user`. But to post by a `page`, follow the following steps : 
 
-    * Go to `https://developers.facebook.com/tools/explorer/`
+    * Go to https://developers.facebook.com/tools/explorer/
     * Replace the Access Token by your `long lived user access token`.
     * Hit `GET /me` in graph api gui and receive an `id` of your facebook account.
     * Hit `Get id/accounts` and get an access token for your respective page.
-    * Go to `https://developers.facebook.com/tools/debug/accesstoken` and debug the access token you got. You will see the type of token is `Page`, Page ID is `your page name` and it will expires `Never`. Use this page access token in SlackBook server's environment.
+    * Go to https://developers.facebook.com/tools/debug/accesstoken and debug the access token you got. You will see the type of token is `Page`, Page ID is `your page name` and it will expires `Never`. Use this page access token in SlackBook server's environment.
 
 # SlackBook Server Configuration
 
@@ -149,7 +152,7 @@ The server will be needed some environment variables listed below in a .env file
    <br>
 
     PORT = 80
-    MARKUP = true
+    TEXT_FORMATTER = true
     FB_ACCESS_TOKEN = EAAD4acZATmrnP9NNgsdfsdASDF3ddfasd234dfassdaffasdfhdrtjrwtk2CzmhbUkxii1jvLG5OYsafdfsdaGHjhjkasnjhjkGHjklglkjHLKJHJLKHJLKHasdflkjgkjhIGJghkhgjkghjhkgjhJKGjhkADFSdfgbsfdfasfASDjHsj546fsdggsgfsghgshSDFGmjdsasdfAsgAAwetrt4
     FB_GROUP_ID = 95365675463530
     SLACK_SIGNING_SECRET = 9fasgaseg4ery546543fsdg230ea7c
