@@ -90,7 +90,7 @@ This is the server for SlackBook
 
 8. Click on `Generate Access Token` and grant permission.
 
-9. Get the access token, but it will be expire in 1 hour. To extend the expire time ( Maximum of 2 months if the facebook user doesn't change password ) click on the **_i_** button on the left side of the access token dialogue > click on `Open in Access token Tool` > scroll down and click on `Extend Access token`. You can also debug any access token here `https://developers.facebook.com/tools/debug/accesstoken/`
+9. Get the access token, but it will be expired in 1 hour. To extend the expire time ( Maximum of 2 months if the facebook user doesn't change password ) click on the **_i_** button on the left side of the access token dialogue > click on `Open in Access token Tool` > scroll down and click on `Extend Access token`. You can also debug any access token here `https://developers.facebook.com/tools/debug/accesstoken/`
 
 10. You wil get a long-lived access token for 2 months. Copy and Store it somewhere. It will be needed in SlackBook server to call graph api and post on facebook group by a facebook `user`. But to post by a `page`, follow the following steps : 
 
@@ -98,7 +98,7 @@ This is the server for SlackBook
     * Replace the Access Token by your `long lived user access token`.
     * Hit `GET /me` in graph api gui and receive an `id` of your facebook account.
     * Hit `Get id/accounts` and get an access token for your respective page.
-    * Go to https://developers.facebook.com/tools/debug/accesstoken and debug the access token you got. You will see the type of token is `Page`, Page ID is `your page name` and it will expires `Never`. Use this page access token in SlackBook server's environment.
+    * Go to https://developers.facebook.com/tools/debug/accesstoken and debug the access token you got. You will see the type of token is `Page`, Page ID is `your page name` and it will expire `Never`. Use this page access token in SlackBook server's environment.
 
 # SlackBook Server Configuration
 
@@ -139,6 +139,7 @@ Thats it. Some helpful pm2 commands are listed bellow:
 - `sudo pm2 restart slackbook` ( to restart the slackbook process)
 - `sudo pm2 kill` ( to kill all the pm2 process)
 
+>*`Don't forget to use sudo each time. It will work but not the way it should be.`*
 
 
 
@@ -166,9 +167,12 @@ The server will be needed some environment variables listed below in a .env file
 
 </details>
 <br>
-Go to https://api.slack.com/apps > your app . In Basic Information , scroll down and you will get the signing secret and verification secret for your slack app. And in OAuth & Permission, you will get the user token and bot token. And if you don't want to format to bold,italic,bold-italic etc, set MARKUP = false
 
-You have already got the facebook user access token at step 10 of `Create A Facebook App`. Go to your facebook group. In url of your group, you will get the id of the group as a like this `95365675463530`
+Go to https://api.slack.com/apps > your app . In Basic Information , scroll down and you will get the `SLACK_SIGNING_SECRET` and `SLACK_VERIFICATION_TOKEN` for your slack app. And in OAuth & Permission, you will get the `SLACK_USER_TOKEN` and `SLACK_BOT_TOKEN`. If you don't want to format to bold,italic,bold-italic etc, set `TEXT_FONT_FORMATTER` = false and to turn off blockquote, code or codeblocks of slack, set `TEXT_BLOCK_FORMATTER` = false. `WEATHER_API_SECRET` is the app id you get after creating your account in https://api.openweathermap.org .
+
+You have already got the `FB_ACCESS_TOKEN` at step 10 of `Create A Facebook App`. Go to your facebook group. In url of your group, you will get `FB_GROUP_ID` as a like this *95365675463530*
+
+`PORT` is by default 80 if you don't specify anything else. You can set two administrators who will be able to get/set/configure the SlackBook server and will get notification in inbox by SlackBook bot. To set administrators, go to the slack profile of the person and copy the member id and set `ADMINISTRATOR_SLACK_MEMBER_ID_1` and `ADMINISTRATOR_SLACK_MEMBER_ID_2` by the value.
 
 # Demonstration & Manuals
 
@@ -198,6 +202,8 @@ You have already got the facebook user access token at step 10 of `Create A Face
 
 - Type `/getConfig` and send the message
 
+  *`/getConfig is only allowed to the administrators.`*
+
 ## Change Server Configuration
 
 - Enter any public/private inbox in your workspace.
@@ -205,6 +211,8 @@ You have already got the facebook user access token at step 10 of `Create A Face
 - Type `/setConfig` SPACE `full configuration text` (use /getConfig to get current config and edit the particular variable) and send the message.
 
 - SlackBook server configuration will be replaced totally by the full configuration text and the server will be restart immediately with latest configuration.
+  
+  *`/setConfig is only allowed to the administrators.`*
 
 ## Get A Greeting
 

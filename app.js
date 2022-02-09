@@ -3,7 +3,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const slackCommand = require('./controllers/slackCommandController')
 const slackEvent = require('./controllers/slackEventController.js');
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 80;
 const app = express()
 const rateLimit = require('express-rate-limit');
 app.set('trust proxy', 1);
