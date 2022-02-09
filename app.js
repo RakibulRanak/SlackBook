@@ -8,7 +8,7 @@ const app = express()
 const rateLimit = require('express-rate-limit');
 app.set('trust proxy', 1);
 const limiter = rateLimit({
-    max: 10, //1 request
+    max: 10, //10 request
     windowMs: 60 * 1000, //1000 = 1 second
     message: 'Too many requests sent by this ip, please try again in an hour !'
 });

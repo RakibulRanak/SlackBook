@@ -10,10 +10,9 @@ exports.postWithoutLinkAndAttachments = (message, event) => {
     FB.api(`/${fbGroupID}/feed`, 'POST', { message }, function (response) {
         if (response.error && response.error.type !== "GraphMethodException") {
             console.log(`Fb api error: ${response.error.message}`);
-            if (response.error.type === 'OAuthException') {
-                fbTokenExpirationNotifier.notify(event);
-                console.log("Need to generate new fb access token");
-            }
+            if (response.error.type === 'OAuthException')
+                fbTokenExpirationNotifier.notify(event, response.error.message);
+
         }
         else
             console.log("Succesfully posted on fb!")
@@ -26,10 +25,8 @@ exports.postWithLinkAndAttachments = (message, publicLink, lastLink, linksLength
     FB.api(`/${fbGroupID}/feed?link=${publicLink}`, 'POST', { message }, function (response) {
         if (response.error && response.error.type !== "GraphMethodException") {
             console.log(`Fb api error: ${response.error.message}`);
-            if (response.error.type === 'OAuthException') {
-                fbTokenExpirationNotifier.notify(event);
-                console.log("Need to generate new fb access token");
-            }
+            if (response.error.type === 'OAuthException')
+                fbTokenExpirationNotifier.notify(event, response.error.message);
         }
         else
             console.log("Succesfully posted on fb!")
