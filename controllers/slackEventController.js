@@ -22,7 +22,6 @@ slackEvents.on('message', async (event) => {
                 const currentEventId = Math.floor(event.event_ts);
                 const username = userInfo.user.profile.real_name
                 // console.log(`Got message from user <@${username}>: ${event.text}`);
-
                 let message = event.text;
                 (async () => {
                     if (message.includes("#fbpost") && (!eventSet.has(currentEventId))) {
