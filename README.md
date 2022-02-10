@@ -214,13 +214,6 @@ You have already got the `FB_ACCESS_TOKEN` at step 10 of `Create A Facebook App`
   
   *`/setConfig is only allowed to the administrators.`*
 
-## Get A Greeting
-
-- Enter any of the public channels where bot is integrated or in bot inbox.
-- Type `greet me` and send the message. Your message will be visible to others too.
-- You will get `Hello @your_username!` response from bot which will also be visible by others.
-
-  > This feature was actually implemented to test if the server was live. It can be modified to any other necessary task if needed.
 
 ## Check Server Logs
 
@@ -306,7 +299,9 @@ Maybe you want to perform some action/api calls without sending a message in pub
 
     <br>
 
-    - **Step 5** : The final step for the system to call the corresponding EndPoint of Facebook API . Credentials to Post a Status without Links and Attachments are :
+    - **Step 5** : The final step for the system to call the corresponding EndPoint of Facebook API . Credentials to Post a Status without Links and Attachments are : <br>
+
+      **with user token** : 
 
       <pre>
       
@@ -319,7 +314,16 @@ Maybe you want to perform some action/api calls without sending a message in pub
       Permission Scope :  1. publish_to_groups  2. public_profile 
       
       </pre>
-
+      **with page token** : 
+      <pre>
+      Method Name: POST
+      API Endpoint: https://graph.facebook.com/{group_id}/feed/
+      Parameter: message = {message_you_want_to_share}
+      Facebook App: SlackBot
+      Token Type: page Token
+      Access Token : generated access token in graph api explorer in facebook
+      Permission Scope :  1.pages_show_list 2. public_profile 3.pages_read_engagement 4.pages_manage_posts
+      </pre>
     </details>
 
     <br>
@@ -329,6 +333,8 @@ Maybe you want to perform some action/api calls without sending a message in pub
     <br>
 
     - **Step 5** : The final step for the system to call the Corresponding Endpoint of Facebook API .Credentials to Post a Status with Links are :
+       
+        **with user token** :
 
        <pre>
       
@@ -341,6 +347,18 @@ Maybe you want to perform some action/api calls without sending a message in pub
         Permission Scope :  1. publish_to_groups  2. public_profile 
       
       </pre>
+
+      **with page token** : 
+      <pre>
+      Method Name: POST
+      API Endpoint: https://graph.facebook.com/{group_id}/feed?link={link_you_want_to_share}
+      Parameter: message = {message_you_want_to_share}
+      Facebook App: SlackBot
+      Token Type: page Token
+      Access Token : generated access token in graph api explorer in facebook
+      Permission Scope :  1.pages_show_list 2. public_profile 3.pages_read_engagement 4.pages_manage_posts
+      </pre>
+
 
     - **Limitations** : Facebook doesn’t preview more than one link on Facebook . Other Links including the first one will remain in the message as a link but will not be previewd . That’s Why system has to pass the first link in the link parameter but all the links will remain in the message .
 
@@ -362,6 +380,9 @@ Maybe you want to perform some action/api calls without sending a message in pub
     - **Step 5** : System makes the url of the file public in the slack server. For this system uses a method which takes the user token of slack app and file id of file as arguments .
 
     - **Step 7** : The final step for the system to call the Corresponding Endpoint of Facebook API .Credentials to Post a Status with attachments are
+       
+        **with user token** :
+
         <pre>
         
         Method Name: POST 
@@ -374,7 +395,22 @@ Maybe you want to perform some action/api calls without sending a message in pub
         
         </pre>
 
+      **with page token** : 
+
+      <pre>
+      Method Name: POST
+      API Endpoint: https://graph.facebook.com/{group_id}/feed?link={public_link_of_the_file_in_slack_file_server} 
+      Parameter: message = {message_you_want_to_share}
+      Facebook App: SlackBot
+      Token Type: page Token
+      Access Token : generated access token in graph api explorer in facebook
+      Permission Scope :  1.pages_show_list 2. public_profile 3.pages_read_engagement 4.pages_manage_posts
+      </pre>
+
     - **Limitations** :
+    Facebook doesn’t preview more than one file on Facebook . Other Links including the first one will remain in the message as a link but will not be previewd . That’s Why system has to pass the first link in the link parameter but all the links will remain in the message .
+
+
 
       </details>
 

@@ -37,10 +37,6 @@ slackEvents.on('message', async (event) => {
                         fbAPI.postWithLinkAndAttachments(messageWithAttachments, publicFileUrlPreview, lastLink, linksLength, event)
                     }
                 }
-                if (message === 'greet me' && (!eventSet.has(currentEventId))) {
-                    eventSet.add(currentEventId);
-                    await slackClient.chat.postEphemeral({ thread_broadcast: false, thread_ts: event.thread_ts, channel: event.channel, user: event.user, text: `Hello <@${event.user}>! :tada:` })
-                }
                 if (eventSet.size > 10) {
                     const val = Math.min(...eventSet);
                     eventSet.delete(val);
