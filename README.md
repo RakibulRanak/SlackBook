@@ -1,6 +1,9 @@
 # SlackBook
 
-This is the server for SlackBook
+> A bot assistant for slack-facebook integration.
+
+<a href="url"><img src=files/cefaloSlackBook_1.png  height="150" width="150"> <img src=files/cefaloSlackBook_2.png  height="150" width="150"> </a>
+</br>
 
 # Features
 
