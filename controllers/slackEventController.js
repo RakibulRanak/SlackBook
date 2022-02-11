@@ -14,7 +14,7 @@ const slackClient = new WebClient(slackBotToken);
 
 slackEvents.on('message', async (event) => {
     try {
-        if (!event.subtype) {
+        if (event.subtype != "message_changed") {
             const userInfo = await slackClient.users.info({
                 user: event.user
             });
