@@ -1,6 +1,7 @@
 const encoder = require('./characterEncoder');
-exports.extract = async (message) => {
+const textFontFormatter = process.env.TEXT_FONT_FORMATTER;
 
+exports.extract = async (message) => {
     const boldRegex = /\*.*?\*/g;
     const italicRegex = /\_.*?\_/g;
     const boldItalicRegex = /_\*.[^_]{1,}\*_/g;
@@ -11,7 +12,7 @@ exports.extract = async (message) => {
     if (boldItalicArray) {
         for (let i = 0; i < boldItalicArray.length; i++) {
             let sub_Message = boldItalicArray[i].substring(2, boldItalicArray[i].length - 2);
-            if (process.env.MARKUP === "true")
+            if (textFontFormatter === "true")
                 sub_Message = encoder.encode(sub_Message, 'bold_italic');
             message = message.replace(boldItalicArray[i], sub_Message);
         }
@@ -20,7 +21,7 @@ exports.extract = async (message) => {
     if (italicArray) {
         for (let i = 0; i < italicArray.length; i++) {
             let sub_Message = italicArray[i].substring(1, italicArray[i].length - 1);
-            if (process.env.MARKUP === "true")
+            if (textFontFormatter === "true")
                 sub_Message = encoder.encode(sub_Message, 'italic');
             message = message.replace(italicArray[i], sub_Message)
         }
@@ -30,7 +31,7 @@ exports.extract = async (message) => {
     if (boldArray) {
         for (let i = 0; i < boldArray.length; i++) {
             let sub_Message = boldArray[i].substring(1, boldArray[i].length - 1)
-            if (process.env.MARKUP === "true")
+            if (textFontFormatter === "true")
                 sub_Message = encoder.encode(sub_Message, 'bold');
             message = message.replace(boldArray[i], sub_Message);
 

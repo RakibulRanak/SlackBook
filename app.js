@@ -3,12 +3,12 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const slackCommand = require('./controllers/slackCommandController')
 const slackEvent = require('./controllers/slackEventController.js');
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 80;
 const app = express()
 const rateLimit = require('express-rate-limit');
 app.set('trust proxy', 1);
 const limiter = rateLimit({
-    max: 10, //1 request
+    max: 10, //10 request
     windowMs: 60 * 1000, //1000 = 1 second
     message: 'Too many requests sent by this ip, please try again in an hour !'
 });
