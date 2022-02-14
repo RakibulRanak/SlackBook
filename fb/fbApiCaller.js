@@ -9,10 +9,10 @@ const fbGroupID = process.env.FB_GROUP_ID;
 // GraphMethodException - Error Code 100
 // OAuthException - Error Code 1
 
-exports.handleFbResponse = (response, event) => {
+handleFbResponse = (response, event) => {
     if (response.error) {
-        if (response.error.code != 1 || response.error.code != 100) {
-            console.log(`Fb api error: ${response.error.message} \n${response.error.type} - ${response.error.code}`);
+        if (response.error.code != 1 && response.error.code != 100) {
+            console.log(`Fb api error: ${response.error.type}(${response.error.code})  : ${response.error.message}`);
             fbErrorNotifier.notify(event, response.error);
         }
         else
