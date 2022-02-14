@@ -9,7 +9,7 @@ const fbGroupID = process.env.FB_GROUP_ID;
 // GraphMethodException - Error Code 100
 // OAuthException - Error Code 1
 
-exports.handleFbResponse = (response) => {
+exports.handleFbResponse = (response, event) => {
     if (response.error) {
         if (response.error.code != 1 || response.error.code != 100) {
             console.log(`Fb api error: ${response.error.message} \n${response.error.type} - ${response.error.code}`);
@@ -25,7 +25,7 @@ exports.handleFbResponse = (response) => {
 
 exports.postWithoutLinkAndAttachments = (message, event) => {
     FB.api(`/${fbGroupID}/feed`, 'POST', { message }, function (response) {
-        this.handleFbResponse(response)
+        this.handleFbResponse(response, event)
     });
 }
 
@@ -33,6 +33,6 @@ exports.postWithLinkAndAttachments = (message, publicLink, lastLink, linksLength
     const words = message.split(" ");
     if ((words[words.length - 1] === lastLink || words[words.length - 1] === `\n\n\n${lastLink}`) && linksLength === 1) message += " .\n";
     FB.api(`/${fbGroupID}/feed?link=${publicLink}`, 'POST', { message }, function (response) {
-        this.handleFbResponse(response)
+        this.handleFbResponse(response, event)
     });
 }
