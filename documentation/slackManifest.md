@@ -113,6 +113,7 @@ oauth_config:
      - chat:write
      - im:history
      - users:read
+     - users:read.email
      - commands
 ```
 
@@ -142,6 +143,9 @@ oauth_config:
 
   users:read 
   > View people in a workspace
+
+  users:read.email 
+  > To read email of an user
 
   commands 
   > Add shortcuts and/or slash commands that people can use
