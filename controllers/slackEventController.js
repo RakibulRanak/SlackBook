@@ -21,7 +21,8 @@ slackEvents.on('message', async (event) => {
             if (!userInfo.user.is_bot) {
                 const currentEventId = Math.floor(event.event_ts);
                 const username = userInfo.user.profile.real_name
-                // console.log(`Got message from user <@${username}>: ${event.text}`);
+                const email = userInfo.user.profile.real_name
+                console.log(`Got message to post on facebook by ${username} (${email})`);
                 let message = event.text;
                 (async () => {
                     if (message.includes("#fbpost") && (!eventSet.has(currentEventId))) {
@@ -36,10 +37,6 @@ slackEvents.on('message', async (event) => {
                             const { messageWithAttachments, publicFileUrlPreview, lastLink, linksLength } = await fileProcessor.process(event.files, slackClient, message, slackUserToken);
                             fbAPI.postWithLinkAndAttachments(messageWithAttachments, publicFileUrlPreview, lastLink, linksLength, event)
                         }
-                    }
-                    if (message === 'greet me' && (!eventSet.has(currentEventId))) {
-                        eventSet.add(currentEventId);
-                        await slackClient.chat.postEphemeral({ thread_broadcast: false, thread_ts: event.thread_ts, channel: event.channel, user: event.user, text: `Hello <@${event.user}>! :tada:` })
                     }
                     if (eventSet.size > 10) {
                         const val = Math.min(...eventSet);
