@@ -21,7 +21,7 @@ slackEvents.on('message', async (event) => {
             if (!userInfo.user.is_bot) {
                 const currentEventId = Math.floor(event.event_ts);
                 const username = userInfo.user.profile.real_name
-                const email = userInfo.user.profile.real_name
+                const email = userInfo.user.profile.email
                 console.log(`Got message to post on facebook by ${username} (${email})`);
                 let message = event.text;
                 (async () => {

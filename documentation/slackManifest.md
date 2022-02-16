@@ -40,6 +40,7 @@ oauth_config:
      - chat:write
      - im:history
      - users:read
+     - users:read.email
      - commands
 settings:
  event_subscriptions:
