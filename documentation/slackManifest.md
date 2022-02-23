@@ -1,56 +1,54 @@
 # Slack app configuration manifest.yaml
 
 ```yaml
-_metadata:
- major_version: 1
- minor_version: 1
 display_information:
- name: SlackBook
+  name: SlackBook
 features:
- app_home:
-   home_tab_enabled: false
-   messages_tab_enabled: true
-   messages_tab_read_only_enabled: false
- bot_user:
-   display_name: SlackBook
-   always_online: true
- slash_commands:
-   - command: /weather
-     url: https://cefaloslackbook.herokuapp.com/slack/commands
-     description: Get the current weather report.
-     usage_hint: /weather
-     should_escape: false
-  - command: /getConfig
+  app_home:
+    home_tab_enabled: false
+    messages_tab_enabled: true
+    messages_tab_read_only_enabled: false
+  bot_user:
+    display_name: SlackBook
+    always_online: true
+  slash_commands:
+    - command: /weather
+      url: https://cefaloslackbook.herokuapp.com/slack/commands
+      description: Get current weather report.
+      usage_hint: /weather
+      should_escape: false
+    - command: /getConfig
       url: https://cefaloslackbook.herokuapp.com/slack/commands
       description: Get current server environment set up.
       usage_hint: /getConfig
       should_escape: false
-  - command: /setConfig
+    - command: /setConfig
       url: https://cefaloslackbook.herokuapp.com/slack/commands
       description: Set or Update server environment.
       usage_hint: /setConfig configuration
       should_escape: false
 oauth_config:
- scopes:
-   user:
-     - files:write
-   bot:
-     - channels:read
-     - channels:history
-     - chat:write
-     - im:history
-     - users:read
-     - users:read.email
-     - commands
+  scopes:
+    user:
+      - files:write
+    bot:
+      - channels:read
+      - channels:history
+      - chat:write
+      - im:history
+      - users:read
+      - users:read.email
+      - commands
 settings:
- event_subscriptions:
-   request_url: https://cefaloslackbook.herokuapp.com/slack/events
-   bot_events:
-     - message.channels
-     - message.im
- org_deploy_enabled: false
- socket_mode_enabled: false
- token_rotation_enabled: false
+  event_subscriptions:
+    request_url: https://cefaloslackbook.herokuapp.com/slack/events
+    bot_events:
+      - message.channels
+      - message.im
+  org_deploy_enabled: false
+  socket_mode_enabled: false
+  token_rotation_enabled: false
+
  ```
 
 
