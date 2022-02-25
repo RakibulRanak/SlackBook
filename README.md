@@ -175,7 +175,7 @@ Go to https://api.slack.com/apps > your app . In Basic Information , scroll down
 
 You have already got the `FB_ACCESS_TOKEN` at step 10 of `Create A Facebook App`. Go to your facebook group. In url of your group, you will get `FB_GROUP_ID` as a like this *95365675463530*
 
-`PORT` is by default 80 if you don't specify anything else. You can set two administrators who will be able to get/set/configure the SlackBook server and will get notification in inbox by SlackBook bot. To set administrators, go to the slack profile of the person and copy the member id and set `ADMINISTRATOR_SLACK_MEMBER_ID_1` and `ADMINISTRATOR_SLACK_MEMBER_ID_2` by the value.
+`PORT` is by default 80 if you don't specify anything else. You can set two administrators who will be able to get/set/configure the SlackBook server and only administrator_1 will get notification/error message in inbox by SlackBook bot. To set administrators, go to the slack profile of the person and copy the member id and set `ADMINISTRATOR_SLACK_MEMBER_ID_1` and `ADMINISTRATOR_SLACK_MEMBER_ID_2` by the value.
 
 # Demonstration & Manuals
 
