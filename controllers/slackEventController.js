@@ -25,7 +25,7 @@ slackEvents.on('message', async (event) => {
                 console.log(`Got message to post on facebook by ${username} (${email})`);
                 let message = event.text;
                 (async () => {
-                    if (message.includes("#fbpost") && (!eventSet.has(currentEventId))) {
+                    if (message.includes("#fb") && (!eventSet.has(currentEventId))) {
                         eventSet.add(currentEventId);
                         const { links, formattedMessage, lastLink, linksLength } = await messageFormatter.format(message, username);
                         message = formattedMessage;

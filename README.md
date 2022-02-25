@@ -183,7 +183,7 @@ You have already got the `FB_ACCESS_TOKEN` at step 10 of `Create A Facebook App`
 
 - Enter any of the public channels where bot is integrated or in bot inbox.
 
-- Type any message, include any attachments/links/media . Just make sure to add `#fbpost` keyword anywhere of your message to post on facebook group.
+- Type any message, include any attachments/links/media . Just make sure to add `#fb` keyword anywhere of your message to post on facebook group.
 
 - Send your message on slack and check it on facebook group !
 

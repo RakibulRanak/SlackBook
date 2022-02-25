@@ -7,9 +7,9 @@ const textBlockFormatter = process.env.TEXT_BLOCK_FORMATTER;
 
 exports.format = async (message, username) => {
 
-    message = message.replace("#fbpost ", "");
-    message = message.replace(" #fbpost", "");
-    message = message.replace("#fbpost", "");
+    message = message.replace("#fb ", "");
+    message = message.replace(" #fb", "");
+    message = message.replace("#fb", "");
     message = await mailExtractor.extract(message);
     message = await mentionExtractor.extract(message);
     let { links, formattedMessage, lastLink, linksLength } = await linkExtractor.extract(message);
